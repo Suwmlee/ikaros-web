@@ -26,13 +26,12 @@ jobs:
 
     - name: Git push assets to "release" branch
       run: |
-        echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         cd dist
         git init
         git config --local user.name "actions"
         git config --local user.email "action@github.com"
         git checkout -b release
         git add .
-        git commit -m "${{ env.RELEASE_NAME }}"
+        git commit -m "Build Latest"
         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
         git push -f -u origin release
