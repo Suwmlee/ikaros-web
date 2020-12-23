@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :label-position="formlocation" label-width="150px" :model="settings">
+        <el-form label-position="formlocation" label-width="150px" :model="settings">
             <el-form-item label="输出模式" >
                 <el-radio-group v-model="mode">
                     <el-radio :label="1">PT模式(软链接)</el-radio>
@@ -36,7 +36,6 @@ export default {
     name: 'setting',
     data() { 
         return {
-            formlocation: 'right',
             mode: 1,
             settings: {
                 soft_link: true,

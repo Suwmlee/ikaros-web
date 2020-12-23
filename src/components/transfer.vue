@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :label-position="right" label-width="150px" :model="settings">
+        <el-form label-position="right" label-width="150px" :model="settings">
             <el-form-item label="需要软链接目录">
                 <el-input v-model="settings.source_folder"></el-input>
             </el-form-item>
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'transfer',
     data() { 
@@ -35,7 +37,13 @@ export default {
     },
     methods: {
         onSubmit() {
-            console.log('submit!');
+            axios.post('/api/transfer',this.settings)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     }
 }
