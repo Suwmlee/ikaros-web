@@ -1,15 +1,17 @@
 <template>
     <div>
         <el-form :label-position="formlocation" label-width="150px" :model="settings">
-            <el-form-item label="输出模式">
-                <el-radio v-model="settings.mode" label="1">PT模式(软链接)</el-radio>
-                <el-radio v-model="settings.mode" label="2">正常模式(移动文件)</el-radio>
+            <el-form-item label="输出模式" >
+                <el-radio-group v-model="mode">
+                    <el-radio :label="1">PT模式(软链接)</el-radio>
+                    <el-radio :label="2">正常模式(移动文件)</el-radio>
+                </el-radio-group>
             </el-form-item>
             <el-form-item label="软链接前缀">
                 <el-input v-model="settings.soft_prefix"></el-input>
             </el-form-item>
             <el-form-item label="刮削目录">
-                <el-input v-model="settings.scraper_folder"></el-input>
+                <el-input v-model="settings.scrape_folder"></el-input>
             </el-form-item>
             <el-form-item label="输出目录">
                 <el-input v-model="settings.success_folder"></el-input>
@@ -35,10 +37,11 @@ export default {
     data() { 
         return {
             formlocation: 'right',
+            mode: 1,
             settings: {
-                mode: '1',
+                soft_link: true,
                 soft_prefix: '',
-                scraper_folder: '',
+                scrape_folder: '',
                 success_folder: '',
                 failed_folder: '',
                 location_rule: '',
@@ -47,16 +50,34 @@ export default {
         };
     },
     mounted(){
-        axios
-            .get('http://localhost:12346/api/setting')
-            .then(response => (this.settings = response))
+        axios.get('/api/setting')
+            .then(response => {
+                console.log(response)
+                this.settings = response.data;
+                if (response.data.soft_link) {
+                    this.mode = 1
+                }else{
+                    this.mode = 2
+                }
+            })
             .catch(function (error) {
                 console.log(error);
             });
     },
     methods: {
         onSubmit() {
-            console.log('submit!');
+            if (this.mode === 1) {
+                this.settings.soft_link = true       
+            } else if (this.mode === 2) {
+                this.settings.soft_link = false
+            } 
+            axios.post('/api/setting',this.settings)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     }
 
