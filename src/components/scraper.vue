@@ -1,11 +1,90 @@
 <template>
     <div>
-        刮削
+        <el-button type="primary" @click="startscan">扫描</el-button>
+        <el-button type="primary" @click="start">刮削</el-button>
+        <el-table :data="scraperdata" :cell-style="{padding: '0', height: '20px'}" >
+            <el-table-column label="原始名称"
+                prop="basename"              
+                >
+            </el-table-column>
+            <el-table-column label="原始地址" :show-overflow-tooltip="true"
+                prop="basepath"
+                >
+            </el-table-column>
+            <el-table-column label="文件大小(mb)"
+                prop="filesize"
+                >
+            </el-table-column>
+            <el-table-column label="刮削用名称"
+                prop="scrapingname"
+                >
+            </el-table-column>
+            <el-table-column label="状态"
+                prop="status">
+                <template slot-scope="scope">
+                    <el-tag v-if="scope.row.status===0" >未刮削</el-tag>
+                    <el-tag v-if="scope.row.status===1" >完成</el-tag>
+                    <el-tag v-if="scope.row.status===2" >失败</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column label="刮削后名称"
+                prop="newname">
+            </el-table-column>
+            <el-table-column label="刮削后路径" :show-overflow-tooltip="true"
+                prop="newpath" width="150" >
+            </el-table-column>
+            <el-table-column label="更新时间"
+                prop="updatetime">
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-    name: 'scraper'
+    name: 'scraper',
+    data() {
+        return {
+            scraperdata: []
+        }
+    },
+    mounted() {
+        this.timer = setInterval(this.refresh, 1500);
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
+    },
+    methods: {
+        startscan() {
+            axios.post('/api/startscan')
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        start() {
+            axios.post('/api/start')
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        refresh() {
+            axios.get('/api/scrapedata')
+                .then(response => {
+                    this.scraperdata = response.data
+                    // console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    }
 }
 </script>

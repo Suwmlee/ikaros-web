@@ -22,6 +22,18 @@
             <el-form-item label="命名规则">
                 <el-input v-model="settings.naming_rule"></el-input>
             </el-form-item>
+            <el-form-item label="代理开关" >
+                <el-radio-group v-model="settings.proxy_enable">
+                    <el-radio :label="true">启用</el-radio>
+                    <el-radio :label="false">关闭</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item label="类型">
+                <el-input v-model="settings.proxy_type"></el-input>
+            </el-form-item>
+            <el-form-item label="地址">
+                <el-input v-model="settings.proxy_address"></el-input>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">应用</el-button>
             </el-form-item>
@@ -44,7 +56,10 @@ export default {
                 success_folder: '',
                 failed_folder: '',
                 location_rule: '',
-                naming_rule: '',
+                naming_rule: '', 
+                proxy_enable: '',
+                proxy_type: '',
+                proxy_address: ''
             }
         };
     },
@@ -71,8 +86,13 @@ export default {
                 this.settings.soft_link = false
             } 
             axios.post('/api/setting',this.settings)
-                .then(response => {
-                    console.log(response)
+                .then( () => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '更新成功',
+                        type: 'success'
+                    })
                 })
                 .catch(function (error) {
                     console.log(error);
