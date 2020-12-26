@@ -1,7 +1,9 @@
 <template>
     <div>
-        <el-button type="primary" @click="startscan">扫描</el-button>
-        <el-button type="primary" @click="start">刮削</el-button>
+        <el-button :loading="running" size="medium" type="primary" @click="start">
+          <span v-if="!running">刮削</span>
+          <span v-else>刮削中...</span>
+        </el-button>
         <el-table :data="scraperdata" :cell-style="{padding: '0', height: '20px'}" >
             <el-table-column label="原始名称"
                 prop="basename"              
@@ -47,8 +49,13 @@ export default {
     name: 'scraper',
     data() {
         return {
+            running: false,
             scraperdata: []
         }
+    },
+    created(){
+        console.log('init data')
+        this.refresh()
     },
     mounted() {
         this.timer = setInterval(this.refresh, 1500);
@@ -57,15 +64,6 @@ export default {
         clearInterval(this.timer);
     },
     methods: {
-        startscan() {
-            axios.post('/api/startscan')
-                .then(response => {
-                    console.log(response)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        },
         start() {
             axios.post('/api/start')
                 .then(response => {
@@ -78,8 +76,8 @@ export default {
         refresh() {
             axios.get('/api/scrapedata')
                 .then(response => {
-                    this.scraperdata = response.data
-                    // console.log(response)
+                    this.scraperdata = response.data.data
+                    this.running = response.data.running
                 })
                 .catch(function (error) {
                     console.log(error);

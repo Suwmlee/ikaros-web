@@ -7,16 +7,16 @@
           <el-menu-item index="1">快速开始</el-menu-item>
           <el-menu-item index="2">配置</el-menu-item>
           <el-menu-item index="3">刮削</el-menu-item>
-          <el-menu-item index="4">历史</el-menu-item>
-          <el-menu-item index="5">转移</el-menu-item>
+          <el-menu-item index="4">转移</el-menu-item>
+          <el-menu-item index="5">计划任务</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
         <Tutorial v-if="activeIndex==='1'" msg="Welcome to Spike"/>
         <Settings v-if="activeIndex==='2'" />
         <Scraper v-if="activeIndex==='3'" />
-        <History v-if="activeIndex==='4'" />
-        <Transfer v-if="activeIndex==='5'" />
+        <Transfer v-if="activeIndex==='4'" />
+        <Task v-if="activeIndex==='5'" />
       </el-main>
     </el-container>
 
@@ -27,7 +27,7 @@
 import Tutorial from './components/tutorial.vue'
 import Settings from './components/setting'
 import Scraper from './components/scraper'
-import History from './components/history'
+import Task from './components/task'
 import Transfer from './components/transfer'
 
 export default {
@@ -36,8 +36,8 @@ export default {
     Tutorial,
     Settings,
     Scraper,
-    History,
-    Transfer
+    Transfer,
+    Task
   },
   data() {
     return {

@@ -1,11 +1,11 @@
 <template>
     <div>
-        历史
+        计划任务
     </div>
 </template>
 
 <script>
 export default {
-    name: 'history'
+    name: 'task'
 }
 </script>
