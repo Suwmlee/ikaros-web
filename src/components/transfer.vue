@@ -34,17 +34,6 @@
             <el-table-column label="大小(MB)"
                 prop="filesize" width="100" >
             </el-table-column>
-            <el-table-column label="刮削用名称"
-                prop="scrapingname" >
-            </el-table-column>
-            <!-- <el-table-column label="状态"
-                prop="status" width="100">
-                <template slot-scope="scope">
-                    <el-tag v-if="scope.row.status===0" >未刮削</el-tag>
-                    <el-tag v-if="scope.row.status===1" >完成</el-tag>
-                    <el-tag v-if="scope.row.status===2" >失败</el-tag>
-                </template>
-            </el-table-column> -->
             <el-table-column label="状态"
                 prop="success">
             </el-table-column>
@@ -57,18 +46,6 @@
             <el-table-column label="更新时间"
                 prop="updatetime">
             </el-table-column>
-            <el-table-column label="操作">
-                <template slot-scope="scope">
-                    <el-button
-                    size="mini"
-                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button
-                    size="mini"
-                    type="danger"
-                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
-
         </el-table>
         <el-pagination
             :page-size="10"
