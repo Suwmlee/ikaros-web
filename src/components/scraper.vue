@@ -84,7 +84,7 @@ export default {
     },
     methods: {
         start() {
-            axios.post('/api/start')
+            axios.post('/api/scrape')
                 .then(response => {
                     console.log(response)
                 })
