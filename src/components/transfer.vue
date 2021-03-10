@@ -1,5 +1,15 @@
 <template>
     <div>
+        <el-select v-model="selectedoption" 
+                   @change="changesetting"
+                   placeholder="请选择配置">
+            <el-option v-for="item in options"
+                       :key="item.value"
+                       :label="item.label"
+                       :value="item.value">
+            </el-option>
+        </el-select>
+        <el-divider></el-divider>
         <el-form label-position="right" label-width="150px" :model="settings">
             <el-form-item label="需要软链接目录">
                 <el-input v-model="settings.source_folder"></el-input>
@@ -13,15 +23,18 @@
             <el-form-item label="过滤目录">
                 <el-input v-model="settings.escape_folder"></el-input>
             </el-form-item>
+            <el-form-item label="备注">
+                <el-input v-model="settings.mark"></el-input>
+            </el-form-item>
             <el-form-item>
-                <!-- <el-button type="primary" @click="onSubmit">应用</el-button> -->
                 <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
-                    <span v-if="!running">转移</span>
+                    <span v-if="!running">开始转移</span>
                     <span v-else>转移中...</span>
                 </el-button>
+                <el-button type="primary" size="medium" @click="onSubmit">新增/更新配置</el-button>
             </el-form-item>
         </el-form>
-
+        <el-divider></el-divider>
         <el-table :data="transferdata" 
                 stripe 
                 :cell-style="{padding: '0', height: '20px'}" >
@@ -70,11 +83,18 @@ export default {
             totalnum: 10,
             transferdata: [],
             settings: {
-                soft_prefix: '',
-                source_folder: '',
-                output_folder: '',
+                source_folder: '/media/Movies',
+                soft_prefix: '/volume1/Media/Movies',
+                output_folder: '/media/Emby/Movies',
                 escape_folder: '',
-            }
+                mark: ''
+            },
+            selectedoption: '',
+            options: [
+                {value: '1', label: '默认'},
+                {value: '2', label: '电影'},
+                {value: '3', label: '电视剧'}
+            ]
         };
     },
     created(){
@@ -96,6 +116,9 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        changesetting() {
+            console.log(this.selectedoption)
         },
         refresh() {
             let geturl = '/api/transferdata/' + this.currentPage
