@@ -31,9 +31,10 @@
                     <span v-if="!running">开始转移</span>
                     <span v-else>转移中...</span>
                 </el-button>
+                
                 <el-button type="primary" size="medium" @click="addconf">新增</el-button>
                 <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
-                <el-button type="primary" size="medium" @click="deleteconf">删除</el-button>
+                <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
             </el-form-item>
         </el-form>
         <el-divider></el-divider>
@@ -98,14 +99,14 @@ export default {
     },
     created(){
         console.log('init data')
-        // this.refresh()
+        this.refresh()
         this.getconfs()
     },
     mounted() {
-        // this.timer = setInterval(this.refresh, 1500);
+        this.timer = setInterval(this.refresh, 1500);
     },
     beforeDestroy() {
-        // clearInterval(this.timer);
+        clearInterval(this.timer);
     },
     methods: {
         onSubmit() {
