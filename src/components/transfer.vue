@@ -1,37 +1,39 @@
 <template>
     <div>
         <el-select v-model="selectedoption" 
-                   @change="changesetting"
+                   @change="changeConf"
                    placeholder="请选择配置">
             <el-option v-for="item in options"
-                       :key="item.value"
-                       :label="item.label"
-                       :value="item.value">
+                       :key="item.id"
+                       :label="item.mark"
+                       :value="item.id">
             </el-option>
         </el-select>
         <el-divider></el-divider>
-        <el-form label-position="right" label-width="150px" :model="settings">
+        <el-form label-position="right" label-width="150px" :model="transconfig">
             <el-form-item label="需要软链接目录">
-                <el-input v-model="settings.source_folder"></el-input>
+                <el-input v-model="transconfig.source_folder"></el-input>
             </el-form-item>
             <el-form-item label="软链接前缀">
-                <el-input v-model="settings.soft_prefix"></el-input>
+                <el-input v-model="transconfig.soft_prefix"></el-input>
             </el-form-item>
             <el-form-item label="输出目录">
-                <el-input v-model="settings.output_folder"></el-input>
+                <el-input v-model="transconfig.output_folder"></el-input>
             </el-form-item>
             <el-form-item label="过滤目录">
-                <el-input v-model="settings.escape_folder"></el-input>
+                <el-input v-model="transconfig.escape_folder"></el-input>
             </el-form-item>
             <el-form-item label="备注">
-                <el-input v-model="settings.mark"></el-input>
+                <el-input v-model="transconfig.mark"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
                     <span v-if="!running">开始转移</span>
                     <span v-else>转移中...</span>
                 </el-button>
-                <el-button type="primary" size="medium" @click="onSubmit">新增/更新配置</el-button>
+                <el-button type="primary" size="medium" @click="addconf">新增</el-button>
+                <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
+                <el-button type="primary" size="medium" @click="deleteconf">删除</el-button>
             </el-form-item>
         </el-form>
         <el-divider></el-divider>
@@ -82,43 +84,38 @@ export default {
             currentPage: 1,
             totalnum: 10,
             transferdata: [],
-            settings: {
+            transconfig: {
                 source_folder: '/media/Movies',
                 soft_prefix: '/volume1/Media/Movies',
                 output_folder: '/media/Emby/Movies',
                 escape_folder: '',
-                mark: ''
+                mark: '',
+                id: ''
             },
             selectedoption: '',
-            options: [
-                {value: '1', label: '默认'},
-                {value: '2', label: '电影'},
-                {value: '3', label: '电视剧'}
-            ]
+            options: []
         };
     },
     created(){
         console.log('init data')
-        this.refresh()
+        // this.refresh()
+        this.getconfs()
     },
     mounted() {
-        this.timer = setInterval(this.refresh, 1500);
+        // this.timer = setInterval(this.refresh, 1500);
     },
     beforeDestroy() {
-        clearInterval(this.timer);
+        // clearInterval(this.timer);
     },
     methods: {
         onSubmit() {
-            axios.post('/api/transfer',this.settings)
+            axios.post('/api/transfer',this.transconfig)
                 .then(response => {
                     console.log(response)
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-        },
-        changesetting() {
-            console.log(this.selectedoption)
         },
         refresh() {
             let geturl = '/api/transferdata/' + this.currentPage
@@ -136,6 +133,71 @@ export default {
         },
         handleCurrentChange(num){
             this.currentPage = num
+        },
+        getconfs() {
+            let geturl = '/api/transconf/all'
+            axios.get(geturl)
+                .then(response => {
+                    this.options = response.data
+                    if (this.transconfig.id === -1) {
+                        this.transconfig = this.options[0]
+                    }
+                    this.selectedoption = this.transconfig.id;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        changeConf() {
+            this.transconfig = this.options[this.selectedoption - 1]
+        },
+        addconf() {
+            axios.post('/api/transconf', this.transconfig)
+                .then( res => {
+                    this.transconfig = res.data;
+                    this.getconfs()
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '新增成功',
+                        type: 'success'
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        updateconf() {
+            axios.put('/api/transconf', this.transconfig)
+                .then( res => {
+                    this.transconfig = res.data;
+                    this.getconfs()
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '更新成功',
+                        type: 'success'
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        deleteconf() {
+            axios.delete('/api/transconf/'+ this.transconfig.id)
+                .then( () => {
+                    this.transconfig.id = -1;
+                    this.getconfs()
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '删除成功',
+                        type: 'success'
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     }
 }
