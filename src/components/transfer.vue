@@ -11,10 +11,16 @@
         </el-select>
         <el-divider></el-divider>
         <el-form label-position="right" label-width="150px" :model="transconfig">
-            <el-form-item label="需要软链接目录">
+            <el-form-item label="源目录">
                 <el-input v-model="transconfig.source_folder"></el-input>
             </el-form-item>
-            <el-form-item label="软链接前缀">
+            <el-form-item label="链接类型">
+                <el-radio-group v-model="transconfig.linktype">
+                    <el-radio :label="0">软链接</el-radio>
+                    <el-radio :label="1">硬链接</el-radio>
+                </el-radio-group>
+            </el-form-item>
+            <el-form-item v-if="transconfig.linktype==0" label="软链接前缀">
                 <el-input v-model="transconfig.soft_prefix"></el-input>
             </el-form-item>
             <el-form-item label="输出目录">
@@ -87,6 +93,7 @@ export default {
             transferdata: [],
             transconfig: {
                 source_folder: '/media/Movies',
+                linktype: 0,
                 soft_prefix: '/volume1/Media/Movies',
                 output_folder: '/media/Emby/Movies',
                 escape_folder: '',
