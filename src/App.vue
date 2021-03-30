@@ -12,7 +12,7 @@
         </el-menu>
       </el-header>
       <el-main>
-        <Tutorial v-if="activeIndex==='1'" msg="Welcome to Spike"/>
+        <Tutorial v-if="activeIndex==='1'" msg="Welcome to Ikaros"/>
         <Settings v-if="activeIndex==='2'" />
         <Scraper v-if="activeIndex==='3'" />
         <Transfer v-if="activeIndex==='4'" />

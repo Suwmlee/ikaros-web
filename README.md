@@ -1,4 +1,4 @@
-# spike
+# ikaros-web
 
 ## Project setup
 ```
