@@ -48,19 +48,19 @@
                 stripe 
                 :cell-style="{padding: '0', height: '20px'}" >
             <el-table-column label="原始名称"
-                prop="basename" >
+                prop="srcname" >
             </el-table-column>
             <el-table-column label="原始地址" :show-overflow-tooltip="true"
-                prop="basepath" >
+                prop="srcpath" >
             </el-table-column>
             <el-table-column label="大小(MB)"
-                prop="filesize" width="100" >
+                prop="srcsize" width="100" >
             </el-table-column>
             <el-table-column label="状态"
                 prop="success">
             </el-table-column>
-            <el-table-column label="软链接路径" :show-overflow-tooltip="true"
-                prop="softpath" width="150" >
+            <el-table-column label="链接路径" :show-overflow-tooltip="true"
+                prop="linkpath" width="150" >
             </el-table-column>
             <el-table-column label="实际路径" :show-overflow-tooltip="true"
                 prop="destpath" width="150" >

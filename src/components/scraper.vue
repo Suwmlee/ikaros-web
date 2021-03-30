@@ -8,13 +8,13 @@
                 stripe 
                 :cell-style="{padding: '0', height: '20px'}" >
             <el-table-column label="原始名称"
-                prop="basename" >
+                prop="srcname" >
             </el-table-column>
             <el-table-column label="原始地址" :show-overflow-tooltip="true"
-                prop="basepath" >
+                prop="srcpath" >
             </el-table-column>
             <el-table-column label="大小(MB)"
-                prop="filesize" width="100" >
+                prop="srcsize" width="100" >
             </el-table-column>
             <el-table-column label="刮削用名称"
                 prop="scrapingname" >
@@ -28,10 +28,10 @@
                 </template>
             </el-table-column>
             <el-table-column label="刮削后名称"
-                prop="newname">
+                prop="destname">
             </el-table-column>
             <el-table-column label="刮削后路径" :show-overflow-tooltip="true"
-                prop="newpath" width="150" >
+                prop="destpath" width="150" >
             </el-table-column>
             <el-table-column label="更新时间"
                 prop="updatetime">
