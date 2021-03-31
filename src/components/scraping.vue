@@ -63,7 +63,7 @@
 import axios from 'axios'
 
 export default {
-    name: 'scraper',
+    name: 'scraping',
     data() {
         return {
             running: false,
@@ -84,7 +84,7 @@ export default {
     },
     methods: {
         start() {
-            axios.post('/api/scrape')
+            axios.post('/api/scraping')
                 .then(response => {
                     console.log(response)
                 })
@@ -93,7 +93,7 @@ export default {
                 });
         },
         refresh() {
-            let geturl = '/api/scrapedata/' + this.currentPage
+            let geturl = '/api/scrapingrecord/' + this.currentPage
             axios.get(geturl)
                 .then(response => {
                     console.log(response)
@@ -110,7 +110,7 @@ export default {
             console.log(index, row);
         },
         handleDelete(index, row) {
-            axios.delete('/api/scrapingdata/'+ row.id)
+            axios.delete('/api/scrapingrecord/'+ row.id)
                 .then(() => {
                     this.$message({
                         showClose: true,

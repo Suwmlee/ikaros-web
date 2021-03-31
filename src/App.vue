@@ -13,8 +13,8 @@
       </el-header>
       <el-main>
         <Tutorial v-if="activeIndex==='1'" msg="Welcome to Ikaros"/>
-        <Settings v-if="activeIndex==='2'" />
-        <Scraper v-if="activeIndex==='3'" />
+        <ScrapingConf v-if="activeIndex==='2'" />
+        <Scraping v-if="activeIndex==='3'" />
         <Transfer v-if="activeIndex==='4'" />
         <Task v-if="activeIndex==='5'" />
       </el-main>
@@ -25,17 +25,17 @@
 
 <script>
 import Tutorial from './components/tutorial.vue'
-import Settings from './components/setting'
-import Scraper from './components/scraper'
-import Task from './components/task'
+import Scraping from './components/scraping'
+import ScrapingConf from './components/scrapingconf'
 import Transfer from './components/transfer'
+import Task from './components/task'
 
 export default {
   name: 'App',
   components: {
     Tutorial,
-    Settings,
-    Scraper,
+    Scraping,
+    ScrapingConf,
     Transfer,
     Task
   },

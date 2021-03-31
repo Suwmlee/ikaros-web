@@ -126,7 +126,7 @@ export default {
                 });
         },
         refresh() {
-            let geturl = '/api/transferdata/' + this.currentPage
+            let geturl = '/api/transrecord/' + this.currentPage
             axios.get(geturl)
                 .then(response => {
                     console.log(response)

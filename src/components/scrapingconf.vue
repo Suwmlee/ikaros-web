@@ -45,7 +45,7 @@
 import axios from 'axios'
 
 export default {
-    name: 'setting',
+    name: 'scrapingconf',
     data() { 
         return {
             mode: 1,
@@ -64,7 +64,7 @@ export default {
         };
     },
     mounted(){
-        axios.get('/api/setting')
+        axios.get('/api/scrapingconf')
             .then(response => {
                 console.log(response)
                 this.settings = response.data;
@@ -85,7 +85,7 @@ export default {
             } else if (this.mode === 2) {
                 this.settings.soft_link = false
             } 
-            axios.post('/api/setting',this.settings)
+            axios.post('/api/scrapingconf',this.settings)
                 .then( () => {
                     this.$message({
                         showClose: true,
