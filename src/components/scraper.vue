@@ -110,7 +110,24 @@ export default {
             console.log(index, row);
         },
         handleDelete(index, row) {
-            console.log(index, row);
+            axios.delete('/api/scrapingdata/'+ row.id)
+                .then(() => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '删除成功',
+                        type: 'success'
+                    })
+                })
+                .catch(function (error) {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '删除失败:'+ error,
+                        type: 'error'
+                    })
+
+                });
         },
         handleCurrentChange(num){
             this.currentPage = num
