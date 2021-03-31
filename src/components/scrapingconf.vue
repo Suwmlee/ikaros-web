@@ -1,17 +1,17 @@
 <template>
     <div>
         <el-form label-position="formlocation" label-width="150px" :model="settings">
+            <el-form-item label="刮削目录">
+                <el-input v-model="settings.scrape_folder"></el-input>
+            </el-form-item>
             <el-form-item label="输出模式" >
                 <el-radio-group v-model="mode">
                     <el-radio :label="1">PT模式(软链接)</el-radio>
                     <el-radio :label="2">正常模式(移动文件)</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="软链接前缀">
+            <el-form-item v-if="mode==1" label="软链接前缀">
                 <el-input v-model="settings.soft_prefix"></el-input>
-            </el-form-item>
-            <el-form-item label="刮削目录">
-                <el-input v-model="settings.scrape_folder"></el-input>
             </el-form-item>
             <el-form-item label="输出目录">
                 <el-input v-model="settings.success_folder"></el-input>
@@ -28,10 +28,10 @@
                     <el-radio :label="false">关闭</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="类型">
+            <el-form-item v-if="settings.proxy_enable==true" label="类型">
                 <el-input v-model="settings.proxy_type"></el-input>
             </el-form-item>
-            <el-form-item label="地址">
+            <el-form-item v-if="settings.proxy_enable==true" label="地址">
                 <el-input v-model="settings.proxy_address"></el-input>
             </el-form-item>
             <el-form-item>
