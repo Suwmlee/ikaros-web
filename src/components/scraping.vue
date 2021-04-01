@@ -4,7 +4,7 @@
           <span v-if="!running">刮削</span>
           <span v-else>刮削中...</span>
         </el-button>
-        <el-table :data="scraperdata" 
+        <el-table :data="scrapingrecords" 
                 stripe 
                 :cell-style="{padding: '0', height: '20px'}" >
             <el-table-column label="原始名称"
@@ -56,6 +56,31 @@
             layout="prev, pager, next"
             :total="totalnum">
         </el-pagination>
+
+        <el-dialog append-to-body :close-on-click-modal="false" :visible.sync="editdialog" width="500px">
+            <el-form inline size="small" :model="rowrecord" label-width="100px">
+                <el-form-item label="原始名称" prop="srcname">
+                    <span v-text="rowrecord.srcname" style="width: 370px;" />
+                </el-form-item>
+                <el-form-item label="原始地址" prop="srcpath">
+                    <span v-text="rowrecord.srcpath" style="width: 370px;" />
+                </el-form-item>
+                <el-form-item label="状态" prop="status">
+                    <el-radio-group v-model="rowrecord.status">
+                        <el-radio :label="0">未刮削</el-radio>
+                        <el-radio :label="1">完成</el-radio>
+                        <el-radio :label="2">失败</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="刮削用名称" prop="scrapingname">
+                    <el-input v-model="rowrecord.scrapingname" style="width: 300px;" />
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="text" @click="dialogexit()">取消</el-button>
+                <el-button type="primary" @click="dialogupdate()" >修改</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -69,7 +94,9 @@ export default {
             running: false,
             currentPage: 1,
             totalnum: 10,
-            scraperdata: []
+            editdialog: false,
+            rowrecord:[],
+            scrapingrecords: []
         }
     },
     created(){
@@ -96,8 +123,7 @@ export default {
             let geturl = '/api/scrapingrecord/' + this.currentPage
             axios.get(geturl)
                 .then(response => {
-                    console.log(response)
-                    this.scraperdata = response.data.data
+                    this.scrapingrecords = response.data.data
                     this.running = response.data.running
                     this.currentPage = response.data.page
                     this.totalnum = response.data.total
@@ -107,7 +133,21 @@ export default {
                 });
         },
         handleEdit(index, row) {
-            console.log(index, row);
+            this.rowrecord = row;
+            this.editdialog = true
+        },
+        dialogexit() {
+            this.editdialog = false
+        },
+        dialogupdate() {
+            this.editdialog = false
+            axios.put('/api/scrapingrecord', this.rowrecord)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         },
         handleDelete(index, row) {
             axios.delete('/api/scrapingrecord/'+ row.id)
