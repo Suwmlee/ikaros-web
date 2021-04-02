@@ -23,7 +23,7 @@
                 prop="cnsubtag" width="100">
                 <template slot-scope="scope">
                     <span v-if="scope.row.cnsubtag===true" >开启</span>
-                    <span v-if="scope.row.cnsubtag===false" >关闭</span>
+                    <span v-if="scope.row.cnsubtag===false" ></span>
                 </template>
             </el-table-column>
             <el-table-column label="状态"
