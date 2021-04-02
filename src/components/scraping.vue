@@ -19,12 +19,19 @@
             <el-table-column label="刮削用名称"
                 prop="scrapingname" >
             </el-table-column>
+            <el-table-column label="强制中文"
+                prop="cnsubtag" width="100">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.cnsubtag===true" >开启</span>
+                    <span v-if="scope.row.cnsubtag===false" >关闭</span>
+                </template>
+            </el-table-column>
             <el-table-column label="状态"
                 prop="status" width="100">
                 <template slot-scope="scope">
-                    <el-tag v-if="scope.row.status===0" >未刮削</el-tag>
-                    <el-tag v-if="scope.row.status===1" >完成</el-tag>
-                    <el-tag v-if="scope.row.status===2" >失败</el-tag>
+                    <span v-if="scope.row.status===0" >未刮削</span>
+                    <span v-if="scope.row.status===1" >完成</span>
+                    <span v-if="scope.row.status===2" >失败</span>
                 </template>
             </el-table-column>
             <el-table-column label="刮削后名称"
@@ -74,6 +81,12 @@
                 </el-form-item>
                 <el-form-item label="刮削用名称" prop="scrapingname">
                     <el-input v-model="rowrecord.scrapingname" style="width: 300px;" />
+                </el-form-item>
+                <el-form-item label="强制中文" prop="cnsubtag">
+                    <el-radio-group v-model="rowrecord.cnsubtag">
+                        <el-radio :label="true">开启</el-radio>
+                        <el-radio :label="false">关闭</el-radio>
+                    </el-radio-group>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
