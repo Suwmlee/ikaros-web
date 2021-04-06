@@ -2,7 +2,7 @@
     <div>
         <el-form label-position="formlocation" label-width="150px" :model="settings">
             <el-form-item label="刮削目录">
-                <el-input v-model="settings.scrape_folder"></el-input>
+                <el-input v-model="settings.scraping_folder"></el-input>
             </el-form-item>
             <el-form-item label="输出模式" >
                 <el-radio-group v-model="mode">
@@ -22,11 +22,27 @@
             <el-form-item label="命名规则">
                 <el-input v-model="settings.naming_rule"></el-input>
             </el-form-item>
+
+            <el-form-item label="水印开关" >
+                <el-switch
+                    v-model="settings.watermark_enable"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
+            <el-form-item v-if="settings.watermark_enable==true" label="水印大小">
+                <el-input type="Number" v-model="settings.watermark_size" placeholder="添加的水印相对整图的比例 1/size " ></el-input>
+            </el-form-item>
+            <el-form-item v-if="settings.watermark_enable==true" label="水印位置">
+                <el-input type="Number" v-model="settings.watermark_location" placeholder="右上 0, 左上 1, 左下 2，右下 3"></el-input>
+            </el-form-item>
+
             <el-form-item label="代理开关" >
-                <el-radio-group v-model="settings.proxy_enable">
-                    <el-radio :label="true">启用</el-radio>
-                    <el-radio :label="false">关闭</el-radio>
-                </el-radio-group>
+                <el-switch
+                    v-model="settings.proxy_enable"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
             </el-form-item>
             <el-form-item v-if="settings.proxy_enable==true" label="类型">
                 <el-input v-model="settings.proxy_type"></el-input>
@@ -49,18 +65,7 @@ export default {
     data() { 
         return {
             mode: 1,
-            settings: {
-                soft_link: true,
-                soft_prefix: '',
-                scrape_folder: '',
-                success_folder: '',
-                failed_folder: '',
-                location_rule: '',
-                naming_rule: '', 
-                proxy_enable: '',
-                proxy_type: '',
-                proxy_address: ''
-            }
+            settings: {}
         };
     },
     mounted(){

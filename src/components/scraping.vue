@@ -16,6 +16,14 @@
             <el-table-column label="大小(MB)"
                 prop="srcsize" width="100" >
             </el-table-column>
+            <el-table-column label="状态"
+                prop="status" width="100">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.status===0" >未刮削</span>
+                    <span v-if="scope.row.status===1" >完成</span>
+                    <span v-if="scope.row.status===2" >失败</span>
+                </template>
+            </el-table-column>
             <el-table-column label="刮削用名称"
                 prop="scrapingname" >
             </el-table-column>
@@ -24,14 +32,6 @@
                 <template slot-scope="scope">
                     <span v-if="scope.row.cnsubtag===true" >开启</span>
                     <span v-if="scope.row.cnsubtag===false" ></span>
-                </template>
-            </el-table-column>
-            <el-table-column label="状态"
-                prop="status" width="100">
-                <template slot-scope="scope">
-                    <span v-if="scope.row.status===0" >未刮削</span>
-                    <span v-if="scope.row.status===1" >完成</span>
-                    <span v-if="scope.row.status===2" >失败</span>
                 </template>
             </el-table-column>
             <el-table-column label="刮削后名称"
