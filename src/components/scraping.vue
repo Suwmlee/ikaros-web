@@ -4,8 +4,11 @@
           <span v-if="!running">刮削</span>
           <span v-else>刮削中...</span>
         </el-button>
+        <el-input v-model="blur" placeholder="模糊查询"></el-input>
         <el-table :data="scrapingrecords" 
                 stripe 
+                :default-sort = "{prop: 'updatetime', order: 'descending'}"
+                @sort-change="changesort"
                 :cell-style="{padding: '0', height: '20px'}" >
             <el-table-column label="原始名称"
                 prop="srcname" >
@@ -17,6 +20,7 @@
                 prop="srcsize" width="100" >
             </el-table-column>
             <el-table-column label="状态"
+                sortable="custom"
                 prop="status" width="100">
                 <template slot-scope="scope">
                     <span v-if="scope.row.status===0" >未刮削</span>
@@ -28,6 +32,7 @@
                 prop="scrapingname" >
             </el-table-column>
             <el-table-column label="强制中文"
+                sortable="custom"
                 prop="cnsubtag" width="100">
                 <template slot-scope="scope">
                     <span v-if="scope.row.cnsubtag===true" >开启</span>
@@ -41,6 +46,7 @@
                 prop="destpath" width="150" >
             </el-table-column>
             <el-table-column label="更新时间"
+                sortable="custom"
                 prop="updatetime">
             </el-table-column>
             <el-table-column label="操作">
@@ -107,6 +113,10 @@ export default {
             running: false,
             currentPage: 1,
             totalnum: 10,
+            pagesize: 10,
+            blur: '',
+            sortprop: '',
+            sortorder: '',
             editdialog: false,
             rowrecord:[],
             scrapingrecords: []
@@ -132,8 +142,15 @@ export default {
                     console.log(error);
                 });
         },
+        changesort(sortProps){
+            this.sortprop = sortProps.prop
+            this.sortorder = sortProps.order
+        },
         refresh() {
-            let geturl = '/api/scrapingrecord/' + this.currentPage
+            var pageparam = 'page=' + this.currentPage + '&size=' + this.pagesize
+            var sortparam = '&sortprop=' + this.sortprop + '&sortorder=' + this.sortorder
+            var blurparam = '&blur=' + this.blur 
+            let geturl = '/api/scrapingrecord?' + pageparam + sortparam + blurparam
             axios.get(geturl)
                 .then(response => {
                     this.scrapingrecords = response.data.data
