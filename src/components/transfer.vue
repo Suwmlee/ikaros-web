@@ -90,17 +90,18 @@ export default {
             running: false,
             currentPage: 1,
             totalnum: 10,
+            pagesize: 10,
             transferdata: [],
             transconfig: {
-                source_folder: '/media/Movies',
-                linktype: 0,
-                soft_prefix: '/volume1/Media/Movies',
-                output_folder: '/media/Emby/Movies',
-                escape_folder: '',
-                mark: '',
-                id: ''
+                // source_folder: '/media/Movies',
+                // linktype: 0,
+                // soft_prefix: '/volume1/Media/Movies',
+                // output_folder: '/media/Emby/Movies',
+                // escape_folder: '',
+                // mark: '',
+                // id: ''
             },
-            selectedoption: '',
+            selectedoption: -1,
             options: []
         };
     },
@@ -147,22 +148,29 @@ export default {
             axios.get(geturl)
                 .then(response => {
                     this.options = response.data
-                    if (this.transconfig.id === -1) {
-                        this.transconfig = this.options[0]
+                    if(this.selectedoption === -1){
+                        this.selectedoption = this.options[0].id;
                     }
-                    this.selectedoption = this.transconfig.id;
+                    this.changeConf()
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         },
         changeConf() {
-            this.transconfig = this.options[this.selectedoption - 1]
+            const config = this.options.find(conf => conf.id === this.selectedoption);
+            if (typeof config === 'undefined') {
+                this.selectedoption = this.options[0].id;
+                this.transconfig = this.options[0]
+                return
+            }
+            this.transconfig = config
         },
         addconf() {
             axios.post('/api/transconf', this.transconfig)
                 .then( res => {
                     this.transconfig = res.data;
+                    this.selectedoption = this.transconfig.id;
                     this.getconfs()
                     this.$message({
                         showClose: true,
@@ -192,9 +200,17 @@ export default {
                 });
         },
         deleteconf() {
+            if (this.options.length < 2) {
+                this.$message({
+                    showClose: true,
+                    duration: 2000,
+                    message: '仅剩一份配置无法删除',
+                    type: 'success'
+                })
+                return
+            }
             axios.delete('/api/transconf/'+ this.transconfig.id)
                 .then( () => {
-                    this.transconfig.id = -1;
                     this.getconfs()
                     this.$message({
                         showClose: true,
