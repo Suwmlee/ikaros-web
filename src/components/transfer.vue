@@ -127,7 +127,8 @@ export default {
                 });
         },
         refresh() {
-            let geturl = '/api/transrecord/' + this.currentPage
+            var pageparam = 'page=' + this.currentPage + '&size=' + this.pagesize
+            let geturl = '/api/transrecord?' + pageparam
             axios.get(geturl)
                 .then(response => {
                     console.log(response)
