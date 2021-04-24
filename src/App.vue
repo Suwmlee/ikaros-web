@@ -8,7 +8,8 @@
           <el-menu-item index="2">配置</el-menu-item>
           <el-menu-item index="3">刮削</el-menu-item>
           <el-menu-item index="4">转移</el-menu-item>
-          <el-menu-item index="5">计划任务</el-menu-item>
+          <el-menu-item index="5">重命名</el-menu-item>
+          <el-menu-item index="6">计划任务</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
@@ -16,7 +17,8 @@
         <ScrapingConf v-if="activeIndex==='2'" />
         <Scraping v-if="activeIndex==='3'" />
         <Transfer v-if="activeIndex==='4'" />
-        <Task v-if="activeIndex==='5'" />
+        <Reanme v-if="activeIndex==='5'" />
+        <Task v-if="activeIndex==='6'" />
       </el-main>
     </el-container>
 
@@ -28,6 +30,7 @@ import Tutorial from './components/tutorial.vue'
 import Scraping from './components/scraping'
 import ScrapingConf from './components/scrapingconf'
 import Transfer from './components/transfer'
+import Reanme from './components/rename'
 import Task from './components/task'
 
 export default {
@@ -37,6 +40,7 @@ export default {
     Scraping,
     ScrapingConf,
     Transfer,
+    Reanme,
     Task
   },
   data() {
