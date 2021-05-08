@@ -4,17 +4,48 @@
             <el-form-item label="源目录">
                 <el-input v-model="renameconf.source_folder"></el-input>
             </el-form-item>
-            <el-form-item label="旧名称">
-                <el-input v-model="renameconf.base"></el-input>
+            <el-form-item label="正则">
+                <el-input v-model="renameconf.reg"></el-input>
+            </el-form-item>
+            <el-form-item label="备选正则">
+                <el-input v-model="renameconf.reg2"></el-input>
             </el-form-item>
             <el-form-item label="修正后名称">
-                <el-input v-model="renameconf.newfix"></el-input>
+                <el-input v-model="renameconf.prefix"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" size="medium" @click="onSubmit">重命名</el-button>
+                <el-button type="primary" size="medium" @click="preview">预览</el-button>
+                <el-button type="danger" size="medium" @click="apply">应用</el-button>
             </el-form-item>
         </el-form>
         <el-divider></el-divider>
+                
+        <el-row>
+            <el-col :span="10">
+                <div class="grid-content">
+                   <el-input
+                        readonly
+                        type="textarea"
+                        :rows="2"
+                        style="white-space: pre-line;"
+                        v-text="prenames"
+                        >
+                    </el-input>
+                </div>
+            </el-col>
+            <el-col :span="4"><div class="grid-content">
+                   <i class="el-icon-mobile-phone"></i>
+                </div></el-col>
+            <el-col :span="10"><div class="grid-content">
+                   <el-input
+                        readonly
+                        type="textarea"
+                        style="white-space: pre-line;"
+                        v-text="fixnames"
+                        >
+                    </el-input>
+                </div></el-col>
+        </el-row>
     </div>
 </template>
 
@@ -25,24 +56,49 @@ export default {
     name: 'rename',
     data() { 
         return {
-            running: false,
-            currentPage: 1,
-            totalnum: 10,
-            pagesize: 10,
-            transferdata: [],
+            prenames: "",
+            fixnames: "",
             renameconf: {
-                source_folder: '/media/MediaServer/TV Shows/Person/Season 1',
-                base: 'Person.2007.E',
-                newfix: 'Person.2007.S01E',
+                source_folder: 'E:\\Entertaiment\\ACG\\Animes',
+                reg: '[\\[第 ][0-9.svidevoa\\(\\)]*[\\]話话 ]',
+                reg2: '\\.e[0-9videvoa\\(\\)]{1,}[.]',
+                prefix: 'S01E',
                 ext_type: '',
             }
         };
     },
     methods: {
-        onSubmit() {
-            axios.post('/api/rename',this.renameconf)
+        preview() {
+            this.fixnames = "",
+            this.prenames = "",
+            axios.post('/api/previewrename',this.renameconf)
                 .then(response => {
-                    console.log(response)
+                    for(var i in response.data.prefix){  
+                        var fix= i + "."+ response.data.prefix[i];  
+                        this.fixnames += fix + "\r\n"; 
+                    } 
+                    for(var j in response.data.todo){ 
+                        var src = j + "."+ response.data.todo[j];  
+                        this.prenames += src + "\r\n"; 
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        apply() {
+            this.fixnames = "",
+            this.prenames = "",
+            axios.post('/api/renamebyreg',this.renameconf)
+                .then(response => {
+                    for(var i in response.data.prefix){  
+                        var fix= i + "."+ response.data.prefix[i];  
+                        this.fixnames += fix + "\r\n"; 
+                    } 
+                    for(var j in response.data.todo){ 
+                        var src = j + "."+ response.data.todo[j];  
+                        this.prenames += src + "\r\n"; 
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);
