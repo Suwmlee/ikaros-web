@@ -26,6 +26,7 @@
                     <span v-if="scope.row.status===0" >未刮削</span>
                     <span v-if="scope.row.status===1" >完成</span>
                     <span v-if="scope.row.status===2" >失败</span>
+                    <span v-if="scope.row.status===3" >忽略</span>
                 </template>
             </el-table-column>
             <el-table-column label="刮削用名称"
