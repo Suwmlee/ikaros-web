@@ -9,8 +9,8 @@
                 stripe 
                 :default-sort = "{prop: 'updatetime', order: 'descending'}"
                 @sort-change="changesort"
-                :cell-style="{padding: '0', height: '20px'}" >
-            <el-table-column label="原始名称"
+                :cell-style="{padding: '0', height: '24px'}" >
+            <el-table-column label="原始名称" :show-overflow-tooltip="true"
                 prop="srcname" >
             </el-table-column>
             <el-table-column label="原始地址" :show-overflow-tooltip="true"
