@@ -5,14 +5,13 @@
         role="dialog"
         aria-labelledby="dialogTitle"
         aria-describedby="dialogDescription"
-        max-width="450"
       >
         <header
           class="dialog-header"
           id="dialogTitle"
         >
           <slot name="header">
-            This is the default tile!
+            选择文件夹
           </slot>
           <button
             type="button"
@@ -28,24 +27,23 @@
           class="dialog-body"
           id="dialogDescription"
         >
-          <!-- <el-button @click="getDirs()" /> -->
+          <p v-text="selectedPath" />
+          <el-divider></el-divider>
+          <el-button @click="select(parentFolder)" class="btn-item" ><i class="el-icon-back"/>返回上级目录</el-button>
           <div v-for="item in directoryList" :key="item.index">
-            <el-button @click="select(item.fullname)" v-text="item.fullname" />
+            <el-button @click="select(item.fullname)" v-text="item.fullname" class="btn-item"/>
           </div>
         </section>
 
         <footer class="dialog-footer">
-          <slot name="footer">
-            This is the default footer!
-          </slot>
-          <button
+          <el-button
             type="button"
             class="btn-green"
             @click="close"
             aria-label="Close dialog"
           >
-            Close me!
-          </button>
+            确认
+          </el-button>
         </footer>
       </div>
     </div>
@@ -58,6 +56,7 @@ import axios from 'axios';
     name: 'FileBrowserDialog',
     data() {
         return{
+            parentFolder: '',
             selectedPath: '/',
             directoryList: {}
         }
@@ -73,20 +72,24 @@ import axios from 'axios';
     methods: {
       async getDirs(path = '/') {
         try {
-          this.directoryList = (await axios.get("/api/scan/"+ path)).data
+          let data = (await axios.get("/api/scan/"+ path)).data
+          this.directoryList = data.dirs
+          this.parentFolder = data.parent
         } catch (e) {
           this.showSnack(e.message)
         }
       },
       dialogInit() {
         try {
-          this.getDirs(this.path)
-          this.selectedPath = this.path
+          this.select()
         } catch (e) {
           this.getDirs()
         }
       },
       select(path = '/') {
+        if (path === '') {
+          path = '/'
+        }
         this.selectedPath = path
         this.getDirs(path)
       },
@@ -115,6 +118,7 @@ import axios from 'axios';
   }
 
   .dialog {
+    width: 450px;
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
     overflow-x: auto;
@@ -142,7 +146,14 @@ import axios from 'axios';
 
   .dialog-body {
     position: relative;
+    max-height: 400px;
+    overflow-y: auto;
     padding: 20px 10px;
+  }
+
+  .btn-item {
+    width: 90%;
+    text-align: left;
   }
 
   .btn-close {
