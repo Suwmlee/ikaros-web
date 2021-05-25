@@ -2,7 +2,9 @@
     <div>
         <el-form label-position="right" label-width="150px" :model="renameconf">
             <el-form-item label="源目录">
-                <el-input v-model="renameconf.source_folder"></el-input>
+                <el-input v-model="renameconf.source_folder">
+                    <el-button slot="append" icon="el-icon-search" @click="showDialog"></el-button>
+                </el-input>
             </el-form-item>
             <el-form-item label="正则">
                 <el-input v-model="renameconf.reg"></el-input>
@@ -46,16 +48,28 @@
                     </el-input>
                 </div></el-col>
         </el-row>
+
+        <FileBrowserDialog
+            v-show="isDialogVisible"
+            :dialogVisible="isDialogVisible"
+            :path.sync="renameconf.source_folder"
+            @close="closeDialog"
+            />
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import FileBrowserDialog from './dialogs/FileBrowserDialog';
 
 export default {
     name: 'rename',
+    components: {
+      FileBrowserDialog,
+    },
     data() { 
         return {
+            isDialogVisible: false,
             prenames: "",
             fixnames: "",
             renameconf: {
@@ -103,6 +117,12 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        showDialog() {
+            this.isDialogVisible = true;
+        },
+        closeDialog() {
+            this.isDialogVisible = false;
         }
     }
 }

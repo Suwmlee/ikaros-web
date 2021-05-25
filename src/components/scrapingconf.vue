@@ -2,7 +2,9 @@
     <div>
         <el-form label-position="formlocation" label-width="150px" :model="settings">
             <el-form-item label="刮削目录">
-                <el-input v-model="settings.scraping_folder"></el-input>
+                <el-input v-model="settings.scraping_folder">
+                    <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
+                </el-input>
             </el-form-item>
             <el-form-item label="输出模式" >
                 <el-radio-group v-model="mode">
@@ -14,7 +16,9 @@
                 <el-input v-model="settings.soft_prefix"></el-input>
             </el-form-item>
             <el-form-item label="输出目录">
-                <el-input v-model="settings.success_folder"></el-input>
+                <el-input v-model="settings.success_folder">
+                    <el-button slot="append" icon="el-icon-search" @click="showOutputDialog"></el-button>
+                </el-input>
             </el-form-item>
             <el-form-item label="目录规则">
                 <el-input v-model="settings.location_rule"></el-input>
@@ -54,16 +58,30 @@
                 <el-button type="primary" @click="onSubmit">应用</el-button>
             </el-form-item>
         </el-form>
+
+        <FileBrowserDialog
+            v-show="isDialogVisible"
+            :dialogVisible="isDialogVisible"
+            :path.sync="folderPath"
+            @close="closeDialog"
+            />
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import FileBrowserDialog from './dialogs/FileBrowserDialog';
 
 export default {
     name: 'scrapingconf',
+    components: {
+      FileBrowserDialog,
+    },
     data() { 
         return {
+            isDialogVisible: false,
+            openDialogID: 1,
+            folderPath:'',
             mode: 1,
             settings: {}
         };
@@ -102,6 +120,23 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        showSourceDialog() {
+            this.openDialogID = 1;
+            this.isDialogVisible = true;
+        },
+        showOutputDialog() {
+            this.openDialogID = 2;
+            this.isDialogVisible = true;
+        },
+        closeDialog() {
+            this.isDialogVisible = false;
+            
+            if (this.openDialogID === 1) {
+                this.settings.scraping_folder = this.folderPath
+            }else if (this.openDialogID === 2) {
+                this.settings.success_folder = this.folderPath
+            }
         }
     }
 
