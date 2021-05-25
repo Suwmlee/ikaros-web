@@ -5,6 +5,7 @@
         role="dialog"
         aria-labelledby="dialogTitle"
         aria-describedby="dialogDescription"
+        max-width="450"
       >
         <header
           class="dialog-header"
@@ -27,9 +28,10 @@
           class="dialog-body"
           id="dialogDescription"
         >
-          <slot name="body">
-            This is the default body!
-          </slot>
+          <!-- <el-button @click="getDirs()" /> -->
+          <div v-for="item in directoryList" :key="item.index">
+            <el-button @click="select(item.fullname)" v-text="item.fullname" />
+          </div>
         </section>
 
         <footer class="dialog-footer">
@@ -51,14 +53,43 @@
 </template>
 
 <script>
+import axios from 'axios';
   export default {
     name: 'FileBrowserDialog',
     data() {
         return{
-            selectedPath: 'testpath'
+            selectedPath: '/',
+            directoryList: {}
         }
     },
+    watch: {
+      dialogVisible(val) {
+        if (val) this.dialogInit()
+      },
+    },
+    props: {
+      dialogVisible: Boolean
+    },
     methods: {
+      async getDirs(path = '/') {
+        try {
+          this.directoryList = (await axios.get("/api/scan/"+ path)).data
+        } catch (e) {
+          this.showSnack(e.message)
+        }
+      },
+      dialogInit() {
+        try {
+          this.getDirs(this.path)
+          this.selectedPath = this.path
+        } catch (e) {
+          this.getDirs()
+        }
+      },
+      select(path = '/') {
+        this.selectedPath = path
+        this.getDirs(path)
+      },
       close() {
         this.$emit('close');
         this.$emit('update:path', this.selectedPath)

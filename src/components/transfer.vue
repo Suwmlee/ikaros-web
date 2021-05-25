@@ -94,6 +94,7 @@
 
         <FileBrowserDialog
             v-show="isDialogVisible"
+            :dialogVisible="isDialogVisible"
             :path.sync="transconfig.source_folder"
             @close="closeDialog"
             />
@@ -111,7 +112,7 @@ export default {
     components: {
       FileBrowserDialog,
     },
-    data() { 
+    data() {
         return {
             isDialogVisible: false,
             running: false,
