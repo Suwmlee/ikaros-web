@@ -42,6 +42,17 @@
                 <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
                 <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
             </el-form-item>
+            <el-divider>扩展功能</el-divider>
+            <el-form-item label="开启重命名" >
+                <el-switch
+                    v-model="renameflag"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
+            <el-form-item v-if="renameflag==true" label="修正前缀">
+                <el-input v-model="renameprefix" ></el-input>
+            </el-form-item>
         </el-form>
         <el-divider></el-divider>
         <el-table :data="transferdata" 
@@ -88,6 +99,8 @@ export default {
     data() { 
         return {
             running: false,
+            renameflag: false,
+            renameprefix: "S01E",
             currentPage: 1,
             totalnum: 10,
             pagesize: 10,
@@ -118,6 +131,8 @@ export default {
     },
     methods: {
         onSubmit() {
+            this.transconfig.renameflag = this.renameflag
+            this.transconfig.renameprefix = this.renameprefix
             axios.post('/api/transfer',this.transconfig)
                 .then(response => {
                     console.log(response)

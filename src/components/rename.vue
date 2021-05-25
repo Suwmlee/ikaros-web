@@ -10,7 +10,7 @@
             <el-form-item label="备选正则">
                 <el-input v-model="renameconf.reg2"></el-input>
             </el-form-item>
-            <el-form-item label="修正后名称">
+            <el-form-item label="修正前缀">
                 <el-input v-model="renameconf.prefix"></el-input>
             </el-form-item>
             <el-form-item>
