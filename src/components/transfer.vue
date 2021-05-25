@@ -10,9 +10,12 @@
             </el-option>
         </el-select>
         <el-divider></el-divider>
+     
         <el-form label-position="right" label-width="150px" :model="transconfig">
             <el-form-item label="源目录">
-                <el-input v-model="transconfig.source_folder"></el-input>
+                <el-input v-model="transconfig.source_folder">
+                    <el-button slot="append" icon="el-icon-search" @click="showDialog"></el-button>
+                </el-input>
             </el-form-item>
             <el-form-item label="链接类型">
                 <el-radio-group v-model="transconfig.linktype">
@@ -88,16 +91,29 @@
             layout="prev, pager, next"
             :total="totalnum">
         </el-pagination>
+
+        <FileBrowserDialog
+            v-show="isDialogVisible"
+            :path.sync="transconfig.source_folder"
+            @close="closeDialog"
+            />
     </div>
+
 </template>
 
 <script>
 import axios from 'axios'
+import FileBrowserDialog from './dialogs/FileBrowserDialog';
+
 
 export default {
     name: 'transfer',
+    components: {
+      FileBrowserDialog,
+    },
     data() { 
         return {
+            isDialogVisible: false,
             running: false,
             renameflag: false,
             renameprefix: "S01E",
@@ -238,7 +254,14 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        showDialog() {
+            this.isDialogVisible = true;
+        },
+        closeDialog() {
+            this.isDialogVisible = false;
         }
+
     }
 }
 </script>
