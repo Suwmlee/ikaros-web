@@ -17,7 +17,7 @@
           <button
             type="button"
             class="btn-close"
-            @click="close"
+            @click="cancel"
             aria-label="Close dialog"
           >
             x
@@ -90,9 +90,12 @@ import axios from 'axios';
         this.selectedPath = path
         this.getDirs(path)
       },
-      close() {
+      cancel(){
         this.$emit('close');
+      },
+      close() {
         this.$emit('update:path', this.selectedPath)
+        this.$emit('close');
       },
     },
   };

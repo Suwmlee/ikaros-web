@@ -14,7 +14,7 @@
         <el-form label-position="right" label-width="150px" :model="transconfig">
             <el-form-item label="源目录">
                 <el-input v-model="transconfig.source_folder">
-                    <el-button slot="append" icon="el-icon-search" @click="showDialog"></el-button>
+                    <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
                 </el-input>
             </el-form-item>
             <el-form-item label="链接类型">
@@ -27,7 +27,9 @@
                 <el-input v-model="transconfig.soft_prefix"></el-input>
             </el-form-item>
             <el-form-item label="输出目录">
-                <el-input v-model="transconfig.output_folder"></el-input>
+                <el-input v-model="transconfig.output_folder">
+                    <el-button slot="append" icon="el-icon-search" @click="showOutputDialog"></el-button>
+                </el-input>
             </el-form-item>
             <el-form-item label="过滤目录">
                 <el-input v-model="transconfig.escape_folder"></el-input>
@@ -95,7 +97,7 @@
         <FileBrowserDialog
             v-show="isDialogVisible"
             :dialogVisible="isDialogVisible"
-            :path.sync="transconfig.source_folder"
+            :path.sync="folderPath"
             @close="closeDialog"
             />
     </div>
@@ -115,6 +117,8 @@ export default {
     data() {
         return {
             isDialogVisible: false,
+            openDialogID: 1,
+            folderPath:'',
             running: false,
             renameflag: false,
             renameprefix: "S01E",
@@ -256,13 +260,23 @@ export default {
                     console.log(error);
                 });
         },
-        showDialog() {
+        showSourceDialog() {
+            this.openDialogID = 1;
+            this.isDialogVisible = true;
+        },
+        showOutputDialog() {
+            this.openDialogID = 2;
             this.isDialogVisible = true;
         },
         closeDialog() {
             this.isDialogVisible = false;
+            
+            if (this.openDialogID === 1) {
+                this.transconfig.source_folder = this.folderPath
+            }else if (this.openDialogID === 2) {
+                this.transconfig.output_folder = this.folderPath
+            }
         }
-
     }
 }
 </script>
