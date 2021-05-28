@@ -105,8 +105,9 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
+import {ScrapingRecordDto} from '../types/ika-record'
 
 export default {
     name: 'scraping',
@@ -120,7 +121,7 @@ export default {
             sortprop: '',
             sortorder: '',
             editdialog: false,
-            rowrecord:[],
+            rowrecord: [],
             scrapingrecords: []
         }
     },
@@ -149,9 +150,9 @@ export default {
             this.sortorder = sortProps.order
         },
         refresh() {
-            var pageparam = 'page=' + this.currentPage + '&size=' + this.pagesize
-            var sortparam = '&sortprop=' + this.sortprop + '&sortorder=' + this.sortorder
-            var blurparam = '&blur=' + this.blur 
+            let pageparam: string = 'page=' + this.currentPage + '&size=' + this.pagesize
+            let sortparam = '&sortprop=' + this.sortprop + '&sortorder=' + this.sortorder
+            let blurparam = '&blur=' + this.blur 
             let geturl = '/api/scrapingrecord?' + pageparam + sortparam + blurparam
             axios.get(geturl)
                 .then(response => {
@@ -164,7 +165,7 @@ export default {
                     console.log(error);
                 });
         },
-        handleEdit(index, row) {
+        handleEdit(index: number, row: ScrapingRecordDto) {
             this.rowrecord = row;
             this.editdialog = true
         },
@@ -181,7 +182,7 @@ export default {
                     console.log(error);
                 });
         },
-        handleDelete(index, row) {
+        handleDelete(index: number, row: ScrapingRecordDto) {
             axios.delete('/api/scrapingrecord/'+ row.id)
                 .then(() => {
                     this.$message({
@@ -201,7 +202,7 @@ export default {
 
                 });
         },
-        handleCurrentChange(num){
+        handleCurrentChange(num: number){
             this.currentPage = num
         }
     }

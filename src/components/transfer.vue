@@ -104,9 +104,9 @@
 
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
-import FileBrowserDialog from './dialogs/FileBrowserDialog';
+import FileBrowserDialog from './dialogs/FileBrowserDialog.vue';
 
 
 export default {
@@ -136,7 +136,7 @@ export default {
                 // id: ''
             },
             selectedoption: -1,
-            options: []
+            options: [],
         };
     },
     created(){
@@ -163,8 +163,8 @@ export default {
                 });
         },
         refresh() {
-            var pageparam = 'page=' + this.currentPage + '&size=' + this.pagesize
-            let geturl = '/api/transrecord?' + pageparam
+            let pageparam: string = 'page=' + this.currentPage + '&size=' + this.pagesize
+            let geturl: string = '/api/transrecord?' + pageparam
             axios.get(geturl)
                 .then(response => {
                     console.log(response)
@@ -177,7 +177,7 @@ export default {
                     console.log(error);
                 });
         },
-        handleCurrentChange(num){
+        handleCurrentChange(num: number){
             this.currentPage = num
         },
         getconfs() {
@@ -195,7 +195,9 @@ export default {
                 });
         },
         changeConf() {
-            const config = this.options.find(conf => conf.id === this.selectedoption);
+            const config = this.options.find(conf =>{
+                return conf.id == this.selectedoption
+            });
             if (typeof config === 'undefined') {
                 this.selectedoption = this.options[0].id;
                 this.transconfig = this.options[0]

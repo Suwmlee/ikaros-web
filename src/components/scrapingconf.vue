@@ -68,9 +68,9 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
-import FileBrowserDialog from './dialogs/FileBrowserDialog';
+import FileBrowserDialog from './dialogs/FileBrowserDialog.vue';
 
 export default {
     name: 'scrapingconf',

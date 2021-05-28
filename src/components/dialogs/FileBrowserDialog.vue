@@ -50,7 +50,7 @@
   </transition>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
   export default {
     name: 'FileBrowserDialog',
@@ -62,7 +62,7 @@ import axios from 'axios';
         }
     },
     watch: {
-      dialogVisible(val) {
+      dialogVisible(val: boolean) {
         if (val) this.dialogInit()
       },
     },

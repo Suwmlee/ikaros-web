@@ -58,9 +58,9 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
-import FileBrowserDialog from './dialogs/FileBrowserDialog';
+import FileBrowserDialog from './dialogs/FileBrowserDialog.vue';
 
 export default {
     name: 'rename',
@@ -106,7 +106,7 @@ export default {
             axios.post('/api/renamebyreg',this.renameconf)
                 .then(response => {
                     for(var i in response.data.prefix){  
-                        var fix= i + "."+ response.data.prefix[i];  
+                        let fix: string= i + "."+ response.data.prefix[i];  
                         this.fixnames += fix + "\r\n"; 
                     } 
                     for(var j in response.data.todo){ 

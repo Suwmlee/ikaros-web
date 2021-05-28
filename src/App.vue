@@ -25,13 +25,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Tutorial from './components/tutorial.vue'
-import Scraping from './components/scraping'
-import ScrapingConf from './components/scrapingconf'
-import Transfer from './components/transfer'
-import Reanme from './components/rename'
-import Task from './components/task'
+import Scraping from './components/scraping.vue'
+import ScrapingConf from './components/scrapingconf.vue'
+import Transfer from './components/transfer.vue'
+import Reanme from './components/rename.vue'
+import Task from './components/task.vue'
 
 export default {
   name: 'App',
@@ -49,7 +49,7 @@ export default {
     };
   },
   methods: {
-    handleSelect(key) {
+    handleSelect(key: number) {
       this.activeIndex = key
     }
   }
