@@ -4,6 +4,8 @@
           <span v-if="!running">刮削</span>
           <span v-else>刮削中...</span>
         </el-button>
+        <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
+
         <el-input v-model="blur" placeholder="模糊查询"></el-input>
         <el-table :data="scrapingrecords" 
                 stripe 
@@ -145,7 +147,16 @@ export default {
                     console.log(error);
                 });
         },
-        changesort(sortProps){
+        stop() {
+            axios.get('/api/stopall')
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        changesort(sortProps: any){
             this.sortprop = sortProps.prop
             this.sortorder = sortProps.order
         },

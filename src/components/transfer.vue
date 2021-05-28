@@ -42,7 +42,7 @@
                     <span v-if="!running">开始转移</span>
                     <span v-else>转移中...</span>
                 </el-button>
-                
+                <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
                 <el-button type="primary" size="medium" @click="addconf">新增</el-button>
                 <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
                 <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
@@ -155,6 +155,15 @@ export default {
             this.transconfig.renameflag = this.renameflag
             this.transconfig.renameprefix = this.renameprefix
             axios.post('/api/transfer',this.transconfig)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        stop() {
+            axios.get('/api/stopall')
                 .then(response => {
                     console.log(response)
                 })
