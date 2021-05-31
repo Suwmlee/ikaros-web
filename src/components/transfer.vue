@@ -48,7 +48,7 @@
                 <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
             </el-form-item>
             <el-divider>扩展功能</el-divider>
-            <el-form-item label="开启重命名" >
+            <el-form-item label="重命名(正则)" >
                 <el-switch
                     v-model="renameflag"
                     active-color="#13ce66"
