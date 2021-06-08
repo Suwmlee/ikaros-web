@@ -1,21 +1,42 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p> morning
-    </p>
+   <vue-markdown :source="fileContent" class="markdown-body" > </vue-markdown>
   </div>
 </template>
 
 <script lang="ts">
+import axios from 'axios'
+import VueMarkdown from 'vue-markdown'
+import 'github-markdown-css';
+
 export default {
   name: 'tutorial',
-  props: {
-    msg: String
+  components: {
+    VueMarkdown
+  },
+    data() {
+        return {
+            fileContent:'',
+        };
+    },
+  created: function() {
+    this.getContent();
+  },
+  methods: {
+    getContent() {
+      axios.get('/api/intro')
+                .then(response => {
+                    console.log(response)
+                    this.fileContent = response.data
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;
