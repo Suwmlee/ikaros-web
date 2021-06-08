@@ -52,7 +52,7 @@
                 sortable="custom"
                 prop="updatetime">
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="150">
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
@@ -73,7 +73,7 @@
             :total="totalnum">
         </el-pagination>
 
-        <el-dialog append-to-body :close-on-click-modal="false" :visible.sync="editdialog" width="500px">
+        <el-dialog append-to-body :close-on-click-modal="false" :visible.sync="editdialog" width="400px">
             <el-form inline size="small" :model="rowrecord" label-width="100px">
                 <el-form-item label="原始名称" prop="srcname">
                     <span v-text="rowrecord.srcname" style="width: 370px;" />

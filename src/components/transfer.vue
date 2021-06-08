@@ -11,7 +11,7 @@
         </el-select>
         <el-divider></el-divider>
      
-        <el-form label-position="right" label-width="150px" :model="transconfig">
+        <el-form label-position="right" label-width="80px" :model="transconfig">
             <el-form-item label="源目录">
                 <el-input v-model="transconfig.source_folder">
                     <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
@@ -37,7 +37,6 @@
             <el-form-item label="备注">
                 <el-input v-model="transconfig.mark"></el-input>
             </el-form-item>
-            <el-form-item>
                 <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
                     <span v-if="!running">开始转移</span>
                     <span v-else>转移中...</span>
@@ -46,9 +45,8 @@
                 <el-button type="primary" size="medium" @click="addconf">新增</el-button>
                 <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
                 <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
-            </el-form-item>
             <el-divider>扩展功能</el-divider>
-            <el-form-item label="重命名(正则)" >
+            <el-form-item label="剧集重命名(正则)" >
                 <el-switch
                     v-model="renameflag"
                     active-color="#13ce66"

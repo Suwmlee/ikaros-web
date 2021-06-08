@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form label-position="right" label-width="150px" :model="renameconf">
+        <el-form label-position="right" label-width="80px" :model="renameconf">
             <el-form-item label="源目录">
                 <el-input v-model="renameconf.source_folder">
                     <el-button slot="append" icon="el-icon-search" @click="showDialog"></el-button>

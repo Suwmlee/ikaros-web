@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form label-position="formlocation" label-width="150px" :model="settings">
+        <el-form label-position="formlocation" label-width="80px" :model="settings">
             <el-form-item label="刮削目录">
                 <el-input v-model="settings.scraping_folder">
                     <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
@@ -8,8 +8,8 @@
             </el-form-item>
             <el-form-item label="输出模式" >
                 <el-radio-group v-model="mode">
-                    <el-radio :label="1">PT模式(软链接)</el-radio>
-                    <el-radio :label="2">正常模式(移动文件)</el-radio>
+                    <el-radio :label="1">软链接</el-radio>
+                    <el-radio :label="2">正常(移动文件)</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item v-if="mode==1" label="软链接前缀">
