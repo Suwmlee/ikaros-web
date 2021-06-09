@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <el-form label-position="formlocation" label-width="80px" :model="settings">
+    <div class="body-wrap">
+        <el-form label-position="right" label-width="auto" :model="settings">
             <el-form-item label="刮削目录">
                 <el-input v-model="settings.scraping_folder">
                     <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
@@ -25,6 +25,9 @@
             </el-form-item>
             <el-form-item label="命名规则">
                 <el-input v-model="settings.naming_rule"></el-input>
+            </el-form-item>
+            <el-form-item label="Javdb Cookies">
+                <el-input v-model="settings.cookies_javdb" placeholder="请输入Javdb Cookies(有效期7天)"></el-input>
             </el-form-item>
 
             <el-form-item label="水印开关" >
@@ -142,3 +145,11 @@ export default {
 
 }
 </script>
+
+<style scoped>
+
+.body-wrap{
+    margin: 15px 5px 5px 5px;
+}
+
+</style>

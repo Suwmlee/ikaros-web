@@ -22,8 +22,8 @@
                 <el-input v-model="renameconf.prefix"></el-input>
             </el-form-item>
             <el-form-item v-if="renametype==0" >
-                <el-button type="primary" size="medium" @click="preview">预览</el-button>
-                <el-button type="danger" size="medium" @click="apply">应用</el-button>
+                <el-button type="info" size="medium" @click="preview">预览</el-button>
+                <el-button type="primary" size="medium" @click="apply">应用</el-button>
             </el-form-item>
 
             <el-form-item v-if="renametype==1" label="替换部分">
@@ -33,7 +33,7 @@
                 <el-input v-model="renameconf.newfix"></el-input>
             </el-form-item>
             <el-form-item v-if="renametype==1" >
-                <el-button type="danger" size="medium" @click="replace">应用</el-button>
+                <el-button type="primary" size="medium" @click="replace">应用</el-button>
             </el-form-item>
         </el-form>
         <el-divider></el-divider>

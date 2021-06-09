@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="body-wrap">
         <el-select v-model="selectedoption" 
                    @change="changeConf"
                    placeholder="请选择配置">
@@ -11,7 +11,7 @@
         </el-select>
         <el-divider></el-divider>
      
-        <el-form label-position="right" label-width="80px" :model="transconfig">
+        <el-form label-position="right" label-width="auto" :model="transconfig">
             <el-form-item label="源目录">
                 <el-input v-model="transconfig.source_folder">
                     <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
@@ -37,16 +37,8 @@
             <el-form-item label="备注">
                 <el-input v-model="transconfig.mark"></el-input>
             </el-form-item>
-                <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
-                    <span v-if="!running">开始转移</span>
-                    <span v-else>转移中...</span>
-                </el-button>
-                <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
-                <el-button type="primary" size="medium" @click="addconf">新增</el-button>
-                <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
-                <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
             <el-divider>扩展功能</el-divider>
-            <el-form-item label="剧集重命名(正则)" >
+            <el-form-item label="正则重命名" >
                 <el-switch
                     v-model="renameflag"
                     active-color="#13ce66"
@@ -57,30 +49,36 @@
                 <el-input v-model="renameprefix" ></el-input>
             </el-form-item>
         </el-form>
+        <el-button type="primary" size="medium" @click="addconf">新增</el-button>
+        <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
+        <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
+        <el-divider></el-divider>
+        <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
+            <span v-if="!running">开始转移</span>
+            <span v-else>转移中...</span>
+        </el-button>
+        <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
         <el-divider></el-divider>
         <el-table :data="transferdata" 
                 stripe 
                 :cell-style="{padding: '0', height: '50px'}" >
-            <el-table-column label="原始名称" :show-overflow-tooltip="true"
+            <el-table-column label="原始名称"  min-width="150" :show-overflow-tooltip="true"
                 prop="srcname" >
             </el-table-column>
-            <el-table-column label="原始地址" :show-overflow-tooltip="true"
+            <el-table-column label="原始地址" min-width="150" :show-overflow-tooltip="true"
                 prop="srcpath" >
             </el-table-column>
-            <el-table-column label="大小(MB)"
-                prop="srcsize" width="100" >
+            <el-table-column label="大小(MB)" width="80"
+                prop="srcsize" >
             </el-table-column>
-            <el-table-column label="状态"
-                prop="success">
+            <el-table-column label="链接路径" min-width="150" :show-overflow-tooltip="true"
+                prop="linkpath" >
             </el-table-column>
-            <el-table-column label="链接路径" :show-overflow-tooltip="true"
-                prop="linkpath" width="150" >
+            <el-table-column label="实际路径" min-width="150" :show-overflow-tooltip="true"
+                prop="destpath" >
             </el-table-column>
-            <el-table-column label="实际路径" :show-overflow-tooltip="true"
-                prop="destpath" width="150" >
-            </el-table-column>
-            <el-table-column label="更新时间"
-                prop="updatetime">
+            <el-table-column label="更新时间" width="155"
+                prop="updatetime" >
             </el-table-column>
         </el-table>
         <el-pagination
@@ -289,3 +287,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+.body-wrap{
+    margin: 15px 5px 5px 5px;
+}
+
+</style>

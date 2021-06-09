@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-   <vue-markdown :source="fileContent" class="markdown-body" > </vue-markdown>
+  <div class="body-wrap">
+    <vue-markdown :source="fileContent" class="markdown-body" > </vue-markdown>
   </div>
 </template>
 
@@ -38,18 +38,9 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+
+.body-wrap{
+    margin: 15px 5px 5px 5px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
