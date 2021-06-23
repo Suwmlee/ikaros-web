@@ -9,16 +9,20 @@
             <el-form-item label="输出模式" >
                 <el-radio-group v-model="mode">
                     <el-radio :label="1">软链接</el-radio>
-                    <el-radio :label="2">正常(移动文件)</el-radio>
+                    <el-radio :label="2">移动文件</el-radio>
+                    <el-radio :label="3">直接刮削</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item v-if="mode==1" label="软链接前缀">
                 <el-input v-model="settings.soft_prefix"></el-input>
             </el-form-item>
-            <el-form-item label="输出目录">
+            <el-form-item v-if="mode!=3" label="输出目录">
                 <el-input v-model="settings.success_folder">
                     <el-button slot="append" icon="el-icon-search" @click="showOutputDialog"></el-button>
                 </el-input>
+            </el-form-item>
+            <el-form-item label="跳过目录">
+                <el-input v-model="settings.escape_folders"></el-input>
             </el-form-item>
             <el-form-item label="目录规则">
                 <el-input v-model="settings.location_rule"></el-input>
@@ -94,10 +98,15 @@ export default {
             .then(response => {
                 console.log(response)
                 this.settings = response.data;
-                if (response.data.soft_link) {
-                    this.mode = 1
+
+                if (response.data.main_mode === 3) {
+                    this.mode = 3
                 }else{
-                    this.mode = 2
+                    if (response.data.soft_link) {
+                        this.mode = 1
+                    }else{
+                        this.mode = 2
+                    }
                 }
             })
             .catch(function (error) {
@@ -107,10 +116,14 @@ export default {
     methods: {
         onSubmit() {
             if (this.mode === 1) {
-                this.settings.soft_link = true       
+                this.settings.soft_link = true
+                this.settings.main_mode = 1
             } else if (this.mode === 2) {
                 this.settings.soft_link = false
-            } 
+                this.settings.main_mode = 1
+            } else if (this.mode === 3) {
+                this.settings.main_mode = 3
+            }
             axios.post('/api/scrapingconf',this.settings)
                 .then( () => {
                     this.$message({
