@@ -13,6 +13,13 @@
             </el-col>
         </el-row>
 
+        <el-alert class="alter-tip"
+            v-if="running"
+            :title="tips"
+            :closable="false"
+            type="info">
+        </el-alert>
+
         <el-table :data="scrapingrecords" 
                 stripe 
                 :default-sort = "{prop: 'updatetime', order: 'descending'}"
@@ -122,6 +129,7 @@ export default {
     data() {
         return {
             running: false,
+            tips: '当前无任务',
             currentPage: 1,
             totalnum: 10,
             pagesize: 10,
@@ -174,9 +182,16 @@ export default {
             axios.get(geturl)
                 .then(response => {
                     this.scrapingrecords = response.data.data
-                    this.running = response.data.running
                     this.currentPage = response.data.page
                     this.totalnum = response.data.total
+
+                    this.running = response.data.running
+                    if (this.running) {
+                        let tasktotal: number = response.data.tasktotal
+                        let taskfinished: number = response.data.taskfinished
+                        let percentage = taskfinished / tasktotal * 100
+                        this.tips = "刮削进度: " + percentage.toFixed(2) + '%' + " [" + taskfinished + "/" + tasktotal + "]"
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -234,4 +249,9 @@ export default {
 .el-col {
     border-radius: 4px;
 }
+
+.alter-tip {
+    margin: 5px;
+}
+
 </style>
