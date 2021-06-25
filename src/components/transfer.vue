@@ -309,4 +309,8 @@ export default {
     margin: 15px 5px 5px 5px;
 }
 
+.alter-tip {
+    margin: 5px;
+}
+
 </style>

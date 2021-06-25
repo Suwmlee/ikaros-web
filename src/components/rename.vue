@@ -91,7 +91,7 @@ export default {
             renametype: 0,
             renameconf: {
                 source_folder: 'E:\\Entertaiment\\ACG\\Animes',
-                reg: '[\\[第 ][0-9.svidevoa\\(\\)]*[\\]話话 ]',
+                reg: '[\\[第 ][0-9.svidevoa\\(\\)]*[\\]話话集 ]',
                 reg2: '\\.e[0-9videvoa\\(\\)]{1,}[.]',
                 prefix: 'S01E',
                 ext_type: '',
