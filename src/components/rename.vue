@@ -140,7 +140,13 @@ export default {
         replace() {
             axios.post('/api/renamebyrep',this.renameconf)
                 .then(response => {
-                   console.log(response)
+                    console.log(response)
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '重命名成功',
+                        type: 'success'
+                    })
                 })
                 .catch(function (error) {
                     console.log(error);

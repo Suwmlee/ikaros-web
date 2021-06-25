@@ -59,6 +59,14 @@
         </el-button>
         <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
         <el-divider></el-divider>
+
+        <el-alert class="alter-tip"
+            v-if="running"
+            :title="tips"
+            :closable="false"
+            type="info">
+        </el-alert>
+
         <el-table :data="transferdata" 
                 stripe 
                 :cell-style="{padding: '0', height: '50px'}" >
@@ -112,10 +120,11 @@ export default {
     },
     data() {
         return {
+            running: false,
+            tips: '当前无任务',
             isDialogVisible: false,
             openDialogID: 1,
             folderPath:'',
-            running: false,
             renameflag: false,
             renameprefix: "S01E",
             currentPage: 1,
@@ -172,11 +181,17 @@ export default {
             let geturl: string = '/api/transrecord?' + pageparam
             axios.get(geturl)
                 .then(response => {
-                    console.log(response)
                     this.transferdata = response.data.data
-                    this.running = response.data.running
                     this.currentPage = response.data.page
                     this.totalnum = response.data.total
+
+                    this.running = response.data.running
+                    if (this.running) {
+                        let tasktotal: number = response.data.tasktotal
+                        let taskfinished: number = response.data.taskfinished
+                        let percentage = taskfinished / tasktotal * 100
+                        this.tips = "转移进度: " + percentage.toFixed(2) + '%' + " [" + taskfinished + "/" + tasktotal + "]"
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);
