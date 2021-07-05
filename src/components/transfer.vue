@@ -58,6 +58,7 @@
             <span v-else>转移中...</span>
         </el-button>
         <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
+        <el-button type="danger" size="medium" @click="delrecords">清理记录</el-button>
         <el-divider></el-divider>
 
         <el-alert class="alter-tip"
@@ -192,6 +193,20 @@ export default {
                         let percentage = taskfinished / tasktotal * 100
                         this.tips = "转移进度: " + percentage.toFixed(2) + '%' + " [" + taskfinished + "/" + tasktotal + "]"
                     }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        delrecords() {
+            axios.delete('/api/transrecord')
+                .then( () => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '清理成功',
+                        type: 'success'
+                    })
                 })
                 .catch(function (error) {
                     console.log(error);
