@@ -9,8 +9,9 @@
             <el-form-item label="输出模式" >
                 <el-radio-group v-model="mode">
                     <el-radio :label="1">软链接</el-radio>
-                    <el-radio :label="2">移动文件</el-radio>
-                    <el-radio :label="3">直接刮削</el-radio>
+                    <el-radio :label="2">硬链接</el-radio>
+                    <el-radio :label="3">移动文件</el-radio>
+                    <el-radio :label="4">直接刮削</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item v-if="mode==1" label="软链接前缀">
@@ -100,12 +101,14 @@ export default {
                 this.settings = response.data;
 
                 if (response.data.main_mode === 3) {
-                    this.mode = 3
+                    this.mode = 4
                 }else{
-                    if (response.data.soft_link) {
+                    if (response.data.link_type === 1) {
                         this.mode = 1
-                    }else{
+                    }else if (response.data.link_type === 2) {
                         this.mode = 2
+                    }else{
+                        this.mode = 3
                     }
                 }
             })
@@ -116,12 +119,15 @@ export default {
     methods: {
         onSubmit() {
             if (this.mode === 1) {
-                this.settings.soft_link = true
+                this.settings.link_type = 1
                 this.settings.main_mode = 1
             } else if (this.mode === 2) {
-                this.settings.soft_link = false
+                this.settings.link_type = 2
                 this.settings.main_mode = 1
             } else if (this.mode === 3) {
+                this.settings.link_type = 0
+                this.settings.main_mode = 1
+            } else if (this.mode === 4) {
                 this.settings.main_mode = 3
             }
             axios.post('/api/scrapingconf',this.settings)
