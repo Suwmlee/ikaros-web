@@ -17,7 +17,7 @@
             <el-form-item v-if="mode==1" label="软链接前缀">
                 <el-input v-model="settings.soft_prefix"></el-input>
             </el-form-item>
-            <el-form-item v-if="mode!=3" label="输出目录">
+            <el-form-item v-if="mode!=4" label="输出目录">
                 <el-input v-model="settings.success_folder">
                     <el-button slot="append" icon="el-icon-search" @click="showOutputDialog"></el-button>
                 </el-input>
