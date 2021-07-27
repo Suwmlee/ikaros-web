@@ -22,6 +22,11 @@
                     <el-button slot="append" icon="el-icon-search" @click="showOutputDialog"></el-button>
                 </el-input>
             </el-form-item>
+            <el-form-item v-if="mode==1 || mode == 2" label="失败目录">
+                <el-input v-model="settings.failed_folder">
+                    <el-button slot="append" icon="el-icon-search" @click="showFailedDialog"></el-button>
+                </el-input>
+            </el-form-item>
             <el-form-item label="跳过目录">
                 <el-input v-model="settings.escape_folders"></el-input>
             </el-form-item>
@@ -151,6 +156,10 @@ export default {
             this.openDialogID = 2;
             this.isDialogVisible = true;
         },
+        showFailedDialog() {
+            this.openDialogID = 3;
+            this.isDialogVisible = true;
+        },
         closeDialog() {
             this.isDialogVisible = false;
             
@@ -158,6 +167,8 @@ export default {
                 this.settings.scraping_folder = this.folderPath
             }else if (this.openDialogID === 2) {
                 this.settings.success_folder = this.folderPath
+            }else if (this.openDialogID === 3) {
+                this.settings.failed_folder = this.folderPath
             }
         }
     }
