@@ -40,7 +40,7 @@
                 <el-input v-model="settings.cookies_javdb" placeholder="请输入Javdb Cookies(有效期7天)"></el-input>
             </el-form-item>
 
-            <el-form-item label="水印开关" >
+            <el-form-item label="添加水印" >
                 <el-switch
                     v-model="settings.watermark_enable"
                     active-color="#13ce66"
@@ -54,7 +54,18 @@
                 <el-input type="Number" v-model="settings.watermark_location" placeholder="右上 0, 左上 1, 左下 2，右下 3"></el-input>
             </el-form-item>
 
-            <el-form-item label="代理开关" >
+            <el-form-item label="下载剧照" >
+                <el-switch
+                    v-model="settings.extrafanart_enable"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
+            <el-form-item v-if="settings.extrafanart_enable==true" label="剧照文件夹">
+                <el-input v-model="settings.extrafanart_folder"></el-input>
+            </el-form-item>
+
+            <el-form-item label="使用代理" >
                 <el-switch
                     v-model="settings.proxy_enable"
                     active-color="#13ce66"
