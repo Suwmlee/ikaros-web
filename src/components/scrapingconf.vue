@@ -36,6 +36,9 @@
             <el-form-item label="命名规则">
                 <el-input v-model="settings.naming_rule"></el-input>
             </el-form-item>
+            <el-form-item label="刮削源">
+                <el-input v-model="settings.website_priority"></el-input>
+            </el-form-item>
             <el-form-item label="Javdb Cookies">
                 <el-input v-model="settings.cookies_javdb" placeholder="请输入Javdb Cookies(有效期7天)"></el-input>
             </el-form-item>
