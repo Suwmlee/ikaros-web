@@ -55,8 +55,11 @@
                     <span v-if="scope.row.cnsubtag===false" ></span>
                 </template>
             </el-table-column>
-            <el-table-column label="刮削后名称" min-width="150" :show-overflow-tooltip="true"
-                prop="destname">
+            <el-table-column label="分集标识" min-width="80" :show-overflow-tooltip="true"
+                prop="cdnum">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.cdnum" v-text="scope.row.cdnum"></span>
+                </template>
             </el-table-column>
             <el-table-column label="刮削后路径" min-width="150" :show-overflow-tooltip="true"
                 prop="destpath" >
@@ -103,13 +106,16 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="刮削用名称" prop="scrapingname">
-                    <el-input v-model="rowrecord.scrapingname" style="width: 300px;" />
+                    <el-input v-model="rowrecord.scrapingname" style="width: 200px;" />
                 </el-form-item>
                 <el-form-item label="强制中文" prop="cnsubtag">
                     <el-radio-group v-model="rowrecord.cnsubtag">
                         <el-radio :label="true">开启</el-radio>
                         <el-radio :label="false">关闭</el-radio>
                     </el-radio-group>
+                </el-form-item>
+                <el-form-item label="分集标识" prop="cdnum">
+                    <el-input v-model="rowrecord.cdnum" style="width: 200px;" />
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">

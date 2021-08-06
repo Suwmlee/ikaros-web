@@ -81,6 +81,9 @@
             <el-form-item v-if="settings.proxy_enable==true" label="地址">
                 <el-input v-model="settings.proxy_address"></el-input>
             </el-form-item>
+            <el-form-item label="超时">
+                <el-input v-model="settings.proxy_timeout"></el-input>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">应用</el-button>
             </el-form-item>
