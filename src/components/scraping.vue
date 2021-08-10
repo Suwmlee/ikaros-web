@@ -82,10 +82,12 @@
         </el-table>
         <el-pagination
             :page-size="10"
+            :page-sizes="[10, 20, 50, 100]"
             :pager-count="7"
             :current-page="currentPage"
+            @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            layout="prev, pager, next"
+            layout="sizes, prev, pager, next"
             :total="totalnum">
         </el-pagination>
 
@@ -242,7 +244,10 @@ export default {
         },
         handleCurrentChange(num: number){
             this.currentPage = num
-        }
+        },
+        handleSizeChange(val: number) {
+            this.pagesize = val
+        },
     }
 }
 </script>
