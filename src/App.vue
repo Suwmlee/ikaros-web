@@ -15,12 +15,14 @@
         <Transfer v-if="activeIndex==='4'" />
         <Reanme v-if="activeIndex==='5'" />
       </el-main>
+      <el-footer><a href="https://github.com/Suwmlee/ikaros">ikaros</a> v{{ version }}</el-footer>
     </el-container>
 
   </div>
 </template>
 
 <script lang="ts">
+import axios from 'axios'
 import Tutorial from './components/tutorial.vue'
 import JavScraping from './components/javscraping.vue'
 import Transfer from './components/transfer.vue'
@@ -36,12 +38,26 @@ export default {
   },
   data() {
     return {
+      version:'',
       activeIndex: '1',
     };
+  },
+  async created() {
+    this.versionInfo()
   },
   methods: {
     handleSelect(key: number) {
       this.activeIndex = key
+    },
+    versionInfo(){
+      axios.get('/api/version')
+          .then(response => {
+              console.log(response)
+              this.version = response.data
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
     }
   }
 }
@@ -55,4 +71,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+.el-footer {
+  text-align: center;
+  line-height: 60px;
+}
+
 </style>
