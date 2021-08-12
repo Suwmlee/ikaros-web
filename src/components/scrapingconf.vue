@@ -42,6 +42,9 @@
             <el-form-item label="Javdb Cookies">
                 <el-input v-model="settings.cookies_javdb" placeholder="请输入Javdb Cookies(有效期7天)"></el-input>
             </el-form-item>
+            <el-form-item label="Javlib Cookies">
+                <el-input v-model="settings.cookies_javlib" placeholder="请输入Javlib Cookies"></el-input>
+            </el-form-item>
 
             <el-form-item label="添加水印" >
                 <el-switch
@@ -68,6 +71,15 @@
                 <el-input v-model="settings.extrafanart_folder"></el-input>
             </el-form-item>
 
+            <el-form-item label="刮削顺序" >
+                <el-switch
+                    active-text="同时使用多个源刮削"
+                    inactive-text="按照源顺序刮削"
+                    v-model="settings.async_request"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
             <el-form-item label="使用代理" >
                 <el-switch
                     v-model="settings.proxy_enable"
