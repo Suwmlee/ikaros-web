@@ -2,7 +2,7 @@
     <div class="body-wrap">
         <el-row :gutter="24">
             <el-col :span="12" >
-                <el-button :loading="running" size="medium" type="primary" @click="start">
+                <el-button :loading="running" size="medium" type="primary" @click="start_all">
                     <span v-if="!running">刮削</span>
                     <span v-else>刮削中...</span>
                 </el-button>
@@ -68,8 +68,12 @@
                 sortable="custom"
                 prop="updatetime">
             </el-table-column>
-            <el-table-column label="操作" width="150">
+            <el-table-column label="操作" width="210">
                 <template slot-scope="scope">
+                    <el-button
+                    size="mini"
+                    type="primary"
+                    @click="handleSingle(scope.$index, scope.row)">刮削</el-button>
                     <el-button
                     size="mini"
                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -160,8 +164,17 @@ export default {
         clearInterval(this.timer);
     },
     methods: {
-        start() {
+        start_all() {
             axios.post('/api/scraping')
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleSingle(index: number, row: ScrapingRecordDto) {
+            axios.post('/api/scraping', row)
                 .then(response => {
                     console.log(response)
                 })
