@@ -38,6 +38,10 @@
                 <el-input v-model="transconfig.mark"></el-input>
             </el-form-item>
             <el-divider>扩展功能</el-divider>
+            <el-form-item label="刷新emby库">
+                <el-input v-model="transconfig.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
+                <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/">参考链接</a>
+            </el-form-item>
             <el-form-item label="正则重命名" >
                 <el-switch
                     v-model="renameflag"
