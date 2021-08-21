@@ -45,6 +45,10 @@
             <el-form-item label="Javlib Cookies">
                 <el-input v-model="settings.cookies_javlib" placeholder="请输入Javlib Cookies"></el-input>
             </el-form-item>
+            <el-form-item label="刷新emby库">
+                <el-input v-model="settings.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
+                <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/">参考链接</a>
+            </el-form-item>
 
             <el-form-item label="添加水印" >
                 <el-switch
