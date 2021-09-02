@@ -27,6 +27,7 @@ jobs:
     - name: Git push assets to "release" branch
       run: |
         cd dist
+        echo ${{ github.sha }} > version.txt
         git init
         git config --local user.name "actions"
         git config --local user.email "action@github.com"
