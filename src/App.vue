@@ -15,7 +15,7 @@
         <Transfer v-if="activeIndex==='4'" />
         <Reanme v-if="activeIndex==='5'" />
       </el-main>
-      <el-footer><a href="https://github.com/Suwmlee/ikaros">ikaros</a> v{{ version }}</el-footer>
+      <el-footer ><a class="site-footer" href="https://github.com/Suwmlee/ikaros">ikaros</a> {{ version }}</el-footer>
     </el-container>
 
   </div>
@@ -75,6 +75,14 @@ export default {
 .el-footer {
   text-align: center;
   line-height: 60px;
+}
+
+.site-footer {
+    color: var(--theme-footer-link-color);
+    padding: 4px 0;
+    line-height: 1.30769231;
+    display: inline-block;
+    text-decoration: none;
 }
 
 </style>
