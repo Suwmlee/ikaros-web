@@ -7,6 +7,7 @@
           <el-menu-item index="3">刮削</el-menu-item>
           <el-menu-item index="4">转移</el-menu-item>
           <el-menu-item index="5">重命名</el-menu-item>
+          <el-menu-item index="6">自动</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
@@ -14,6 +15,7 @@
         <JavScraping v-if="activeIndex==='3'" />
         <Transfer v-if="activeIndex==='4'" />
         <Reanme v-if="activeIndex==='5'" />
+        <AutoConf v-if="activeIndex==='6'" />
       </el-main>
       <el-footer ><a class="site-footer" href="https://github.com/Suwmlee/ikaros">ikaros</a> {{ version }}</el-footer>
     </el-container>
@@ -27,6 +29,7 @@ import Tutorial from './components/tutorial.vue'
 import JavScraping from './components/javscraping.vue'
 import Transfer from './components/transfer.vue'
 import Reanme from './components/rename.vue'
+import AutoConf from './components/autoconf.vue'
 
 export default {
   name: 'App',
@@ -35,6 +38,7 @@ export default {
     JavScraping,
     Transfer,
     Reanme,
+    AutoConf
   },
   data() {
     return {
