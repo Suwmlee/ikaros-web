@@ -1,5 +1,12 @@
 <template>
     <div class="body-wrap">
+        <pre>
+        transmission 种子下载完成后执行脚本:
+
+        #!/bin/bash
+        TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
+        wget "http://localhost:12346/api/client?path=$TR_DOWNLOADS"
+        </pre>
         <el-form label-position="right" label-width="auto" :model="settings">
             <el-form-item label="源前缀">
                 <el-input v-model="settings.original" placeholder="需要替换的前缀"></el-input>
