@@ -26,6 +26,10 @@
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">应用</el-button>
             </el-form-item>
+            <el-divider>任务列表</el-divider>
+            <el-form-item>
+                <el-button type="danger" @click="clean">清理任务</el-button>
+            </el-form-item>
         </el-form>
 
     </div>
@@ -61,6 +65,15 @@ export default {
                         message: '更新成功',
                         type: 'success'
                     })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        clean() {
+            axios.get('/api/client/clean')
+                .then(response => {
+                    console.log(response)
                 })
                 .catch(function (error) {
                     console.log(error);
