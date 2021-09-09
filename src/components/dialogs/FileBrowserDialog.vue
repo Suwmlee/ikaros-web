@@ -27,10 +27,11 @@
           class="dialog-body"
           id="dialogDescription"
         >
-          <p v-text="selectedPath" />
-          <el-divider></el-divider>
+          <el-tooltip class="item" effect="dark" :open-delay='400' :content="selectedPath" placement="right">
+            <span class="span-txt" v-text="selectedPath" />
+          </el-tooltip>
           <el-button @click="select(parentFolder)" class="btn-item" ><i class="el-icon-back"/>返回上级目录</el-button>
-          <div v-for="item in directoryList" :key="item.index">
+          <div class="filelist-body" v-for="item in directoryList" :key="item.index">
             <el-tooltip class="item" effect="dark" :open-delay='400' :content="item.fullname" placement="right">
               <el-button @click="select(item.fullname)" v-text="item.fullname" class="btn-item"/>
             </el-tooltip>
@@ -157,15 +158,27 @@ import axios from 'axios';
     flex-direction: column;
   }
 
+  .span-txt {
+    display: flex;
+    height: 40px;
+    width: 95%;
+    margin: auto;
+    line-height: 40px;
+    align-content: center;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+  }
+
   .dialog-body {
     position: relative;
-    max-height: 400px;
     overflow-y: auto;
     padding: 20px 10px;
   }
 
   .btn-item {
-    width: 90%;
+    width: 100%;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
