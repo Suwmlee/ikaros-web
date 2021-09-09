@@ -8,6 +8,7 @@
           <el-menu-item index="4">转移</el-menu-item>
           <el-menu-item index="5">重命名</el-menu-item>
           <el-menu-item index="6">自动</el-menu-item>
+          <el-menu-item index="7">配置</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
@@ -16,8 +17,9 @@
         <Transfer v-if="activeIndex==='4'" />
         <Reanme v-if="activeIndex==='5'" />
         <AutoConf v-if="activeIndex==='6'" />
+        <Config v-if="activeIndex==='7'" />
       </el-main>
-      <el-footer ><a class="site-footer" href="https://github.com/Suwmlee/ikaros">ikaros</a> {{ version }}</el-footer>
+      <el-footer><a class="site-footer" href="https://github.com/Suwmlee/ikaros">ikaros</a> {{ version }}</el-footer>
     </el-container>
 
   </div>
@@ -30,6 +32,7 @@ import JavScraping from './components/javscraping.vue'
 import Transfer from './components/transfer.vue'
 import Reanme from './components/rename.vue'
 import AutoConf from './components/autoconf.vue'
+import Config from './components/config.vue'
 
 export default {
   name: 'App',
@@ -38,7 +41,8 @@ export default {
     JavScraping,
     Transfer,
     Reanme,
-    AutoConf
+    AutoConf,
+    Config
   },
   data() {
     return {
@@ -73,7 +77,15 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.el-container {
+  min-height: 97vh;
+}
+
+.el-header {
+  text-align: center;
+  line-height: 60px;
 }
 
 .el-footer {
@@ -83,7 +95,6 @@ export default {
 
 .site-footer {
     color: var(--theme-footer-link-color);
-    padding: 4px 0;
     line-height: 1.30769231;
     display: inline-block;
     text-decoration: none;
