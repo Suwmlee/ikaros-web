@@ -19,7 +19,7 @@
             @click="cancel"
             aria-label="Close dialog"
           >
-            x
+            <i class="el-icon-close"></i>
           </button>
         </header>
 
@@ -31,7 +31,9 @@
           <el-divider></el-divider>
           <el-button @click="select(parentFolder)" class="btn-item" ><i class="el-icon-back"/>返回上级目录</el-button>
           <div v-for="item in directoryList" :key="item.index">
-            <el-button @click="select(item.fullname)" v-text="item.fullname" class="btn-item"/>
+            <el-tooltip class="item" effect="dark" :open-delay='400' :content="item.fullname" placement="right">
+              <el-button @click="select(item.fullname)" v-text="item.fullname" class="btn-item"/>
+            </el-tooltip>
           </div>
         </section>
 
@@ -128,6 +130,7 @@ import axios from 'axios';
   }
 
   .dialog {
+    max-height: 80vh;
     width: 450px;
     background: #FFFFFF;
     box-shadow: 2px 2px 20px 1px;
@@ -164,6 +167,8 @@ import axios from 'axios';
   .btn-item {
     width: 90%;
     text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .btn-close {
