@@ -73,8 +73,18 @@ import axios from 'axios';
       async getDirs(path = '/') {
         try {
           let data = (await axios.get("/api/scan/"+ path)).data
-          this.directoryList = data.dirs
-          this.parentFolder = data.parent
+          if (null == data.parent)
+          {
+            this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: data.error,
+                        type: 'error'
+                    })
+          }else{
+            this.directoryList = data.dirs
+            this.parentFolder = data.parent
+          }
         } catch (e) {
           this.showSnack(e.message)
         }
