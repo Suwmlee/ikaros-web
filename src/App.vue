@@ -86,6 +86,10 @@ export default {
 .el-header {
   text-align: center;
   line-height: 60px;
+  overflow-x: auto;
+}
+.el-header > ul {
+  width: 450px;
 }
 
 .el-footer {
