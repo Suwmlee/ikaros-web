@@ -42,6 +42,13 @@
                 <el-input v-model="transconfig.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
                 <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/">参考链接</a>
             </el-form-item>
+            <el-form-item label="清理其他文件">
+                <el-switch
+                    v-model="cleanflag"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
             <el-form-item label="正则重命名" >
                 <el-switch
                     v-model="renameflag"
@@ -134,6 +141,7 @@ export default {
             folderPath:'',
             renameflag: false,
             renameprefix: "S01E",
+            cleanflag: true,
             currentPage: 1,
             totalnum: 10,
             pagesize: 10,
@@ -166,6 +174,7 @@ export default {
         onSubmit() {
             this.transconfig.renameflag = this.renameflag
             this.transconfig.renameprefix = this.renameprefix
+            this.transconfig.cleanflag = this.cleanflag
             axios.post('/api/transfer',this.transconfig)
                 .then(response => {
                     console.log(response)
