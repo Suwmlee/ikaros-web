@@ -87,6 +87,7 @@ export default {
   text-align: center;
   line-height: 60px;
   overflow-x: auto;
+  overflow-y: hidden;
 }
 .el-header > ul {
   width: 450px;
