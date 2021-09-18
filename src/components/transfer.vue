@@ -44,7 +44,14 @@
             </el-form-item>
             <el-form-item label="清理其他文件">
                 <el-switch
-                    v-model="cleanflag"
+                    v-model="transconfig.clean_others"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
+            <el-form-item label="移除中文字符">
+                <el-switch
+                    v-model="transconfig.replace_CJK"
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
@@ -141,7 +148,6 @@ export default {
             folderPath:'',
             renameflag: false,
             renameprefix: "S01E",
-            cleanflag: true,
             currentPage: 1,
             totalnum: 10,
             pagesize: 10,
