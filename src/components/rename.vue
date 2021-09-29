@@ -12,14 +12,11 @@
                     <el-radio :label="1">替换</el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="renametype==0" label="正则">
-                <el-input v-model="renameconf.reg"></el-input>
-            </el-form-item>
-            <el-form-item v-if="renametype==0" label="备选正则">
-                <el-input v-model="renameconf.reg2"></el-input>
+            <el-form-item v-if="renametype==0" label="自定义">
+                <el-input v-model="renameconf.reg" placeholder="输入自定义正则匹配规则，默认使用针对剧集的匹配规则"></el-input>
             </el-form-item>
             <el-form-item v-if="renametype==0" label="修正前缀">
-                <el-input v-model="renameconf.prefix"></el-input>
+                <el-input v-model="renameconf.prefix" placeholder="默认S01E, 将匹配的 E11或 [11] 修正为 S01E11"></el-input>
             </el-form-item>
             <el-form-item v-if="renametype==0" >
                 <el-button type="info" size="medium" @click="preview">预览</el-button>
@@ -91,9 +88,8 @@ export default {
             renametype: 0,
             renameconf: {
                 source_folder: 'E:\\Entertaiment\\ACG\\Animes',
-                reg: '[\\[第 ][0-9.svidevoa\\(\\)]*[\\]話话集 ]',
-                reg2: '\\.e[0-9videvoa\\(\\)]{1,}[.]',
-                prefix: 'S01E',
+                reg: '',
+                prefix: '',
                 ext_type: '',
                 base: '',
                 newfix: ''
@@ -107,11 +103,13 @@ export default {
             axios.post('/api/previewrename',this.renameconf)
                 .then(response => {
                     for(var i in response.data.prefix){
-                        var fix= i + "."+ response.data.prefix[i];  
+                        let num: number = Number.parseInt(i) + 1;
+                        var fix= num + "重命名后: "+ response.data.prefix[i];  
                         this.fixnames += fix + "\r\n"; 
                     }
                     for(var j in response.data.todo){
-                        var src = j + "."+ response.data.todo[j];
+                        let num: number = Number.parseInt(j) + 1;
+                        var src = num + "重命名前: "+ response.data.todo[j];
                         this.prenames += src + "\r\n"; 
                     }
                 })
