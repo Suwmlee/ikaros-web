@@ -5,7 +5,8 @@
 
         #!/bin/bash
         TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
-        wget "http://localhost:12346/api/client?path=$TR_DOWNLOADS"
+        Fix_Name="${TR_DOWNLOADS//+/$'%2b'}"
+        wget "http://localhost:12346/api/client?path=$Fix_Name"
         </pre>
         <el-form label-position="right" label-width="auto" :model="settings">
             <el-form-item label="源前缀">
