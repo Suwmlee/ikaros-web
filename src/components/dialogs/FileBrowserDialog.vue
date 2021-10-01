@@ -75,7 +75,8 @@ import axios from 'axios';
     methods: {
       async getDirs(path = '/') {
         try {
-          let data = (await axios.get("/api/scan/"+ path)).data
+          const queryjson = { path: path };
+          let data = (await axios.post("/api/scan/", queryjson)).data
           if (null == data.parent)
           {
             this.$message({
