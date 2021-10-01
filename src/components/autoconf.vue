@@ -2,11 +2,13 @@
     <div class="body-wrap">
         <pre>
         transmission 种子下载完成后执行脚本:
-
         #!/bin/bash
         TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
-        Fix_Name="${TR_DOWNLOADS//+/$'%2b'}"
-        wget "http://localhost:12346/api/client?path=$Fix_Name"
+        curl -XPOST http://192.168.1.233:12346/api/client -H 'Content-Type: application/json' \
+        --data @&lt;(cat &lt;&lt;EOF
+        {"path":"$TR_DOWNLOADS"}
+        EOF
+        )
         </pre>
         <el-form label-position="right" label-width="auto" :model="settings">
             <el-form-item label="源前缀">
