@@ -109,6 +109,7 @@
                         <el-radio :label="1">完成</el-radio>
                         <el-radio :label="2">失败</el-radio>
                         <el-radio :label="3">忽略</el-radio>
+                        <el-radio :label="4">进行中</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="刮削用名称" prop="scrapingname">
