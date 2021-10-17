@@ -42,6 +42,7 @@
                     <span v-if="scope.row.status===1" >完成</span>
                     <span v-if="scope.row.status===2" >失败</span>
                     <span v-if="scope.row.status===3" >忽略</span>
+                    <span v-if="scope.row.status===4" >进行中</span>
                 </template>
             </el-table-column>
             <el-table-column label="刮削用名称" min-width="120" :show-overflow-tooltip="true"
@@ -109,7 +110,6 @@
                         <el-radio :label="1">完成</el-radio>
                         <el-radio :label="2">失败</el-radio>
                         <el-radio :label="3">忽略</el-radio>
-                        <el-radio :label="4">进行中</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="刮削用名称" prop="scrapingname">
