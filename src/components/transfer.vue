@@ -58,7 +58,7 @@
             </el-form-item>
             <el-form-item label="修正剧集命名" >
                 <el-switch
-                    v-model="renameflag"
+                    v-model="transconfig.fix_series"
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
@@ -143,7 +143,6 @@ export default {
             isDialogVisible: false,
             openDialogID: 1,
             folderPath:'',
-            renameflag: false,
             currentPage: 1,
             totalnum: 10,
             pagesize: 10,
@@ -174,8 +173,6 @@ export default {
     },
     methods: {
         onSubmit() {
-            this.transconfig.renameflag = this.renameflag
-            this.transconfig.cleanflag = this.cleanflag
             axios.post('/api/transfer',this.transconfig)
                 .then(response => {
                     console.log(response)
