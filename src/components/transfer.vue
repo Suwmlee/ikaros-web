@@ -83,9 +83,15 @@
             type="info">
         </el-alert>
 
-        <el-table :data="transferdata" 
-                stripe 
+        <el-table :data="transferdata"
+                ref="multipleTable"
+                stripe
+                @selection-change="handleSelectionChange"
                 :cell-style="{padding: '0', height: '50px'}" >
+            <el-table-column
+                type="selection"
+                width="55">
+            </el-table-column>
             <el-table-column label="原始名称"  min-width="150" :show-overflow-tooltip="true"
                 prop="srcname" >
             </el-table-column>
@@ -94,6 +100,27 @@
             </el-table-column>
             <el-table-column label="大小(MB)" width="80"
                 prop="srcsize" >
+            </el-table-column>
+            <el-table-column label="剧集" width="80"
+                prop="isepisode" >
+                <template slot-scope="scope">
+                    <span v-if="scope.row.isepisode===true" >是</span>
+                    <span v-if="scope.row.isepisode===false" ></span>
+                </template>
+            </el-table-column>
+            <el-table-column label="季" width="80"
+                prop="season" >
+                 <template slot-scope="scope">
+                    <span v-if="scope.row.season===-1" ></span>
+                    <span v-if="scope.row.season > -1" >{{scope.row.season}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="集数" width="80"
+                prop="episode" >
+                 <template slot-scope="scope">
+                    <span v-if="scope.row.episode===-1" ></span>
+                    <span v-if="scope.row.episode > -1" >{{scope.row.episode}}</span>
+                </template>
             </el-table-column>
             <el-table-column label="链接路径" min-width="150" :show-overflow-tooltip="true"
                 prop="linkpath" >
@@ -158,6 +185,7 @@ export default {
             },
             selectedoption: -1,
             options: [],
+            multipleSelection: []
         };
     },
     created(){
@@ -165,14 +193,15 @@ export default {
         this.refresh()
         this.getconfs()
     },
-    mounted() {
-        this.timer = setInterval(this.refresh, 1500);
-    },
-    beforeDestroy() {
-        clearInterval(this.timer);
-    },
+    // mounted() {
+    //     this.timer = setInterval(this.refresh, 1500);
+    // },
+    // beforeDestroy() {
+    //     clearInterval(this.timer);
+    // },
     methods: {
         onSubmit() {
+            this.timer = setInterval(this.refresh, 1500);
             axios.post('/api/transfer',this.transconfig)
                 .then(response => {
                     console.log(response)
@@ -210,6 +239,9 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+            if (this.running) {
+                clearInterval(this.timer);
+            }
         },
         delrecords() {
             axios.delete('/api/transrecord')
@@ -220,6 +252,7 @@ export default {
                         message: '清理成功',
                         type: 'success'
                     })
+                    this.refresh()
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -227,9 +260,11 @@ export default {
         },
         handleCurrentChange(num: number){
             this.currentPage = num
+            this.refresh()
         },
         handleSizeChange(val: number) {
             this.pagesize = val
+            this.refresh()
         },
         getconfs() {
             let geturl = '/api/transconf/all'
@@ -329,6 +364,18 @@ export default {
             }else if (this.openDialogID === 2) {
                 this.transconfig.output_folder = this.folderPath
             }
+        },
+        toggleSelection(rows) {
+            if (rows) {
+                rows.forEach(row => {
+                    this.$refs.multipleTable.toggleRowSelection(row);
+                });
+            } else {
+                this.$refs.multipleTable.clearSelection();
+            }
+        },
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
         }
     }
 }
