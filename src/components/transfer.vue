@@ -101,6 +101,15 @@
             <el-table-column label="大小(MB)" width="80"
                 prop="srcsize" >
             </el-table-column>
+            <el-table-column label="状态" width="80"
+                sortable="custom"
+                prop="status" >
+                <template slot-scope="scope">
+                    <span v-if="scope.row.status===0" ></span>
+                    <span v-if="scope.row.status===1" >锁定</span>
+                    <span v-if="scope.row.status===2" >忽略</span>
+                </template>
+            </el-table-column>
             <el-table-column label="剧集" width="80"
                 prop="isepisode" >
                 <template slot-scope="scope">
@@ -166,6 +175,7 @@ export default {
     data() {
         return {
             running: false,
+            timerstatus: 0,
             tips: '当前无任务',
             isDialogVisible: false,
             openDialogID: 1,
@@ -190,18 +200,15 @@ export default {
     },
     created(){
         console.log('init data')
-        this.refresh()
+        this.starttimer()
         this.getconfs()
     },
-    // mounted() {
-    //     this.timer = setInterval(this.refresh, 1500);
-    // },
-    // beforeDestroy() {
-    //     clearInterval(this.timer);
-    // },
+    beforeDestroy() {
+        this.stoptimer()
+    },
     methods: {
         onSubmit() {
-            this.timer = setInterval(this.refresh, 1500);
+            this.starttimer()
             axios.post('/api/transfer',this.transconfig)
                 .then(response => {
                     console.log(response)
@@ -239,9 +246,19 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
-            if (this.running) {
-                clearInterval(this.timer);
+            if (!this.running) {
+                this.stoptimer()
             }
+        },
+        starttimer(){
+            if (this.timerstatus == 0) {
+                this.timer = setInterval(this.refresh, 1500);
+                this.timerstatus = 1
+            }
+        },
+        stoptimer(){
+            clearInterval(this.timer)
+            this.timerstatus = 0
         },
         delrecords() {
             axios.delete('/api/transrecord')
