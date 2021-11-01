@@ -241,17 +241,21 @@ export default {
                         let taskfinished: number = response.data.taskfinished
                         let percentage = taskfinished / tasktotal * 100
                         this.tips = "转移进度: " + percentage.toFixed(2) + '%' + " [" + taskfinished + "/" + tasktotal + "]"
+                        console.log(this.tips)
+                        if (this.timerstatus === 0) {
+                            this.starttimer()
+                        }
+                    }else{
+                        this.stoptimer()
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
+                    this.stoptimer()
                 });
-            if (!this.running) {
-                this.stoptimer()
-            }
         },
         starttimer(){
-            if (this.timerstatus == 0) {
+            if (this.timerstatus === 0) {
                 this.timer = setInterval(this.refresh, 1500);
                 this.timerstatus = 1
             }
