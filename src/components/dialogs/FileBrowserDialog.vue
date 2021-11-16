@@ -54,8 +54,9 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue'
 import axios from 'axios';
-  export default {
+  export default Vue.extend({
     name: 'FileBrowserDialog',
     data() {
         return{
@@ -115,7 +116,7 @@ import axios from 'axios';
         this.$emit('close');
       },
     },
-  };
+  })
 </script>
 
 <style>

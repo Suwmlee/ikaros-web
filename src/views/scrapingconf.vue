@@ -116,7 +116,7 @@
 
 <script lang="ts">
 import axios from 'axios'
-import FileBrowserDialog from './dialogs/FileBrowserDialog.vue';
+import FileBrowserDialog from '../components/dialogs/FileBrowserDialog.vue';
 
 export default {
     name: 'scrapingconf',

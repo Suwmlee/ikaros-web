@@ -27,12 +27,12 @@
 
 <script lang="ts">
 import axios from 'axios'
-import Tutorial from './components/tutorial.vue'
-import JavScraping from './components/javscraping.vue'
-import Transfer from './components/transfer.vue'
-import Reanme from './components/rename.vue'
-import AutoConf from './components/autoconf.vue'
-import Config from './components/config.vue'
+import Tutorial from './views/tutorial.vue'
+import JavScraping from './views/javscraping.vue'
+import Transfer from './views/transfer.vue'
+import Reanme from './views/rename.vue'
+import AutoConf from './views/autoconf.vue'
+import Config from './views/config.vue'
 
 export default {
   name: 'App',
