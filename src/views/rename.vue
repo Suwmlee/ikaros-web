@@ -98,18 +98,16 @@ export default {
     },
     methods: {
         preview() {
-            this.fixnames = "",
-            this.prenames = "",
+            this.fixnames = "重命名后: \r\n",
+            this.prenames = "重命名前: \r\n",
             axios.post('/api/previewrename',this.renameconf)
                 .then(response => {
                     for(var i in response.data.prefix){
-                        let num: number = Number.parseInt(i) + 1;
-                        var fix= num + "重命名后: "+ response.data.prefix[i];  
+                        var fix= response.data.prefix[i];  
                         this.fixnames += fix + "\r\n"; 
                     }
                     for(var j in response.data.todo){
-                        let num: number = Number.parseInt(j) + 1;
-                        var src = num + "重命名前: "+ response.data.todo[j];
+                        var src = response.data.todo[j];
                         this.prenames += src + "\r\n"; 
                     }
                 })
