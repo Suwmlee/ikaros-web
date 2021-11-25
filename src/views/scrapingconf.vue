@@ -195,7 +195,7 @@ export default {
         },
         closeDialog() {
             this.isDialogVisible = false;
-            
+
             if (this.openDialogID === 1) {
                 this.settings.scraping_folder = this.folderPath
             }else if (this.openDialogID === 2) {
