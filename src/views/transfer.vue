@@ -52,7 +52,7 @@
                 <el-input v-model="transconfig.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
                 <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/">参考链接</a>
             </el-form-item>
-            <el-form-item v-if="transconfig.specified_files==''" label="清理其他文件">
+            <el-form-item label="清理其他文件">
                 <el-switch
                     v-model="transconfig.clean_others"
                     active-color="#13ce66"
