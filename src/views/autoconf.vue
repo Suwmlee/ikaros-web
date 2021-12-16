@@ -1,15 +1,40 @@
 <template>
     <div class="body-wrap">
-        <pre>
-        transmission 种子下载完成后执行脚本:
-        #!/bin/bash
-        TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
-        curl -XPOST http://192.168.1.233:12346/api/client -H 'Content-Type: application/json' \
-        --data @&lt;(cat &lt;&lt;EOF
-        {"path":"$TR_DOWNLOADS"}
-        EOF
-        )
-        </pre>
+        <el-row class="row-card">
+            <el-col :span="10" offset="1">
+                <el-card>
+                    <div slot="header" class="clearfix">
+                        <span>Transmission种子下载完成后执行脚本:</span>
+                    </div>
+<pre>
+#!/bin/bash
+TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
+curl -XPOST http://192.168.1.233:12346/api/client \
+-H 'Content-Type: application/json' \
+--data @&lt;(cat &lt;&lt;EOF
+{"path":"$TR_DOWNLOADS"}
+EOF
+)</pre>
+                </el-card>
+            </el-col>
+            <el-col :offset="1" :span="10">
+                <el-card>
+                    <div slot="header" class="clearfix">
+                        <span>qBittorrent种子下载完成后执行脚本:</span>
+                    </div>
+<pre>
+#!/bin/bash
+# qbcomplete.sh %D %N
+QB_DOWNLOADS="${1}/${2}"
+curl -XPOST http://192.168.1.233:12346/api/client \
+-H 'Content-Type: application/json' \
+--data @&lt;(cat &lt;&lt;EOF
+{"path":"$QB_DOWNLOADS"}
+EOF)</pre>
+                </el-card>
+            </el-col>
+        </el-row>
+
         <el-form label-position="right" label-width="auto" :model="settings">
             <el-form-item label="源前缀">
                 <el-input v-model="settings.original" placeholder="需要替换的前缀"></el-input>
@@ -95,7 +120,11 @@ export default {
 <style scoped>
 
 .body-wrap{
-    margin: 15px 5px 5px 5px;
+    margin: 5px 5px 5px 5px;
+}
+
+.row-card{
+    margin-bottom: 20px;
 }
 
 .el-form-item {

@@ -50,7 +50,7 @@
             <el-divider>扩展功能</el-divider>
             <el-form-item label="刷新emby库">
                 <el-input v-model="transconfig.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
-                <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/">参考链接</a>
+                <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/&do=findComment&comment=487929">参考链接</a>
             </el-form-item>
             <el-form-item label="清理其他文件">
                 <el-switch

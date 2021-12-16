@@ -19,7 +19,7 @@
                 <el-input v-model="renameconf.prefix" placeholder="默认S01E, 将匹配的 E11或 [11] 修正为 S01E11"></el-input>
             </el-form-item>
             <el-form-item v-if="renametype==0" >
-                <el-button type="info" size="medium" @click="preview">预览</el-button>
+                <el-button type="info" size="medium" @click="preview">预览重命名</el-button>
                 <el-button type="primary" size="medium" @click="apply">应用</el-button>
             </el-form-item>
 
@@ -34,9 +34,9 @@
             </el-form-item>
         </el-form>
         <el-divider></el-divider>
-                
+
         <el-row>
-            <el-col :span="10">
+            <el-col :span="10" offset="1">
                 <div class="grid-content">
                    <el-input
                         readonly
@@ -48,10 +48,7 @@
                     </el-input>
                 </div>
             </el-col>
-            <el-col :span="4"><div class="grid-content">
-                   <i class="el-icon-mobile-phone"></i>
-                </div></el-col>
-            <el-col :span="10"><div class="grid-content">
+            <el-col :span="10" offset="2"><div class="grid-content">
                    <el-input
                         readonly
                         type="textarea"
@@ -104,11 +101,11 @@ export default {
                 .then(response => {
                     for(var i in response.data.prefix){
                         var fix= response.data.prefix[i];  
-                        this.fixnames += fix + "\r\n"; 
+                        this.fixnames += fix + "\r\n\r\n"; 
                     }
                     for(var j in response.data.todo){
                         var src = response.data.todo[j];
-                        this.prenames += src + "\r\n"; 
+                        this.prenames += src + "\r\n\r\n"; 
                     }
                 })
                 .catch(function (error) {
