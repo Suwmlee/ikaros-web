@@ -202,7 +202,6 @@ export default {
         };
     },
     created(){
-        console.log('init data')
         this.starttimer()
         this.getconfs()
     },
@@ -213,9 +212,6 @@ export default {
         onSubmit() {
             this.starttimer()
             axios.post('/api/transfer',this.transconfig)
-                .then(response => {
-                    console.log(response)
-                })
                 .catch(function (error) {
                     console.log(error);
                 });

@@ -27,7 +27,6 @@ export default {
     mounted(){
         axios.get('/api/loglevel')
             .then(response => {
-                console.log(response)
                 this.loglevel = response.data.loglevel;
             })
             .catch(function (error) {

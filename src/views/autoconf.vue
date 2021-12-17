@@ -77,7 +77,6 @@ export default {
     mounted(){
         axios.get('/api/autoconf')
             .then(response => {
-                console.log(response)
                 this.settings = response.data;
             })
             .catch(function (error) {
@@ -101,8 +100,13 @@ export default {
         },
         clean() {
             axios.get('/api/client/clean')
-                .then(response => {
-                    console.log(response)
+                .then(() => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '清理完成',
+                        type: 'success'
+                    })
                 })
                 .catch(function (error) {
                     console.log(error);

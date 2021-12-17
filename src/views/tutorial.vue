@@ -25,13 +25,12 @@ export default {
   methods: {
     getContent() {
       axios.get('/api/intro')
-                .then(response => {
-                    console.log(response)
-                    this.fileContent = response.data
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            .then(response => {
+                this.fileContent = response.data
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
   }
 }

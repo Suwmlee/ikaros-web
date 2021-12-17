@@ -156,7 +156,6 @@ export default {
         }
     },
     created(){
-        console.log('init data')
         this.refresh()
         this.setDialogWidth()
     },
@@ -270,7 +269,7 @@ export default {
             this.pagesize = val
         },
         setDialogWidth() {
-            console.log(document.body.clientWidth)
+            // console.log(document.body.clientWidth)
             var val = document.body.clientWidth
             const def = 700
             if (val < def) {

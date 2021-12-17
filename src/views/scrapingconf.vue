@@ -135,7 +135,6 @@ export default {
     mounted(){
         axios.get('/api/scrapingconf')
             .then(response => {
-                console.log(response)
                 this.settings = response.data;
 
                 if (response.data.main_mode === 3) {

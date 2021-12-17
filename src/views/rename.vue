@@ -99,14 +99,7 @@ export default {
             this.prenames = "",
             axios.post('/api/renamebyreg',this.renameconf)
                 .then(response => {
-                    for(var i in response.data.prefix){  
-                        let fix: string= i + "."+ response.data.prefix[i];  
-                        this.fixnames += fix + "\r\n"; 
-                    } 
-                    for(var j in response.data.todo){ 
-                        var src = j + "."+ response.data.todo[j];  
-                        this.prenames += src + "\r\n"; 
-                    }
+                    this.prenames = response.data
                 })
                 .catch(function (error) {
                     console.log(error);
