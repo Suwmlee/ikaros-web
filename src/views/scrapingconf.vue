@@ -77,8 +77,8 @@
 
             <el-form-item label="刮削顺序" >
                 <el-switch
-                    active-text="同时使用多个源刮削"
-                    inactive-text="按照源顺序刮削"
+                    active-text="同时使用多个源"
+                    inactive-text="按照顺序"
                     v-model="settings.async_request"
                     active-color="#13ce66"
                     inactive-color="#ff4949">

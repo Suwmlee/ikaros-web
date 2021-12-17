@@ -1,12 +1,12 @@
 <template>
     <div class="body-wrap">
         <div >
-            <el-button type="primary" @click="cleandata">清理记录</el-button>
+            <el-button type="primary" @click="cleandata">清理</el-button>
             <div slot="tip" class="el-upload__tip">清理源文件已不存在的记录</div>
         </div>
         <el-divider />
         <div >
-            <el-button type="primary" @click="exportdb" >导出记录</el-button>
+            <el-button type="primary" @click="exportdb" >导出</el-button>
         </div>
         <el-divider />
         <div class="div-upload">
@@ -16,9 +16,9 @@
                 :file-list="fileList"
                 :multiple="multifile"
                 :auto-upload="false">
-                <el-button slot="trigger" type="primary">选择文件</el-button>
-                <el-button style="margin-left: 10px;" type="success" @click="submitUpload">导入记录</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传xls/xlsx文件</div>
+                <el-button slot="trigger" type="primary">选择记录</el-button>
+                <el-button style="margin-left: 10px;" type="success" @click="submitUpload">导入</el-button>
+                <div slot="tip" class="el-upload__tip">只能导入xls/xlsx文件</div>
             </el-upload>
         </div>
     </div>

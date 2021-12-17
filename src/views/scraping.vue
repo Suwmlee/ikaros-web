@@ -74,7 +74,7 @@
                     <el-button
                     size="mini"
                     type="primary"
-                    @click="handleSingle(scope.$index, scope.row)">刮削</el-button>
+                    @click="handleSingle(scope.$index, scope.row)">修正</el-button>
                     <el-button
                     size="mini"
                     @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
