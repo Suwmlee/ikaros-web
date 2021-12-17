@@ -34,32 +34,32 @@
             <el-form-item label="过滤目录">
                 <el-input v-model="transconfig.escape_folder"></el-input>
             </el-form-item>
-            <el-form-item label="修正剧集命名" >
+            <el-form-item label="修正剧集名" >
                 <el-switch
                     v-model="transconfig.fix_series"
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
             </el-form-item>
-            <el-form-item v-if="transconfig.fix_series" label="指定文件(夹)">
-                <el-input v-model="transconfig.specified_files" placeholder="可针对源目录下的特定文件"></el-input>
+            <el-form-item v-if="transconfig.fix_series" label="指定内容">
+                <el-input v-model="transconfig.specified_files" placeholder="可针对源目录下的特定文件(夹)"></el-input>
             </el-form-item>
             <el-form-item label="备注">
                 <el-input v-model="transconfig.mark"></el-input>
             </el-form-item>
             <el-divider>扩展功能</el-divider>
-            <el-form-item label="刷新emby库">
+            <el-form-item label="刷新emby">
                 <el-input v-model="transconfig.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
                 <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/&do=findComment&comment=487929">参考链接</a>
             </el-form-item>
-            <el-form-item label="清理其他文件">
+            <el-form-item label="删除其他">
                 <el-switch
                     v-model="transconfig.clean_others"
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
             </el-form-item>
-            <el-form-item label="移除中文字符">
+            <el-form-item label="移除中文">
                 <el-switch
                     v-model="transconfig.replace_CJK"
                     active-color="#13ce66"
