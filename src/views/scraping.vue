@@ -297,8 +297,8 @@ export default {
 }
 
 .radio-btn {
-    height: 40px;
-    width: 70px;
+    margin: 8px auto;
+    width: 100px;
 }
 
 </style>

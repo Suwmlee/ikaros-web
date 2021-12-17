@@ -61,8 +61,8 @@ export default {
 }
 
 .radio-btn {
-    height: 40px;
-    width: 80px;
+    margin: 8px auto;
+    width: 100px;
 }
 
 </style>
