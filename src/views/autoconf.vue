@@ -1,39 +1,35 @@
 <template>
     <div class="body-wrap">
-        <el-row class="row-card">
-            <el-col :span="10" offset="1">
-                <el-card>
-                    <div slot="header" class="clearfix">
-                        <span>Transmission种子下载完成后执行脚本:</span>
-                    </div>
-<pre>
-#!/bin/bash
-TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
-curl -XPOST http://192.168.1.233:12346/api/client \
--H 'Content-Type: application/json' \
---data @&lt;(cat &lt;&lt;EOF
-{"path":"$TR_DOWNLOADS"}
-EOF
-)</pre>
-                </el-card>
-            </el-col>
-            <el-col :offset="1" :span="10">
-                <el-card>
-                    <div slot="header" class="clearfix">
-                        <span>qBittorrent种子下载完成后执行脚本:</span>
-                    </div>
-<pre>
-#!/bin/bash
-# qbcomplete.sh %D %N
-QB_DOWNLOADS="${1}/${2}"
-curl -XPOST http://192.168.1.233:12346/api/client \
--H 'Content-Type: application/json' \
---data @&lt;(cat &lt;&lt;EOF
-{"path":"$QB_DOWNLOADS"}
-EOF)</pre>
-                </el-card>
-            </el-col>
-        </el-row>
+        <div class="row-card">
+            <el-collapse >
+                <el-collapse-item title="Transmission种子下载完成后执行脚本:" name="1">
+                    <pre class="pre-md">
+                        <code>
+        #!/bin/bash
+        TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
+        curl -XPOST http://127.0.0.1:12346/api/client \
+        -H 'Content-Type: application/json' \
+        --data @&lt;(cat &lt;&lt;EOF
+        {"path":"$TR_DOWNLOADS"}
+        EOF
+        )</code>
+                    </pre>
+                </el-collapse-item>
+                <el-collapse-item title="qBittorrent种子下载完成后执行脚本:" name="2">
+                    <pre class="pre-md">
+                        <code>
+        #!/bin/bash
+        TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
+        curl -XPOST http://127.0.0.1:12346/api/client \
+        -H 'Content-Type: application/json' \
+        --data @&lt;(cat &lt;&lt;EOF
+        {"path":"$TR_DOWNLOADS"}
+        EOF
+        )</code> 
+                    </pre>
+                </el-collapse-item>
+            </el-collapse>
+        </div>
 
         <el-form label-position="right" label-width="auto" :model="settings">
             <el-form-item label="源前缀">
@@ -136,6 +132,12 @@ export default {
     margin-top: 3px;
     font-size: 12px;
     line-height: normal;
+}
+
+.pre-md {
+    overflow-x:auto;
+    background-color: #f6f8fa;
+    padding: 5px;
 }
 
 </style>
