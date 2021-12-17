@@ -96,24 +96,24 @@
             :total="totalnum">
         </el-pagination>
 
-        <el-dialog append-to-body :close-on-click-modal="false" :visible.sync="editdialog" width="400px">
-            <el-form inline size="small" :model="rowrecord" label-width="100px">
+        <el-dialog :close-on-click-modal="false" :visible.sync="editdialog" :width="dialogWidth">
+            <el-form :model="rowrecord" label-width="auto">
                 <el-form-item label="原始名称" prop="srcname">
-                    <span v-text="rowrecord.srcname" style="width: 370px;" />
+                    <span v-text="rowrecord.srcname" />
                 </el-form-item>
                 <el-form-item label="原始地址" prop="srcpath">
-                    <span v-text="rowrecord.srcpath" style="width: 370px;" />
+                    <span v-text="rowrecord.srcpath" />
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="rowrecord.status">
-                        <el-radio :label="0">未刮削</el-radio>
-                        <el-radio :label="1">完成</el-radio>
-                        <el-radio :label="2">失败</el-radio>
-                        <el-radio :label="3">忽略</el-radio>
+                        <el-radio class="radio-btn" :label="0">未刮削</el-radio>
+                        <el-radio class="radio-btn" :label="1">完成</el-radio>
+                        <el-radio class="radio-btn" :label="2">失败</el-radio>
+                        <el-radio class="radio-btn" :label="3">忽略</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="刮削用名称" prop="scrapingname">
-                    <el-input v-model="rowrecord.scrapingname" style="width: 200px;" />
+                <el-form-item label="刮削番号" prop="scrapingname">
+                    <el-input v-model="rowrecord.scrapingname" />
                 </el-form-item>
                 <el-form-item label="强制中文" prop="cnsubtag">
                     <el-radio-group v-model="rowrecord.cnsubtag">
@@ -122,7 +122,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="分集标识" prop="cdnum">
-                    <el-input v-model="rowrecord.cdnum" style="width: 200px;" />
+                    <el-input v-model="rowrecord.cdnum" />
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -142,6 +142,7 @@ export default {
     data() {
         return {
             running: false,
+            dialogWidth: 0,
             tips: '当前无任务',
             currentPage: 1,
             totalnum: 10,
@@ -157,9 +158,15 @@ export default {
     created(){
         console.log('init data')
         this.refresh()
+        this.setDialogWidth()
     },
     mounted() {
         this.timer = setInterval(this.refresh, 1500);
+        window.onresize = () => {
+            return (() => {
+                this.setDialogWidth()
+            })()
+        }
     },
     beforeDestroy() {
         clearInterval(this.timer);
@@ -262,6 +269,16 @@ export default {
         handleSizeChange(val: number) {
             this.pagesize = val
         },
+        setDialogWidth() {
+            console.log(document.body.clientWidth)
+            var val = document.body.clientWidth
+            const def = 700
+            if (val < def) {
+                this.dialogWidth = '90%'
+            } else {
+                this.dialogWidth = def + 'px'
+            }
+        },
     }
 }
 </script>
@@ -277,6 +294,11 @@ export default {
 
 .alter-tip {
     margin: 5px;
+}
+
+.radio-btn {
+    height: 40px;
+    width: 70px;
 }
 
 </style>
