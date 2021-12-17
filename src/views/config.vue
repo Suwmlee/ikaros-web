@@ -3,10 +3,10 @@
         <el-form label-position="right" label-width="auto" >
            <el-form-item label="日志等级">
                 <el-radio-group v-model="loglevel" @change="onSubmit">
-                    <el-radio :label="10">DEBUG</el-radio>
-                    <el-radio :label="20">INFO</el-radio>
-                    <el-radio :label="30">WARNING</el-radio>
-                    <el-radio :label="40">ERROR</el-radio>
+                    <el-radio class="radio-btn" :label="10">DEBUG</el-radio>
+                    <el-radio class="radio-btn" :label="20">INFO</el-radio>
+                    <el-radio class="radio-btn" :label="30">WARNING</el-radio>
+                    <el-radio class="radio-btn" :label="40">ERROR</el-radio>
                 </el-radio-group>
             </el-form-item>
         </el-form>
@@ -58,6 +58,11 @@ export default {
 
 .body-wrap{
     margin: 15px 5px 5px 5px;
+}
+
+.radio-btn {
+    height: 40px;
+    width: 80px;
 }
 
 </style>

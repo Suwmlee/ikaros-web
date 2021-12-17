@@ -8,10 +8,10 @@
             </el-form-item>
             <el-form-item label="输出模式" >
                 <el-radio-group v-model="mode">
-                    <el-radio :label="1">软链接</el-radio>
-                    <el-radio :label="2">硬链接</el-radio>
-                    <el-radio :label="3">移动文件</el-radio>
-                    <el-radio :label="4">直接刮削</el-radio>
+                    <el-radio class="radio-btn" :label="1">软链接</el-radio>
+                    <el-radio class="radio-btn" :label="2">硬链接</el-radio>
+                    <el-radio class="radio-btn" :label="3">移动文件</el-radio>
+                    <el-radio class="radio-btn" :label="4">直接刮削</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item v-if="mode==1" label="软链接前缀">
@@ -39,15 +39,15 @@
             <el-form-item label="刮削源">
                 <el-input v-model="settings.website_priority"></el-input>
             </el-form-item>
-            <el-form-item label="Javdb Cookies">
-                <el-input v-model="settings.cookies_javdb" placeholder="请输入Javdb Cookies(有效期7天)"></el-input>
+            <el-form-item label="Javdb">
+                <el-input v-model="settings.cookies_javdb" placeholder="Javdb Cookies(有效期7天)"></el-input>
             </el-form-item>
-            <el-form-item label="Javlib Cookies">
-                <el-input v-model="settings.cookies_javlib" placeholder="请输入Javlib Cookies"></el-input>
+            <el-form-item label="Javlib">
+                <el-input v-model="settings.cookies_javlib" placeholder="Javlib Cookies"></el-input>
             </el-form-item>
-            <el-form-item label="刷新emby库">
+            <el-form-item label="刷新emby">
                 <el-input v-model="settings.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
-                <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/&do=findComment&comment=487929">参考链接</a>
+                <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/&do=findComment&comment=487929">参考链接</a>,后缀增加apikey参数即可
             </el-form-item>
 
             <el-form-item label="添加水印" >
@@ -213,6 +213,11 @@ export default {
 
 .body-wrap{
     margin: 15px 5px 5px 5px;
+}
+
+.radio-btn {
+    height: 40px;
+    width: 80px;
 }
 
 </style>
