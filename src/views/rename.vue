@@ -36,7 +36,7 @@
         <el-divider></el-divider>
 
         <el-row>
-            <el-col :span="10" offset="1">
+            <el-col :span="10" :offset="1">
                 <div class="grid-content">
                    <el-input
                         readonly
@@ -48,7 +48,7 @@
                     </el-input>
                 </div>
             </el-col>
-            <el-col :span="10" offset="2"><div class="grid-content">
+            <el-col :span="10" :offset="2"><div class="grid-content">
                    <el-input
                         readonly
                         type="textarea"
