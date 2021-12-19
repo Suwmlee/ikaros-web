@@ -72,12 +72,11 @@
         <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
         <el-divider></el-divider>
         <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
-            <span v-if="!running">开始转移</span>
+            <span v-if="!running">开始</span>
             <span v-else>转移中...</span>
         </el-button>
         <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
-        <el-button type="danger" size="medium" @click="delrecords">清理记录</el-button>
-        <el-divider></el-divider>
+        <!-- <el-button type="danger" size="medium" @click="delrecords">清理记录</el-button> -->
 
         <el-alert class="alter-tip"
             v-if="running"
@@ -101,9 +100,9 @@
             <el-table-column label="原始地址" min-width="150" :show-overflow-tooltip="true"
                 prop="srcpath" >
             </el-table-column>
-            <el-table-column label="大小(MB)" width="80"
+            <!-- <el-table-column label="大小(MB)" width="80"
                 prop="srcsize" >
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column label="状态" width="80"
                 sortable="custom"
                 prop="status" >
@@ -142,6 +141,14 @@
             </el-table-column>
             <el-table-column label="更新时间" width="155"
                 prop="updatetime" >
+            </el-table-column>
+            <el-table-column label="操作" >
+                <template slot-scope="scope">
+                    <el-button
+                    size="mini"
+                    type="danger"
+                    @click="confirmDelete(scope.$index, scope.row)">删除</el-button>
+                </template>
             </el-table-column>
         </el-table>
         <el-pagination
@@ -187,18 +194,11 @@ export default {
             totalnum: 10,
             pagesize: 10,
             transferdata: [],
-            transconfig: {
-                // source_folder: '/media/Movies',
-                // linktype: 0,
-                // soft_prefix: '/volume1/Media/Movies',
-                // output_folder: '/media/Emby/Movies',
-                // escape_folder: '',
-                // mark: '',
-                // id: ''
-            },
+            transconfig: {},
             selectedoption: -1,
             options: [],
-            multipleSelection: []
+            multipleSelection: [],
+            dialogVisible: false
         };
     },
     created(){
@@ -396,7 +396,28 @@ export default {
         },
         handleSelectionChange(val) {
             this.multipleSelection = val;
-        }
+        },
+        confirmDelete(index, row) {
+            axios.delete('/api/transfer/record/'+ row.id)
+                .then(() => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '删除成功',
+                        type: 'success'
+                    })
+                    this.refresh()
+                })
+                .catch(function (error) {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '删除失败:'+ error,
+                        type: 'error'
+                    })
+
+                });
+        },
     }
 }
 </script>

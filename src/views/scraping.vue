@@ -3,7 +3,7 @@
         <el-row :gutter="24">
             <el-col :span="12" >
                 <el-button :loading="running" size="medium" type="primary" @click="start_all">
-                    <span v-if="!running">刮削</span>
+                    <span v-if="!running">开始</span>
                     <span v-else>刮削中...</span>
                 </el-button>
                 <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
