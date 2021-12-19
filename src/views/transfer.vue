@@ -71,13 +71,21 @@
         <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
         <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
         <el-divider></el-divider>
-        <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
-            <span v-if="!running">开始</span>
-            <span v-else>转移中...</span>
-        </el-button>
-        <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
-        <!-- <el-button type="danger" size="medium" @click="delrecords">清理记录</el-button> -->
-
+        <el-row>
+            <el-col :span="12" >
+                <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
+                    <span v-if="!running">开始</span>
+                    <span v-else>转移中...</span>
+                </el-button>
+                <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
+            </el-col>
+            <el-col :span="9" >
+                <el-input width='auto' placeholder="模糊查询"></el-input>
+            </el-col>
+            <el-col :span="1" :offset="1">
+                <el-button v-if="multipleSelection.length > 0" type="danger" size="medium" @click="delrecords">删除</el-button>
+            </el-col>
+        </el-row>
         <el-alert class="alter-tip"
             v-if="running"
             :title="tips"
@@ -146,8 +154,7 @@
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
-                    type="danger"
-                    @click="confirmDelete(scope.$index, scope.row)">删除</el-button>
+                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -264,7 +271,11 @@ export default {
             this.timerstatus = 0
         },
         delrecords() {
-            axios.delete('/api/transrecord')
+            var ids = new Array();
+            this.multipleSelection.forEach((item) => {
+                ids.push(item.id);
+            });
+            axios.delete('/api/transfer/record/delete', {data:ids})
                 .then( () => {
                     this.$message({
                         showClose: true,
@@ -397,26 +408,8 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
-        confirmDelete(index, row) {
-            axios.delete('/api/transfer/record/'+ row.id)
-                .then(() => {
-                    this.$message({
-                        showClose: true,
-                        duration: 2000,
-                        message: '删除成功',
-                        type: 'success'
-                    })
-                    this.refresh()
-                })
-                .catch(function (error) {
-                    this.$message({
-                        showClose: true,
-                        duration: 2000,
-                        message: '删除失败:'+ error,
-                        type: 'error'
-                    })
-
-                });
+        handleEdit(index: number, row) {
+            console.log(row)
         },
     }
 }
