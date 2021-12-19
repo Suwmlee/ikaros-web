@@ -275,7 +275,7 @@ export default {
             this.multipleSelection.forEach((item) => {
                 ids.push(item.id);
             });
-            axios.delete('/api/transfer/record/delete', {data:ids})
+            axios.delete('/api/transfer/record', {data:ids})
                 .then( () => {
                     this.$message({
                         showClose: true,
