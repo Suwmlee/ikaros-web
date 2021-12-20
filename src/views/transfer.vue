@@ -80,7 +80,7 @@
                 <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
             </el-col>
             <el-col :span="9" >
-                <el-input width='auto' placeholder="模糊查询"></el-input>
+                <el-input width='auto' v-model="blur" @input="handleSearch" placeholder="模糊查询"></el-input>
             </el-col>
             <el-col :span="1" :offset="1">
                 <el-button v-if="multipleSelection.length > 0" type="danger" size="medium" @click="delrecords">删除</el-button>
@@ -123,7 +123,7 @@
             <el-table-column label="剧集" width="80"
                 prop="isepisode" >
                 <template slot-scope="scope">
-                    <span v-if="scope.row.isepisode===true" >是</span>
+                    <span v-if="scope.row.isepisode===true" >✓</span>
                     <span v-if="scope.row.isepisode===false" ></span>
                 </template>
             </el-table-column>
@@ -175,6 +175,45 @@
             :path.sync="folderPath"
             @close="closeDialog"
             />
+
+        <el-dialog :close-on-click-modal="false" :visible.sync="editdialog" :width="dialogWidth">
+            <el-form :model="rowrecord" label-width="auto">
+                <el-form-item label="原始名称" prop="srcname">
+                    <span v-text="rowrecord.srcname" />
+                </el-form-item>
+                <el-form-item label="原始地址" prop="srcpath">
+                    <span v-text="rowrecord.srcpath" />
+                </el-form-item>
+                <el-form-item label="状态" prop="status">
+                    <el-radio-group v-model="rowrecord.status">
+                        <el-radio class="radio-btn" :label="0">正常</el-radio>
+                        <!-- <el-radio class="radio-btn" :label="1">锁定</el-radio> -->
+                        <el-radio class="radio-btn" :label="2">忽略</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="剧集" prop="isepisode">
+                    <el-switch
+                        v-model="rowrecord.isepisode"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
+                <el-form-item v-if="!rowrecord.isepisode" label="次级目录" prop="secondfolder">
+                    <el-input v-model="rowrecord.secondfolder" />
+                </el-form-item>
+                <el-form-item v-if="rowrecord.isepisode" label="季" prop="season">
+                    <el-input v-model="rowrecord.season" />
+                </el-form-item>
+                <el-form-item v-if="rowrecord.isepisode" label="集" prop="episode">
+                    <el-input v-model="rowrecord.episode" />
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="text" @click="dialogexit()">取消</el-button>
+                <el-button type="primary" @click="dialogupdate()" >修改</el-button>
+            </div>
+        </el-dialog>
+
     </div>
 
 </template>
@@ -200,17 +239,28 @@ export default {
             currentPage: 1,
             totalnum: 10,
             pagesize: 10,
+            blur: '',
             transferdata: [],
             transconfig: {},
             selectedoption: -1,
             options: [],
             multipleSelection: [],
-            dialogVisible: false
+            dialogVisible: false,
+            editdialog: false,
+            rowrecord: [],
         };
     },
     created(){
         this.starttimer()
         this.getconfs()
+        this.setDialogWidth()
+    },
+    mounted(){
+        window.onresize = () => {
+            return (() => {
+                this.setDialogWidth()
+            })()
+        }
     },
     beforeDestroy() {
         this.stoptimer()
@@ -234,7 +284,8 @@ export default {
         },
         refresh() {
             let pageparam: string = 'page=' + this.currentPage + '&size=' + this.pagesize
-            let geturl: string = '/api/transrecord?' + pageparam
+            let blurparam = '&blur=' + this.blur 
+            let geturl: string = '/api/transrecord?' + pageparam + blurparam
             axios.get(geturl)
                 .then(response => {
                     this.transferdata = response.data.data
@@ -409,8 +460,34 @@ export default {
             this.multipleSelection = val;
         },
         handleEdit(index: number, row) {
-            console.log(row)
+            this.rowrecord = row;
+            this.editdialog = true
         },
+        dialogexit() {
+            this.editdialog = false
+        },
+        dialogupdate() {
+            this.editdialog = false
+            axios.put('/api/transfer/record', this.rowrecord)
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        setDialogWidth() {
+            var val = document.body.clientWidth
+            const def = 700
+            if (val < def) {
+                this.dialogWidth = '90%'
+            } else {
+                this.dialogWidth = def + 'px'
+            }
+        },
+        handleSearch(){
+            this.refresh()
+        }
     }
 }
 </script>
