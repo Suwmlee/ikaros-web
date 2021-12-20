@@ -75,19 +75,22 @@
             </el-collapse-item>
         </el-collapse>
         <el-divider></el-divider>
-        <el-row>
-            <el-col :span="12" >
+        <el-row :gutter="24" >
+            <el-col :md="12" >
                 <el-button :loading="running" size="medium" type="primary" @click="onSubmit">
                     <span v-if="!running">开始</span>
                     <span v-else>转移中...</span>
                 </el-button>
                 <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
             </el-col>
-            <el-col :span="9" >
+            <el-col :md="8" >
                 <el-input width='auto' v-model="blur" @input="handleSearch" placeholder="模糊查询"></el-input>
             </el-col>
-            <el-col :span="1" :offset="1">
-                <el-button v-if="multipleSelection.length > 0" type="danger" size="medium" @click="delrecords">删除</el-button>
+            <el-col :md="3" :xs="10">
+                <el-button-group>
+                    <el-button icon="el-icon-edit" @click="editfolders"></el-button>
+                    <el-button :disabled="multipleSelection.length === 0" icon="el-icon-delete" type="danger" @click="delrecords"></el-button>
+                </el-button-group>
             </el-col>
         </el-row>
         <el-alert class="alter-tip"
@@ -112,9 +115,9 @@
             <el-table-column label="原始地址" min-width="150" :show-overflow-tooltip="true"
                 prop="srcpath" >
             </el-table-column>
-            <!-- <el-table-column label="大小(MB)" width="80"
-                prop="srcsize" >
-            </el-table-column> -->
+            <el-table-column label="顶层目录" width="100" :show-overflow-tooltip="true"
+                prop="topfolder" >
+            </el-table-column>
             <el-table-column label="状态" width="80"
                 sortable="custom"
                 prop="status" >
@@ -158,7 +161,8 @@
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
-                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    icon="el-icon-edit"
+                    @click="handleEdit(scope.$index, scope.row)"></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -191,9 +195,12 @@
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="rowrecord.status">
                         <el-radio class="radio-btn" :label="0">正常</el-radio>
-                        <!-- <el-radio class="radio-btn" :label="1">锁定</el-radio> -->
+                        <el-radio class="radio-btn" :label="1">锁定</el-radio>
                         <el-radio class="radio-btn" :label="2">忽略</el-radio>
                     </el-radio-group>
+                </el-form-item>
+                <el-form-item label="顶层目录" prop="topfolder">
+                    <el-input v-model="rowrecord.topfolder" />
                 </el-form-item>
                 <el-form-item label="剧集" prop="isepisode">
                     <el-switch
@@ -203,7 +210,7 @@
                     </el-switch>
                 </el-form-item>
                 <el-form-item v-if="!rowrecord.isepisode" label="次级目录" prop="secondfolder">
-                    <el-input v-model="rowrecord.secondfolder" />
+                    <el-input v-model="rowrecord.secondfolder" placeholder="特殊目录，例如: specials  extras"/>
                 </el-form-item>
                 <el-form-item v-if="rowrecord.isepisode" label="季" prop="season">
                     <el-input v-model="rowrecord.season" />
@@ -344,6 +351,12 @@ export default {
                     console.log(error);
                 });
         },
+        editfolders(){
+            console.log('te')
+        },
+        editfoldersEnable(){
+            return false
+        },
         handleCurrentChange(num: number){
             this.currentPage = num
             this.refresh()
@@ -474,6 +487,7 @@ export default {
             this.editdialog = false
             axios.put('/api/transfer/record', this.rowrecord)
                 .then(response => {
+                    this.refresh()
                     console.log(response)
                 })
                 .catch(function (error) {
@@ -504,6 +518,10 @@ export default {
 
 .alter-tip {
     margin: 5px;
+}
+
+.el-col {
+    margin-bottom: 10px;
 }
 
 </style>
