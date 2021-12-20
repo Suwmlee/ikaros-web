@@ -1,75 +1,79 @@
 <template>
     <div class="body-wrap">
-        <el-select v-model="selectedoption" 
-                   @change="changeConf"
-                   placeholder="请选择配置">
-            <el-option v-for="item in options"
-                       :key="item.id"
-                       :label="item.mark"
-                       :value="item.id">
-            </el-option>
-        </el-select>
-        <el-divider></el-divider>
-     
-        <el-form label-position="right" label-width="auto" :model="transconfig">
-            <el-form-item label="源目录">
-                <el-input v-model="transconfig.source_folder">
-                    <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
-                </el-input>
-            </el-form-item>
-            <el-form-item label="链接类型">
-                <el-radio-group v-model="transconfig.linktype">
-                    <el-radio :label="0">软链接</el-radio>
-                    <el-radio :label="1">硬链接</el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item v-if="transconfig.linktype==0" label="软链接前缀">
-                <el-input v-model="transconfig.soft_prefix"></el-input>
-            </el-form-item>
-            <el-form-item label="输出目录">
-                <el-input v-model="transconfig.output_folder">
-                    <el-button slot="append" icon="el-icon-search" @click="showOutputDialog"></el-button>
-                </el-input>
-            </el-form-item>
-            <el-form-item label="过滤目录">
-                <el-input v-model="transconfig.escape_folder"></el-input>
-            </el-form-item>
-            <el-form-item label="修正剧集名" >
-                <el-switch
-                    v-model="transconfig.fix_series"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                </el-switch>
-            </el-form-item>
-            <el-form-item v-if="transconfig.fix_series" label="指定内容">
-                <el-input v-model="transconfig.specified_files" placeholder="可针对源目录下的特定文件(夹)"></el-input>
-            </el-form-item>
-            <el-form-item label="备注">
-                <el-input v-model="transconfig.mark"></el-input>
-            </el-form-item>
-            <el-divider>扩展功能</el-divider>
-            <el-form-item label="刷新emby">
-                <el-input v-model="transconfig.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
-                <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/&do=findComment&comment=487929">参考链接</a>
-            </el-form-item>
-            <el-form-item label="删除其他">
-                <el-switch
-                    v-model="transconfig.clean_others"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                </el-switch>
-            </el-form-item>
-            <el-form-item label="移除中文">
-                <el-switch
-                    v-model="transconfig.replace_CJK"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                </el-switch>
-            </el-form-item>
-        </el-form>
-        <el-button type="primary" size="medium" @click="addconf">新增</el-button>
-        <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
-        <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
+        <el-collapse >
+            <el-collapse-item>
+                <template slot="title">
+                    <el-select v-model="selectedoption"
+                            @change="changeConf"
+                            placeholder="请选择配置">
+                        <el-option v-for="item in options"
+                                :key="item.id"
+                                :label="item.mark"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </template>
+            <el-form label-position="right" label-width="auto" :model="transconfig" style="margin-top:15px">
+                <el-form-item label="源目录:">
+                    <el-input v-model="transconfig.source_folder">
+                        <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="链接类型:">
+                    <el-radio-group v-model="transconfig.linktype">
+                        <el-radio :label="0">软链接</el-radio>
+                        <el-radio :label="1">硬链接</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item v-if="transconfig.linktype==0" label="软链接前缀:">
+                    <el-input v-model="transconfig.soft_prefix"></el-input>
+                </el-form-item>
+                <el-form-item label="输出目录:">
+                    <el-input v-model="transconfig.output_folder">
+                        <el-button slot="append" icon="el-icon-search" @click="showOutputDialog"></el-button>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="过滤目录:">
+                    <el-input v-model="transconfig.escape_folder"></el-input>
+                </el-form-item>
+                <el-form-item label="修正剧集名:" >
+                    <el-switch
+                        v-model="transconfig.fix_series"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
+                <el-form-item v-if="transconfig.fix_series" label="指定内容:">
+                    <el-input v-model="transconfig.specified_files" placeholder="可针对源目录下的特定文件(夹)"></el-input>
+                </el-form-item>
+                <el-form-item label="备注:">
+                    <el-input v-model="transconfig.mark"></el-input>
+                </el-form-item>
+                <el-divider>扩展功能</el-divider>
+                <el-form-item label="刷新emby:">
+                    <el-input v-model="transconfig.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
+                    <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/&do=findComment&comment=487929">参考链接</a>
+                </el-form-item>
+                <el-form-item label="删除其他:">
+                    <el-switch
+                        v-model="transconfig.clean_others"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
+                <el-form-item label="移除中文:">
+                    <el-switch
+                        v-model="transconfig.replace_CJK"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
+            </el-form>
+            <el-button type="primary" size="medium" @click="addconf">新增</el-button>
+            <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
+            <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
+            </el-collapse-item>
+        </el-collapse>
         <el-divider></el-divider>
         <el-row>
             <el-col :span="12" >
