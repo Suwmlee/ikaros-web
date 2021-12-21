@@ -13,7 +13,7 @@
                         </el-option>
                     </el-select>
                 </template>
-            <el-form label-position="right" label-width="auto" :model="transconfig" style="margin-top:15px">
+            <el-form label-position="right" label-width="90px" :model="transconfig" style="margin-top:15px">
                 <el-form-item label="源目录:">
                     <el-input v-model="transconfig.source_folder">
                         <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
