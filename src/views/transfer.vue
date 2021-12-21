@@ -88,7 +88,7 @@
             </el-col>
             <el-col :md="3" :xs="10">
                 <el-button-group>
-                    <el-button icon="el-icon-edit" @click="editfolders"></el-button>
+                    <!-- <el-button icon="el-icon-edit" @click="editfolders"></el-button> -->
                     <el-button :disabled="multipleSelection.length === 0" icon="el-icon-delete" type="danger" @click="delrecords"></el-button>
                 </el-button-group>
             </el-col>
