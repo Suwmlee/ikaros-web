@@ -185,7 +185,7 @@
             />
 
         <el-dialog :close-on-click-modal="false" :visible.sync="editdialog" :width="dialogWidth">
-            <el-form :model="rowrecord" label-width="auto">
+            <el-form :model="rowrecord" label-width="75px">
                 <el-form-item label="原始名称" prop="srcname">
                     <span v-text="rowrecord.srcname" />
                 </el-form-item>
