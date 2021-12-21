@@ -201,6 +201,7 @@
                 </el-form-item>
                 <el-form-item label="顶层目录" prop="topfolder">
                     <el-input v-model="rowrecord.topfolder" />
+                    <el-checkbox v-model="renameAllTop">更改所有相同的顶层目录</el-checkbox>
                 </el-form-item>
                 <el-form-item label="剧集" prop="isepisode">
                     <el-switch
@@ -211,9 +212,11 @@
                 </el-form-item>
                 <el-form-item v-if="!rowrecord.isepisode" label="次级目录" prop="secondfolder">
                     <el-input v-model="rowrecord.secondfolder" placeholder="特殊目录，例如: specials  extras"/>
+                    <el-checkbox v-model="renameAllSub">更改所有相同的次级目录</el-checkbox>
                 </el-form-item>
                 <el-form-item v-if="rowrecord.isepisode" label="季" prop="season">
                     <el-input v-model="rowrecord.season" />
+                    <el-checkbox v-model="renameAllSub">更改所有相同的目录</el-checkbox>
                 </el-form-item>
                 <el-form-item v-if="rowrecord.isepisode" label="集" prop="episode">
                     <el-input v-model="rowrecord.episode" />
@@ -259,6 +262,8 @@ export default {
             dialogVisible: false,
             editdialog: false,
             rowrecord: [],
+            renameAllTop: false,
+            renameAllSub: false,
         };
     },
     created(){
@@ -479,12 +484,16 @@ export default {
         handleEdit(index: number, row) {
             this.rowrecord = row;
             this.editdialog = true
+            this.renameAllTop = false
+            this.renameAllSub = false
         },
         dialogexit() {
             this.editdialog = false
         },
         dialogupdate() {
             this.editdialog = false
+            this.rowrecord.renameAllTop = this.renameAllTop
+            this.rowrecord.renameAllSub = this.renameAllSub
             axios.put('/api/transfer/record', this.rowrecord)
                 .then(response => {
                     this.refresh()
