@@ -112,11 +112,14 @@
             <el-table-column label="原始名称"  min-width="150" :show-overflow-tooltip="true"
                 prop="srcname" >
             </el-table-column>
-            <el-table-column label="原始地址" min-width="150" :show-overflow-tooltip="true"
+            <el-table-column label="原始地址" min-width="120" :show-overflow-tooltip="true"
                 prop="srcpath" >
             </el-table-column>
-            <el-table-column label="顶层目录" width="100" :show-overflow-tooltip="true"
+            <el-table-column label="顶层目录" width="120" :show-overflow-tooltip="true"
                 prop="topfolder" >
+            </el-table-column>
+            <el-table-column label="次级目录" width="100" :show-overflow-tooltip="true"
+                prop="secondfolder" >
             </el-table-column>
             <el-table-column label="状态" width="80"
                 sortable="custom"
@@ -134,24 +137,24 @@
                     <span v-if="scope.row.isepisode===false" ></span>
                 </template>
             </el-table-column>
-            <el-table-column label="季" width="80"
+            <el-table-column label="季" width="70"
                 prop="season" >
                  <template slot-scope="scope">
                     <span v-if="scope.row.season===-1" ></span>
                     <span v-if="scope.row.season > -1" >{{scope.row.season}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="集数" width="80"
+            <el-table-column label="集数" width="50"
                 prop="episode" >
                  <template slot-scope="scope">
                     <span v-if="scope.row.episode===-1" ></span>
                     <span v-if="scope.row.episode > -1" >{{scope.row.episode}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="链接路径" min-width="150" :show-overflow-tooltip="true"
+            <el-table-column label="链接路径" min-width="120" :show-overflow-tooltip="true"
                 prop="linkpath" >
             </el-table-column>
-            <el-table-column label="实际路径" min-width="150" :show-overflow-tooltip="true"
+            <el-table-column label="实际路径" min-width="120" :show-overflow-tooltip="true"
                 prop="destpath" >
             </el-table-column>
             <el-table-column label="更新时间" width="155"

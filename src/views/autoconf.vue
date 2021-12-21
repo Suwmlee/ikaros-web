@@ -52,7 +52,7 @@
                 <el-input v-model="settings.mark" placeholder="备注"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">应用</el-button>
+                <el-button type="primary" @click="onSubmit">保存</el-button>
             </el-form-item>
             <el-divider>任务列表</el-divider>
             <el-form-item>
