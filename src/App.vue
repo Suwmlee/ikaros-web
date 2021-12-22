@@ -8,7 +8,7 @@
           <el-menu-item index="4">转移</el-menu-item>
           <el-menu-item index="5">重命名</el-menu-item>
           <el-menu-item index="6">自动</el-menu-item>
-          <el-menu-item index="7">配置</el-menu-item>
+          <el-menu-item index="7">选项</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
@@ -17,7 +17,7 @@
         <Transfer v-if="activeIndex==='4'" />
         <Reanme v-if="activeIndex==='5'" />
         <AutoConf v-if="activeIndex==='6'" />
-        <Config v-if="activeIndex==='7'" />
+        <Options v-if="activeIndex==='7'" />
       </el-main>
       <el-footer class="site-footer" ><a href="https://github.com/Suwmlee/ikaros">ikaros</a> {{ version }}</el-footer>
     </el-container>
@@ -32,7 +32,7 @@ import JavScraping from './views/javscraping.vue'
 import Transfer from './views/transfer.vue'
 import Reanme from './views/rename.vue'
 import AutoConf from './views/autoconf.vue'
-import Config from './views/config.vue'
+import Options from './views/options.vue'
 
 export default {
   name: 'App',
@@ -42,7 +42,7 @@ export default {
     Transfer,
     Reanme,
     AutoConf,
-    Config
+    Options
   },
   data() {
     return {

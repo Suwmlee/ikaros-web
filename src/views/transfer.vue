@@ -139,14 +139,14 @@
             </el-table-column>
             <el-table-column label="季" width="55"
                 prop="season" >
-                 <template slot-scope="scope">
+                <template slot-scope="scope">
                     <span v-if="scope.row.season===-1" ></span>
                     <span v-if="scope.row.season > -1" >{{scope.row.season}}</span>
                 </template>
             </el-table-column>
             <el-table-column label="集" width="100"
                 prop="episode" >
-                 <template slot-scope="scope">
+                <template slot-scope="scope">
                     <span v-if="scope.row.episode===-1" ></span>
                     <span v-if="scope.row.episode != -1" >{{scope.row.episode}}</span>
                 </template>
@@ -219,7 +219,7 @@
                 </el-form-item>
                 <el-form-item v-if="rowrecord.isepisode" label="季" prop="season">
                     <el-input v-model="rowrecord.season" />
-                    <el-checkbox v-model="renameAllSub">更改所有相同的目录</el-checkbox>
+                    <el-checkbox v-model="renameAllSub">更改所有相同的季</el-checkbox>
                 </el-form-item>
                 <el-form-item v-if="rowrecord.isepisode" label="集" prop="episode">
                     <el-input v-model="rowrecord.episode" />
