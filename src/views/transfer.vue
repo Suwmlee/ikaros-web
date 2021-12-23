@@ -151,9 +151,9 @@
                     <span v-if="scope.row.episode != -1" >{{scope.row.episode}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="链接路径" min-width="120" :show-overflow-tooltip="true"
+            <!-- <el-table-column label="链接路径" min-width="120" :show-overflow-tooltip="true"
                 prop="linkpath" >
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column label="实际路径" min-width="120" :show-overflow-tooltip="true"
                 prop="destpath" >
             </el-table-column>
