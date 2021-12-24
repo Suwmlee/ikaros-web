@@ -99,6 +99,9 @@ export default {
                 console.log(error);
             });
     },
+    beforeDestroy() {
+        clearInterval(this.timer);
+    },
     methods: {
         onSubmit() {
             axios.post('/api/auto/conf',this.settings)
