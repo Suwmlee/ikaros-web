@@ -159,10 +159,10 @@ export default {
         }
     },
     created(){
-        this.refresh()
         this.setDialogWidth()
     },
     mounted() {
+        this.refresh()
         this.timer = setInterval(this.refresh, 1500);
         window.onresize = () => {
             return (() => {

@@ -16,7 +16,7 @@
         <JavScraping v-if="activeIndex==='3'" />
         <Transfer v-if="activeIndex==='4'" />
         <Reanme v-if="activeIndex==='5'" />
-        <AutoConf v-if="activeIndex==='6'" />
+        <Automation v-if="activeIndex==='6'" />
         <Options v-if="activeIndex==='7'" />
       </el-main>
       <el-footer class="site-footer" ><a href="https://github.com/Suwmlee/ikaros">ikaros</a> {{ version }}</el-footer>
@@ -31,7 +31,7 @@ import Tutorial from './views/tutorial.vue'
 import JavScraping from './views/javscraping.vue'
 import Transfer from './views/transfer.vue'
 import Reanme from './views/rename.vue'
-import AutoConf from './views/autoconf.vue'
+import Automation from './views/automation.vue'
 import Options from './views/options.vue'
 
 export default {
@@ -41,7 +41,7 @@ export default {
     JavScraping,
     Transfer,
     Reanme,
-    AutoConf,
+    Automation,
     Options
   },
   data() {

@@ -54,13 +54,26 @@
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">保存</el-button>
             </el-form-item>
-            <el-divider>任务列表</el-divider>
-            <el-form-item>
-                <el-button type="danger" @click="clean">清理任务队列</el-button>
-                TODO: 增加当前任务队列 列表
-            </el-form-item>
+        
         </el-form>
+        <el-divider>任务列表</el-divider>
+        <div >
+            <el-button type="danger" @click="clean" >清空</el-button>
+        </div>
 
+        <el-table
+            :data="records"
+            style="width: 95%">
+            <el-table-column
+                prop="path"
+                label="任务路径"
+                >
+            </el-table-column>
+            <el-table-column
+                prop="status"
+                label="状态">
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 
@@ -68,14 +81,17 @@
 import axios from 'axios'
 
 export default {
-    name: 'autoconf',
+    name: 'automation',
     data() { 
         return {
-            settings: {}
+            settings: {},
+            records: []
         };
     },
     mounted(){
-        axios.get('/api/autoconf')
+        this.getTasks()
+        this.timer = setInterval(this.getTasks, 1500);
+        axios.get('/api/auto/conf')
             .then(response => {
                 this.settings = response.data;
             })
@@ -85,7 +101,7 @@ export default {
     },
     methods: {
         onSubmit() {
-            axios.post('/api/autoconf',this.settings)
+            axios.post('/api/auto/conf',this.settings)
                 .then( () => {
                     this.$message({
                         showClose: true,
@@ -98,8 +114,17 @@ export default {
                     console.log(error);
                 });
         },
+        getTasks() {
+            axios.get('/api/auto/task')
+                .then(response => {
+                    this.records = response.data
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
         clean() {
-            axios.get('/api/client/clean')
+            axios.delete('/api/auto/task')
                 .then(() => {
                     this.$message({
                         showClose: true,
