@@ -44,7 +44,7 @@
                     </el-switch>
                 </el-form-item>
                 <el-form-item v-if="transconfig.fix_series" label="指定内容:">
-                    <el-input v-model="transconfig.specified_files" placeholder="可针对源目录下的特定文件(夹),完整路径"></el-input>
+                    <el-input v-model="transconfig.specified_files" placeholder="完整路径;可针对源目录下的特定文件(夹)"></el-input>
                 </el-form-item>
                 <el-form-item label="备注:">
                     <el-input v-model="transconfig.mark"></el-input>

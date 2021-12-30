@@ -117,6 +117,7 @@
                 </el-form-item>
                 <el-form-item label="刮削番号" prop="scrapingname">
                     <el-input v-model="rowrecord.scrapingname" />
+                    <div class="tip-info" >强制使用此番号刮削</div>
                 </el-form-item>
                 <el-form-item label="强制中文" prop="cnsubtag">
                     <el-radio-group v-model="rowrecord.cnsubtag">
@@ -126,6 +127,7 @@
                 </el-form-item>
                 <el-form-item label="分集标识" prop="cdnum">
                     <el-input v-model="rowrecord.cdnum" />
+                    <div class="tip-info" >设置分集编号;默认0，非分集影片</div>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -303,4 +305,10 @@ export default {
     width: 100px;
 }
 
+.tip-info {
+    color: gray;
+    margin-top: 3px;
+    font-size: 12px;
+    line-height: normal;
+}
 </style>
