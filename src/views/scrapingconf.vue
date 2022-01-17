@@ -45,9 +45,8 @@
             <el-form-item label="Javlib">
                 <el-input v-model="settings.cookies_javlib" placeholder="Javlib Cookies"></el-input>
             </el-form-item>
-            <el-form-item label="刷新emby">
-                <el-input v-model="settings.refresh_url" placeholder="完整的刷新emby库链接"></el-input>
-                <a href="https://emby.media/community/index.php?/topic/50862-trigger-a-library-rescan-via-cmd-line/&do=findComment&comment=487929">参考链接</a>,后缀增加apikey参数即可
+            <el-form-item label="刷新Emby">
+                <el-input v-model="settings.refresh_url" placeholder="Emby库刷新链接，查看说明文档"></el-input>
             </el-form-item>
 
             <el-form-item label="添加水印" >
