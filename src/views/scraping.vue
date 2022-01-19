@@ -119,15 +119,15 @@
                     <el-input v-model="rowrecord.scrapingname" />
                     <div class="tip-info" >强制使用此番号刮削</div>
                 </el-form-item>
-                <el-form-item label="强制中文" prop="cnsubtag">
-                    <el-radio-group v-model="rowrecord.cnsubtag">
-                        <el-radio :label="true">开启</el-radio>
-                        <el-radio :label="false">关闭</el-radio>
-                    </el-radio-group>
+                <el-form-item label="中文标记" prop="cnsubtag">
+                    <el-switch
+                        v-model="rowrecord.cnsubtag"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
                 </el-form-item>
-                <el-form-item label="分集标识" prop="cdnum">
-                    <el-input v-model="rowrecord.cdnum" />
-                    <div class="tip-info" >设置分集编号;默认0，非分集影片</div>
+                <el-form-item label="分集编号" prop="cdnum">
+                    <el-input type="number" v-model="rowrecord.cdnum" :min="0"/>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
