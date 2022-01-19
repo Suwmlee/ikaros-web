@@ -45,18 +45,18 @@
                     <span v-if="scope.row.status===4" >进行中</span>
                 </template>
             </el-table-column>
-            <el-table-column label="刮削用名称" min-width="120" :show-overflow-tooltip="true"
+            <el-table-column label="刮削用番号" min-width="120" :show-overflow-tooltip="true"
                 prop="scrapingname" >
             </el-table-column>
-            <el-table-column label="强制中文" width="100"
+            <el-table-column label="中文" width="100"
                 sortable="custom"
                 prop="cnsubtag" >
                 <template slot-scope="scope">
-                    <span v-if="scope.row.cnsubtag===true" >开启</span>
+                    <span v-if="scope.row.cnsubtag===true" >是</span>
                     <span v-if="scope.row.cnsubtag===false" ></span>
                 </template>
             </el-table-column>
-            <el-table-column label="分集标识" min-width="80" :show-overflow-tooltip="true"
+            <el-table-column label="分集编号" min-width="80" :show-overflow-tooltip="true"
                 prop="cdnum">
                 <template slot-scope="scope">
                     <span v-if="scope.row.cdnum" v-text="scope.row.cdnum"></span>
