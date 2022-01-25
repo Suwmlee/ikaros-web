@@ -31,6 +31,14 @@
                 <div slot="tip" class="el-upload__tip">只能导入xls/xlsx文件</div>
             </el-upload>
         </div>
+
+        <div class="row">
+            <h2 >日志:</h2>
+            <div class="logging_window">
+                <pre id="output"></pre>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -54,6 +62,14 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
+
+        var output = document.getElementById('output');
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api/options/logstream', true);
+        xhr.send();
+        setInterval(function() {
+          output.textContent = xhr.responseText;
+        }, 500);
     },
     methods: {
         onSubmit() {
@@ -109,6 +125,29 @@ export default {
 
 .div-upload{
     width: 300px;
+}
+
+.logging_window{
+    display: block;
+    padding: 9.5px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    margin: auto;
+}
+
+pre {    
+    height: auto;
+    max-height: 800px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 </style>
