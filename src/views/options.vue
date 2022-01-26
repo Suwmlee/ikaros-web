@@ -15,7 +15,7 @@
             <div slot="tip" class="el-upload__tip">清理源文件已不存在的记录</div>
         </div>
         <el-divider />
-        <div >
+        <!-- <div >
             <el-button type="primary" @click="exportdb" >导出JAV记录</el-button>
         </div>
         <el-divider />
@@ -30,7 +30,7 @@
                 <el-button style="margin-left: 10px;" type="success" @click="submitUpload">导入JAV记录</el-button>
                 <div slot="tip" class="el-upload__tip">只能导入xls/xlsx文件</div>
             </el-upload>
-        </div>
+        </div> -->
 
         <div class="row">
             <h2 >日志:</h2>
