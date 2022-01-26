@@ -52,7 +52,8 @@ export default {
             loglevel: 20,
             fileList: [],
             multifile: false,
-            loginfo: ''
+            loginfo: '',
+            logtimer: null
         };
     },
     mounted(){
@@ -103,18 +104,31 @@ export default {
                     console.log(error);
                 });
         },
-        updateLog(){
+        xhrRequestLog() {
             var output = document.getElementById('output');
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/api/options/logstream', true);
+            xhr.onreadystatechange = function() {
+                switch(xhr.readyState){
+                    case 4://DONE
+                        console.log("restart xhr")
+                        clearInterval(this.logtimer)
+                        this.logtimer = null;
+                        this.updateLog()
+                        break;
+                }}.bind(this)
             xhr.send();
-            setInterval(function() {
+            this.logtimer = setInterval(function() {
                 if (this.loginfo != xhr.responseText) {
+                    console.log("update log")
                     this.loginfo = xhr.responseText;
                     output.textContent = this.loginfo;
                     output.scrollTop = output.scrollHeight; 
                 }
-            }, 500);
+            }.bind(this), 2000);
+        },
+        updateLog(){
+            setTimeout(function(){this.xhrRequestLog()}.bind(this), 1000)
         },
         // TODO formate
         logFormate(logs){
