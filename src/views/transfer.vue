@@ -247,6 +247,7 @@ export default {
     data() {
         return {
             running: false,
+            timer:null,
             timerstatus: 0,
             tips: '当前无任务',
             isDialogVisible: false,
@@ -274,7 +275,6 @@ export default {
     },
     mounted(){
         this.refresh()
-        this.starttimer()
         window.onresize = () => {
             return (() => {
                 this.setDialogWidth()
@@ -307,6 +307,7 @@ export default {
             let geturl: string = '/api/transrecord?' + pageparam + blurparam
             axios.get(geturl)
                 .then(response => {
+                    this.timerstatus = 0;
                     this.transferdata = response.data.data
                     this.currentPage = response.data.page
                     this.totalnum = response.data.total
@@ -318,26 +319,27 @@ export default {
                         let percentage = taskfinished / tasktotal * 100
                         this.tips = "转移进度: " + percentage.toFixed(2) + '%' + " [" + taskfinished + "/" + tasktotal + "]"
                         console.log(this.tips)
-                        if (this.timerstatus === 0) {
-                            this.starttimer()
-                        }
+
+                        this.starttimer()
                     }else{
                         this.stoptimer()
                     }
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     console.log(error);
-                    this.stoptimer()
-                });
+                    this.timerstatus = 0;
+                    this.starttimer()
+                }.bind(this));
         },
         starttimer(){
             if (this.timerstatus === 0) {
-                this.timer = setInterval(this.refresh, 1500);
+                this.timer = setTimeout(function() {this.refresh()}.bind(this), 2000)
                 this.timerstatus = 1
             }
         },
         stoptimer(){
             clearInterval(this.timer)
+            this.timer = null;
             this.timerstatus = 0
         },
         delrecords() {
