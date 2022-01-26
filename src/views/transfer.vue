@@ -249,7 +249,7 @@ export default {
             running: false,
             timer:null,
             timerstatus: 0,
-            tips: '当前无任务',
+            tips: '转移中',
             isDialogVisible: false,
             openDialogID: 1,
             folderPath:'',
@@ -286,6 +286,7 @@ export default {
     },
     methods: {
         onSubmit() {
+            this.running = true;
             this.starttimer()
             axios.post('/api/transfer',this.transconfig)
                 .catch(function (error) {
