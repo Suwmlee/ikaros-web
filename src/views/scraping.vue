@@ -8,8 +8,13 @@
                 </el-button>
                 <el-button v-if="running" type="danger" size="medium" @click="stop">停止</el-button>
             </el-col>
-            <el-col :span="9" >
-                 <el-input width='auto' v-model="blur" placeholder="模糊查询"></el-input>
+            <el-col :md="8" >
+                <el-input width='auto' v-model="blur" @input="handleSearch" placeholder="模糊查询"></el-input>
+            </el-col>
+            <el-col :md="3" :xs="10">
+                <el-button-group>
+                    <el-button :disabled="multipleSelection.length === 0" icon="el-icon-delete" type="danger" @click="delrecords"></el-button>
+                </el-button-group>
             </el-col>
         </el-row>
 
@@ -20,11 +25,17 @@
             type="info">
         </el-alert>
 
-        <el-table :data="scrapingrecords" 
-                stripe 
-                :default-sort = "{prop: 'updatetime', order: 'descending'}"
+        <el-table :data="scrapingrecords"
+                ref="multipleTable"
+                stripe
+                @selection-change="handleSelectionChange"
                 @sort-change="changesort"
+                :default-sort = "{prop: 'updatetime', order: 'descending'}"
                 :cell-style="{padding: '0', height: '50px'}" >
+            <el-table-column
+                type="selection"
+                width="55">
+            </el-table-column>
             <el-table-column label="原始名称" min-width="150" :show-overflow-tooltip="true"
                 prop="srcname" >
             </el-table-column>
@@ -80,11 +91,6 @@
                     size="mini"
                     icon="el-icon-edit"
                     @click="handleEdit(scope.$index, scope.row)"></el-button>
-                    <el-button
-                    size="mini"
-                    type="danger"
-                    icon="el-icon-delete"
-                    @click="handleDelete(scope.$index, scope.row)"></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -147,8 +153,10 @@ export default {
     data() {
         return {
             running: false,
+            timer:null,
+            timerstatus: 0,
             dialogWidth: 0,
-            tips: '当前无任务',
+            tips: '刮削中',
             currentPage: 1,
             totalnum: 10,
             pagesize: 10,
@@ -157,7 +165,8 @@ export default {
             sortorder: '',
             editdialog: false,
             rowrecord: [],
-            scrapingrecords: []
+            scrapingrecords: [],
+            multipleSelection: [],
         }
     },
     created(){
@@ -165,7 +174,6 @@ export default {
     },
     mounted() {
         this.refresh()
-        this.timer = setInterval(this.refresh, 1500);
         window.onresize = () => {
             return (() => {
                 this.setDialogWidth()
@@ -173,10 +181,12 @@ export default {
         }
     },
     beforeDestroy() {
-        clearInterval(this.timer);
+        this.stoptimer()
     },
     methods: {
         start_all() {
+            this.running = true;
+            this.starttimer()
             axios.post('/api/scraping')
                 .then(response => {
                     console.log(response)
@@ -186,6 +196,8 @@ export default {
                 });
         },
         handleSingle(index: number, row: ScrapingRecordDto) {
+            this.running = true;
+            this.starttimer()
             axios.post('/api/scraping', row)
                 .then(response => {
                     console.log(response)
@@ -214,6 +226,7 @@ export default {
             let geturl = '/api/scrapingrecord?' + pageparam + sortparam + blurparam
             axios.get(geturl)
                 .then(response => {
+                    this.timerstatus = 0;
                     this.scrapingrecords = response.data.data
                     this.currentPage = response.data.page
                     this.totalnum = response.data.total
@@ -224,7 +237,58 @@ export default {
                         let taskfinished: number = response.data.taskfinished
                         let percentage = taskfinished / tasktotal * 100
                         this.tips = "刮削进度: " + percentage.toFixed(2) + '%' + " [" + taskfinished + "/" + tasktotal + "]"
+
+                        this.starttimer()
+                    }else{
+                        this.stoptimer()
                     }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    this.timerstatus = 0;
+                    this.starttimer()
+                }.bind(this));
+        },
+        starttimer(){
+            if (this.timerstatus === 0) {
+                this.timer = setTimeout(function() {this.refresh()}.bind(this), 2000)
+                this.timerstatus = 1
+            }
+        },
+        stoptimer(){
+            clearInterval(this.timer)
+            this.timer = null;
+            this.timerstatus = 0
+        },
+        toggleSelection(rows) {
+            if (rows) {
+                rows.forEach(row => {
+                    this.$refs.multipleTable.toggleRowSelection(row);
+                });
+            } else {
+                this.$refs.multipleTable.clearSelection();
+            }
+        },
+        handleSelectionChange(val) {
+            this.multipleSelection = val;
+        },
+        handleSearch(){
+            this.refresh()
+        },
+        delrecords() {
+            var ids = new Array();
+            this.multipleSelection.forEach((item) => {
+                ids.push(item.id);
+            });
+            axios.delete('/api/scraping/record', {data:ids})
+                .then( () => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '清理成功',
+                        type: 'success'
+                    })
+                    this.refresh()
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -241,37 +305,20 @@ export default {
             this.editdialog = false
             axios.put('/api/scrapingrecord', this.rowrecord)
                 .then(response => {
+                    this.refresh()
                     console.log(response)
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         },
-        handleDelete(index: number, row: ScrapingRecordDto) {
-            axios.delete('/api/scrapingrecord/'+ row.id)
-                .then(() => {
-                    this.$message({
-                        showClose: true,
-                        duration: 2000,
-                        message: '删除成功',
-                        type: 'success'
-                    })
-                })
-                .catch(function (error) {
-                    this.$message({
-                        showClose: true,
-                        duration: 2000,
-                        message: '删除失败:'+ error,
-                        type: 'error'
-                    })
-
-                });
-        },
         handleCurrentChange(num: number){
             this.currentPage = num
+            this.refresh()
         },
         handleSizeChange(val: number) {
             this.pagesize = val
+            this.refresh()
         },
         setDialogWidth() {
             // console.log(document.body.clientWidth)
