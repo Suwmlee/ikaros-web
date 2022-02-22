@@ -120,6 +120,7 @@
                         <el-radio class="radio-btn" :label="2">失败</el-radio>
                         <el-radio class="radio-btn" :label="3">忽略</el-radio>
                     </el-radio-group>
+                    <div class="tip-info" >如需重新刮削,请修改状态为: 未刮削</div>
                 </el-form-item>
                 <el-form-item label="刮削番号" prop="scrapingname">
                     <el-input v-model="rowrecord.scrapingname" />
@@ -128,6 +129,27 @@
                 <el-form-item label="中文标记" prop="cnsubtag">
                     <el-switch
                         v-model="rowrecord.cnsubtag"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
+                <el-form-item label="流出标记" prop="leaktag">
+                    <el-switch
+                        v-model="rowrecord.leaktag"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
+                <el-form-item label="无码标记" prop="uncensoredtag">
+                    <el-switch
+                        v-model="rowrecord.uncensoredtag"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
+                <el-form-item label="破解标记" prop="hacktag">
+                    <el-switch
+                        v-model="rowrecord.hacktag"
                         active-color="#13ce66"
                         inactive-color="#ff4949">
                     </el-switch>
