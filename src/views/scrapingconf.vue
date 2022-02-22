@@ -37,7 +37,7 @@
                 <el-input v-model="settings.naming_rule"></el-input>
             </el-form-item>
             <el-form-item label="刮削源">
-                <el-input v-model="settings.website_priority"></el-input>
+                <el-input v-model="settings.site_sources" placeholder="使用默认顺序"></el-input>
             </el-form-item>
             <el-form-item label="Javdb">
                 <el-input v-model="settings.cookies_javdb" placeholder="Javdb Cookies(有效期7天)"></el-input>
@@ -46,7 +46,7 @@
                 <el-input v-model="settings.cookies_javlib" placeholder="Javlib Cookies"></el-input>
             </el-form-item>
             <el-form-item label="刷新Emby">
-                <el-input v-model="settings.refresh_url" placeholder="Emby库刷新链接，查看说明文档"></el-input>
+                <el-input v-model="settings.refresh_url" placeholder="Emby库刷新链接,查看说明文档"></el-input>
             </el-form-item>
 
             <el-form-item label="添加水印" >
@@ -60,7 +60,7 @@
                 <el-input type="Number" v-model="settings.watermark_size" placeholder="添加的水印相对整图的比例 1/size " ></el-input>
             </el-form-item>
             <el-form-item v-if="settings.watermark_enable==true" label="水印位置">
-                <el-input type="Number" v-model="settings.watermark_location" placeholder="右上 0, 左上 1, 左下 2，右下 3"></el-input>
+                <el-input type="Number" v-model="settings.watermark_location" placeholder="右上:0 左上:1 左下:2 右下:3"></el-input>
             </el-form-item>
 
             <el-form-item label="下载剧照" >
