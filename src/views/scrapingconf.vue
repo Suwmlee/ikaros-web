@@ -37,7 +37,7 @@
                 <el-input v-model="settings.naming_rule"></el-input>
             </el-form-item>
             <el-form-item label="刮削源">
-                <el-input v-model="settings.site_sources" placeholder="使用默认顺序"></el-input>
+                <el-input v-model="settings.site_sources" placeholder="默认顺序:javbus,airav,fanza,xcity,javdb,mgstage,madou,fc2,avsox,dlsite,carib,fc2club"></el-input>
             </el-form-item>
             <el-form-item label="Javdb">
                 <el-input v-model="settings.cookies_javdb" placeholder="Javdb Cookies(有效期7天)"></el-input>
