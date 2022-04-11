@@ -19,11 +19,11 @@
                     <pre class="pre-md">
                         <code>
         #!/bin/bash
-        TR_DOWNLOADS="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
-        curl -XPOST http://127.0.0.1:12346/api/client \
-        -H 'Content-Type: application/json' \
+        # qbcomplete.sh %D %N
+        QB_DOWNLOADS="${1}/${2}"
+        curl -XPOST http://127.0.0.1:12346/api/client -H 'Content-Type: application/json' \
         --data @&lt;(cat &lt;&lt;EOF
-        {"path":"$TR_DOWNLOADS"}
+        {"path":"$QB_DOWNLOADS"}
         EOF
         )</code> 
                     </pre>
