@@ -30,6 +30,9 @@
             <el-form-item label="跳过目录">
                 <el-input v-model="settings.escape_folders"></el-input>
             </el-form-item>
+            <el-form-item label="大小限制">
+                <el-input v-model="settings.escape_size" placeholder="忽略小于此值的文件,单位:MB。设置为0则不限制"></el-input>
+            </el-form-item>
             <el-form-item label="目录规则">
                 <el-input v-model="settings.location_rule"></el-input>
             </el-form-item>

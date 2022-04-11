@@ -36,6 +36,9 @@
                 <el-form-item label="过滤目录">
                     <el-input v-model="transconfig.escape_folder"></el-input>
                 </el-form-item>
+                <el-form-item label="大小限制">
+                    <el-input v-model="transconfig.escape_size" placeholder="忽略小于此值的文件,单位:MB。设置为0则不限制"></el-input>
+                </el-form-item>
                 <el-form-item label="修正剧集名">
                     <el-switch
                         v-model="transconfig.fix_series"
