@@ -45,8 +45,9 @@
                 <div class="tip-info" >可使用刮削配置内刮削目录</div>
             </el-form-item>
             <el-form-item label="转移目录">
-                <el-input v-model="settings.transferfolders" placeholder="以;间隔"></el-input>
-                <div class="tip-info" >可使用转移配置内源目录,不推荐自动转移剧集目录</div>
+                <el-checkbox-group v-model="checkedtr" @change="handleTrChange">
+                    <el-checkbox v-for="tr in troptions" :label="tr.id" :key="tr.srcpath">{{tr.mark}}</el-checkbox>
+                </el-checkbox-group>
             </el-form-item>
             <el-form-item label="备注">
                 <el-input v-model="settings.mark" placeholder="备注"></el-input>
@@ -85,15 +86,24 @@ export default {
     data() { 
         return {
             settings: {},
-            records: []
+            records: [],
+            troptions: [],
+            checkedtr: []
         };
     },
     mounted(){
+        this.getTransferConf();
         this.getTasks()
         this.timer = setInterval(this.getTasks, 1500);
         axios.get('/api/auto/conf')
             .then(response => {
                 this.settings = response.data;
+                let trs = this.settings.transferfolders.split(';')
+                for (let i = 0; i < trs.length; i++) {
+                    if (trs[i] != '') {
+                        this.checkedtr.push(Number(trs[i]))
+                    }
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -103,6 +113,25 @@ export default {
         clearInterval(this.timer);
     },
     methods: {
+        getTransferConf() {
+            let geturl = '/api/transconf/all'
+            axios.get(geturl)
+                .then(response => {
+                    this.troptions = response.data
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        handleTrChange(value) {
+            let selected = []
+            for (let i = 0; i < value.length; i++) {
+                if (!selected.includes(value[i])){
+                    selected.push(value[i])
+                }
+            }
+            this.settings.transferfolders = selected.join(';')
+        },
         onSubmit() {
             axios.post('/api/auto/conf',this.settings)
                 .then( () => {
