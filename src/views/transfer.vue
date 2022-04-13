@@ -8,7 +8,7 @@
                             placeholder="请选择配置">
                         <el-option v-for="item in options"
                                 :key="item.id"
-                                :label="item.mark"
+                                :label="item.remark"
                                 :value="item.id">
                         </el-option>
                     </el-select>
@@ -50,7 +50,7 @@
                     <el-input v-model="transconfig.specified_files" placeholder="针对源目录下的指定文件(夹)"></el-input>
                 </el-form-item>
                 <el-form-item label="备注">
-                    <el-input v-model="transconfig.mark"></el-input>
+                    <el-input v-model="transconfig.remark"></el-input>
                 </el-form-item>
                 <el-divider>扩展功能</el-divider>
                 <el-form-item label="刷新Emby">

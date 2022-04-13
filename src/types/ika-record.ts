@@ -12,4 +12,5 @@ export interface ScrapingRecordDto {
     destname: string,
     destpath: string,
     updatetime: string,
+    configid: number,
 }

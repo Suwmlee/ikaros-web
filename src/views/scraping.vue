@@ -1,5 +1,15 @@
 <template>
     <div class="body-wrap">
+         <el-select v-model="selectedoption"
+                @change="changeConf"
+                placeholder="请选择配置">
+            <el-option v-for="item in options"
+                    :key="item.id"
+                    :label="item.remark"
+                    :value="item.id">
+            </el-option>
+        </el-select>
+        <el-divider></el-divider>
         <el-row :gutter="24">
             <el-col :span="12" >
                 <el-button :loading="running" size="medium" type="primary" @click="start_all">
@@ -120,7 +130,7 @@
                         <el-radio class="radio-btn" :label="2">失败</el-radio>
                         <el-radio class="radio-btn" :label="3">忽略</el-radio>
                     </el-radio-group>
-                    <div class="tip-info" >如需重新刮削,请修改状态为: 未刮削</div>
+                    <div class="tip-info" >如需重新刮削,请修改状态为: 未刮削;将使用页面选择的刮削配置</div>
                 </el-form-item>
                 <el-form-item label="刮削番号" prop="scrapingname">
                     <el-input v-model="rowrecord.scrapingname" />
@@ -189,12 +199,16 @@ export default {
             rowrecord: [],
             scrapingrecords: [],
             multipleSelection: [],
+            selectedoption: -1,
+            options: [],
+            scrapingconfig: {},
         }
     },
     created(){
         this.setDialogWidth()
     },
     mounted() {
+        this.getconfs()
         this.refresh()
         window.onresize = () => {
             return (() => {
@@ -206,10 +220,34 @@ export default {
         this.stoptimer()
     },
     methods: {
+        getconfs() {
+            let geturl = '/api/scraping/conf/all'
+            axios.get(geturl)
+                .then(response => {
+                    this.options = response.data
+                    if(this.selectedoption === -1){
+                        this.selectedoption = this.options[0].id;
+                    }
+                    this.changeConf()
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        changeConf() {
+            const config = this.options.find(conf =>{
+                return conf.id == this.selectedoption
+            });
+            if (typeof config === 'undefined') {
+                this.selectedoption = this.options[0].id;
+                return
+            }
+            this.scrapingconfig = config
+        },
         start_all() {
             this.running = true;
             this.starttimer()
-            axios.post('/api/scraping')
+            axios.post('/api/scraping', this.scrapingconfig)
                 .then(response => {
                     console.log(response)
                 })
@@ -220,7 +258,8 @@ export default {
         handleSingle(index: number, row: ScrapingRecordDto) {
             this.running = true;
             this.starttimer()
-            axios.post('/api/scraping', row)
+            row.configid = this.scrapingconfig.id
+            axios.post('/api/scraping/single', row)
                 .then(response => {
                     console.log(response)
                 })
@@ -245,7 +284,7 @@ export default {
             let pageparam: string = 'page=' + this.currentPage + '&size=' + this.pagesize
             let sortparam = '&sortprop=' + this.sortprop + '&sortorder=' + this.sortorder
             let blurparam = '&blur=' + this.blur 
-            let geturl = '/api/scrapingrecord?' + pageparam + sortparam + blurparam
+            let geturl = '/api/scraping/record?' + pageparam + sortparam + blurparam
             axios.get(geturl)
                 .then(response => {
                     this.timerstatus = 0;
@@ -325,7 +364,7 @@ export default {
         },
         dialogupdate() {
             this.editdialog = false
-            axios.put('/api/scrapingrecord', this.rowrecord)
+            axios.put('/api/scraping/record', this.rowrecord)
                 .then(response => {
                     this.refresh()
                     console.log(response)
