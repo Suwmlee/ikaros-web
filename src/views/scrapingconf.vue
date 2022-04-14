@@ -11,7 +11,7 @@
         </el-select>
         <el-divider></el-divider>
         <el-form label-position="right" label-width="auto" :model="scrapingconfig">
-            <el-form-item label="备注名">
+            <el-form-item label="配置名">
                 <el-input v-model="scrapingconfig.remark"></el-input>
             </el-form-item>
             <el-form-item label="刮削目录">

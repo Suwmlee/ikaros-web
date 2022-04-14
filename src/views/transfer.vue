@@ -14,7 +14,7 @@
                     </el-select>
                 </template>
             <el-form label-position="right" label-width="90px" :model="transconfig" style="margin-top:15px">
-                <el-form-item label="备注名">
+                <el-form-item label="配置名">
                     <el-input v-model="transconfig.remark"></el-input>
                 </el-form-item>
                 <el-form-item label="源目录">

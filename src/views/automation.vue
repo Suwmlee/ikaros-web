@@ -19,8 +19,8 @@
                     <pre class="pre-md">
                         <code>
         #!/bin/bash
-        # qbcomplete.sh %D %N
-        QB_DOWNLOADS="${1}/${2}"
+        # qbcomplete.sh "%F"
+        QB_DOWNLOADS="${1}"
         curl -XPOST http://127.0.0.1:12346/api/client -H 'Content-Type: application/json' \
         --data @&lt;(cat &lt;&lt;EOF
         {"path":"$QB_DOWNLOADS"}
@@ -40,19 +40,19 @@
                 <el-input v-model="settings.prefixed" placeholder="前缀"></el-input>
                 <div class="tip-info" >参考简介内软链接前缀说明，修正后，ikaros可访问的目录/文件</div>
             </el-form-item>
-            <el-form-item label="刮削目录">
+            <el-form-item label="刮削配置">
                 <el-checkbox-group v-model="checkedsc" @change="handleScChange">
                     <el-checkbox v-for="sc in scoptions" :label="sc.id" :key="sc.id">{{sc.remark}}</el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
-            <el-form-item label="转移目录">
+            <el-form-item label="转移配置">
                 <el-checkbox-group v-model="checkedtr" @change="handleTrChange">
                     <el-checkbox v-for="tr in troptions" :label="tr.id" :key="tr.id">{{tr.remark}}</el-checkbox>
                 </el-checkbox-group>
             </el-form-item>
-            <el-form-item label="备注">
+            <!-- <el-form-item label="备注">
                 <el-input v-model="settings.remark" placeholder="备注"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">保存</el-button>
             </el-form-item>
