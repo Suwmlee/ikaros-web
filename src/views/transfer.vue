@@ -14,6 +14,9 @@
                     </el-select>
                 </template>
             <el-form label-position="right" label-width="90px" :model="transconfig" style="margin-top:15px">
+                <el-form-item label="备注名">
+                    <el-input v-model="transconfig.remark"></el-input>
+                </el-form-item>
                 <el-form-item label="源目录">
                     <el-input v-model="transconfig.source_folder">
                         <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
@@ -48,9 +51,6 @@
                 </el-form-item>
                 <el-form-item v-if="transconfig.fix_series" label="指定内容">
                     <el-input v-model="transconfig.specified_files" placeholder="针对源目录下的指定文件(夹)"></el-input>
-                </el-form-item>
-                <el-form-item label="备注">
-                    <el-input v-model="transconfig.remark"></el-input>
                 </el-form-item>
                 <el-divider>扩展功能</el-divider>
                 <el-form-item label="刷新Emby">

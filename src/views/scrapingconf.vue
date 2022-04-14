@@ -11,6 +11,9 @@
         </el-select>
         <el-divider></el-divider>
         <el-form label-position="right" label-width="auto" :model="scrapingconfig">
+            <el-form-item label="备注名">
+                <el-input v-model="scrapingconfig.remark"></el-input>
+            </el-form-item>
             <el-form-item label="刮削目录">
                 <el-input v-model="scrapingconfig.scraping_folder">
                     <el-button slot="append" icon="el-icon-search" @click="showSourceDialog"></el-button>
@@ -111,9 +114,6 @@
             </el-form-item>
             <el-form-item label="超时">
                 <el-input v-model="scrapingconfig.proxy_timeout"></el-input>
-            </el-form-item>
-            <el-form-item label="备注">
-                <el-input v-model="scrapingconfig.remark"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" size="medium" @click="addconf">新增</el-button>
