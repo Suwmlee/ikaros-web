@@ -19,7 +19,7 @@
         <Automation v-if="activeIndex==='6'" />
         <Options v-if="activeIndex==='7'" />
       </el-main>
-      <el-footer class="site-footer" ><a href="https://github.com/Suwmlee/ikaros">ikaros</a> {{ version }}</el-footer>
+      <el-footer class="site-footer" ><a href="https://github.com/Suwmlee/ikaros" target="_blank">ikaros</a> {{ version }}</el-footer>
     </el-container>
 
   </div>

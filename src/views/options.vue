@@ -20,7 +20,7 @@
             </el-form-item>
             <el-form-item label="微信 corpid">
                 <el-input v-model="notificationConf.wechat_corpid" placeholder="企业微信 corpid"></el-input>
-                <div class="tip-info" >参考 https://developer.work.weixin.qq.com/document/path/90665</div>
+                <div class="tip-info" >参考 <a href="https://developer.work.weixin.qq.com/document/path/90665" target="_blank">企业微信开发指南</a></div>
             </el-form-item>
             <el-form-item label="微信 secret">
                 <el-input v-model="notificationConf.wechat_corpsecret" placeholder="企业微信 corpsecret"></el-input>

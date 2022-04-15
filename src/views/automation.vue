@@ -38,7 +38,7 @@
             </el-form-item>
             <el-form-item label="更改前缀">
                 <el-input v-model="settings.prefixed" placeholder="前缀"></el-input>
-                <div class="tip-info" >参考简介内软链接前缀说明，修正后，ikaros可访问的目录/文件</div>
+                <div class="tip-info" >参考简介内软链接前缀说明,修正后,ikaros可访问的目录/文件</div>
             </el-form-item>
             <el-form-item label="刮削配置">
                 <el-checkbox-group v-model="checkedsc" @change="handleScChange">
