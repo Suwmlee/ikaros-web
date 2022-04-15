@@ -308,7 +308,7 @@ export default {
         refresh() {
             let pageparam: string = 'page=' + this.currentPage + '&size=' + this.pagesize
             let blurparam = '&blur=' + this.blur 
-            let geturl: string = '/api/transrecord?' + pageparam + blurparam
+            let geturl: string = '/api/transfer/record?' + pageparam + blurparam
             axios.get(geturl)
                 .then(response => {
                     this.timerstatus = 0;
@@ -380,7 +380,7 @@ export default {
             this.refresh()
         },
         getconfs() {
-            let geturl = '/api/transconf/all'
+            let geturl = '/api/transfer/conf/all'
             axios.get(geturl)
                 .then(response => {
                     this.options = response.data
@@ -405,7 +405,7 @@ export default {
             this.transconfig = config
         },
         addconf() {
-            axios.post('/api/transconf', this.transconfig)
+            axios.post('/api/transfer/conf', this.transconfig)
                 .then( res => {
                     this.transconfig = res.data;
                     this.selectedoption = this.transconfig.id;
@@ -422,7 +422,7 @@ export default {
                 });
         },
         updateconf() {
-            axios.put('/api/transconf', this.transconfig)
+            axios.put('/api/transfer/conf', this.transconfig)
                 .then( res => {
                     this.transconfig = res.data;
                     this.getconfs()
@@ -447,7 +447,7 @@ export default {
                 })
                 return
             }
-            axios.delete('/api/transconf/'+ this.transconfig.id)
+            axios.delete('/api/transfer/conf/'+ this.transconfig.id)
                 .then( () => {
                     this.getconfs()
                     this.$message({

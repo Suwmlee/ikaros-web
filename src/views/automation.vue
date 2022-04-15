@@ -124,7 +124,7 @@ export default {
     },
     methods: {
         getTransferConf() {
-            let geturl = '/api/transconf/all'
+            let geturl = '/api/transfer/conf/all'
             axios.get(geturl)
                 .then(response => {
                     this.troptions = response.data
@@ -162,7 +162,7 @@ export default {
             this.settings.scrapingconfs = selected.join(';')
         },
         onSubmit() {
-            axios.post('/api/auto/conf',this.settings)
+            axios.put('/api/auto/conf',this.settings)
                 .then( () => {
                     this.$message({
                         showClose: true,
