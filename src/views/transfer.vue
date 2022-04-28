@@ -54,7 +54,7 @@
                 </el-form-item>
                 <el-divider>扩展功能</el-divider>
                 <el-form-item label="刷新Emby">
-                    <el-input v-model="transconfig.refresh_url" placeholder="Emby库刷新链接，查看说明文档"></el-input>
+                    <el-input v-model="transconfig.refresh_url" placeholder="Emby库刷新链接,查看说明文档"></el-input>
                 </el-form-item>
                 <el-form-item label="删除其他">
                     <el-switch

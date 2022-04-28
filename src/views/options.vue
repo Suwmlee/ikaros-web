@@ -14,6 +14,7 @@
          <el-form label-position="right" label-width="auto" :model="notificationConf">
             <el-form-item label="TG token">
                 <el-input v-model="notificationConf.tg_token" placeholder="Telegram token"></el-input>
+                <div class="tip-info" >配置后 <a href="https://github.com/Suwmlee/ikaros/wiki/%E6%8E%A8%E9%80%81%E6%B6%88%E6%81%AF%E6%95%88%E6%9E%9C" target="_blank">效果展示</a></div>
             </el-form-item>
             <el-form-item label="TG chatid">
                 <el-input v-model="notificationConf.tg_chatid" placeholder="Telegram chatid"></el-input>

@@ -31,13 +31,13 @@
             </el-collapse>
         </div>
 
-        <el-form label-position="right" label-width="auto" :model="settings">
+        <el-form label-position="right" label-width="auto" :model="config">
             <el-form-item label="源前缀">
-                <el-input v-model="settings.original" placeholder="需要替换的前缀"></el-input>
+                <el-input v-model="config.original" placeholder="需要替换的前缀"></el-input>
                 <div class="tip-info" >参考简介内软链接前缀说明</div>
             </el-form-item>
             <el-form-item label="更改前缀">
-                <el-input v-model="settings.prefixed" placeholder="前缀"></el-input>
+                <el-input v-model="config.prefixed" placeholder="前缀"></el-input>
                 <div class="tip-info" >参考简介内软链接前缀说明,修正后,ikaros可访问的目录/文件</div>
             </el-form-item>
             <el-form-item label="刮削配置">
@@ -51,7 +51,7 @@
                 </el-checkbox-group>
             </el-form-item>
             <!-- <el-form-item label="备注">
-                <el-input v-model="settings.remark" placeholder="备注"></el-input>
+                <el-input v-model="config.remark" placeholder="备注"></el-input>
             </el-form-item> -->
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -86,7 +86,7 @@ export default {
     name: 'automation',
     data() { 
         return {
-            settings: {},
+            config: {},
             records: [],
             troptions: [],
             checkedtr: [],
@@ -101,14 +101,14 @@ export default {
         this.timer = setInterval(this.getTasks, 1500);
         axios.get('/api/auto/conf')
             .then(response => {
-                this.settings = response.data;
-                let trs = this.settings.transferconfs.split(';')
+                this.config = response.data;
+                let trs = this.config.transferconfs.split(';')
                 for (let i = 0; i < trs.length; i++) {
                     if (trs[i] != '') {
                         this.checkedtr.push(Number(trs[i]))
                     }
                 }
-                let scs = this.settings.scrapingconfs.split(';')
+                let scs = this.config.scrapingconfs.split(';')
                 for (let i = 0; i < scs.length; i++) {
                     if (scs[i] != '') {
                         this.checkedsc.push(Number(scs[i]))
@@ -140,7 +140,7 @@ export default {
                     selected.push(value[i])
                 }
             }
-            this.settings.transferconfs = selected.join(';')
+            this.config.transferconfs = selected.join(';')
         },
         getScrapingConf() {
             let geturl = '/api/scraping/conf/all'
@@ -159,10 +159,10 @@ export default {
                     selected.push(value[i])
                 }
             }
-            this.settings.scrapingconfs = selected.join(';')
+            this.config.scrapingconfs = selected.join(';')
         },
         onSubmit() {
-            axios.put('/api/auto/conf',this.settings)
+            axios.put('/api/auto/conf',this.config)
                 .then( () => {
                     this.$message({
                         showClose: true,
