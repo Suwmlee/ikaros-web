@@ -90,7 +90,7 @@
                 <el-input v-model="scrapingconfig.extrafanart_folder"></el-input>
             </el-form-item>
 
-            <el-form-item label="刮削顺序" >
+            <!-- <el-form-item label="刮削顺序" >
                 <el-switch
                     active-text="同时使用多个源"
                     inactive-text="按照顺序"
@@ -98,7 +98,7 @@
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="使用代理" >
                 <el-switch
                     v-model="scrapingconfig.proxy_enable"
@@ -117,7 +117,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" size="medium" @click="addconf">新增</el-button>
-                <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
+                <el-button type="primary" size="medium" @click="updateconf">保存</el-button>
                 <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
             </el-form-item>
         </el-form>
@@ -238,7 +238,7 @@ export default {
                     this.$message({
                         showClose: true,
                         duration: 2000,
-                        message: '更新成功',
+                        message: '保存成功',
                         type: 'success'
                     })
                 })

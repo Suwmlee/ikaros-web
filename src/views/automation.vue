@@ -167,7 +167,7 @@ export default {
                     this.$message({
                         showClose: true,
                         duration: 2000,
-                        message: '更新成功',
+                        message: '保存成功',
                         type: 'success'
                     })
                 })

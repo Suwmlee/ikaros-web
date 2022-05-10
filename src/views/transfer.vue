@@ -72,7 +72,7 @@
                 </el-form-item>
             </el-form>
             <el-button type="primary" size="medium" @click="addconf">新增</el-button>
-            <el-button type="primary" size="medium" @click="updateconf">更新</el-button>
+            <el-button type="primary" size="medium" @click="updateconf">保存</el-button>
             <el-button type="danger" size="medium" @click="deleteconf">删除</el-button>
             </el-collapse-item>
         </el-collapse>
@@ -429,7 +429,7 @@ export default {
                     this.$message({
                         showClose: true,
                         duration: 2000,
-                        message: '更新成功',
+                        message: '保存成功',
                         type: 'success'
                     })
                 })

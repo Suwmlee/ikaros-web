@@ -32,7 +32,7 @@
                 <div class="tip-info" >同上</div>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="updatenotification">更新</el-button>
+                <el-button type="primary" @click="updatenotification">保存</el-button>
             </el-form-item>
         </el-form>
         <el-divider></el-divider>
@@ -102,7 +102,7 @@ export default {
                     this.$message({
                         showClose: true,
                         duration: 2000,
-                        message: '更新成功',
+                        message: '保存成功',
                         type: 'success'
                     })
                 })
@@ -122,7 +122,7 @@ export default {
                     this.$message({
                         showClose: true,
                         duration: 2000,
-                        message: '更新成功',
+                        message: '保存成功',
                         type: 'success'
                     })
                 })
