@@ -31,6 +31,19 @@
                 <el-input v-model="notificationConf.wechat_agentid" placeholder="企业微信 agentid"></el-input>
                 <div class="tip-info" >同上</div>
             </el-form-item>
+            <el-form-item label="使用代理" >
+                <el-switch
+                    v-model="notificationConf.proxy_enable"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
+            <el-form-item v-if="notificationConf.proxy_enable==true" label="类型">
+                <el-input v-model="notificationConf.proxy_type" placeholder="支持: http socks5 socks5h"></el-input>
+            </el-form-item>
+            <el-form-item v-if="notificationConf.proxy_enable==true" label="地址">
+                <el-input v-model="notificationConf.proxy_address" placeholder="127.0.0.1:1080"></el-input>
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="updatenotification">保存</el-button>
             </el-form-item>
