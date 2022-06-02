@@ -7,7 +7,7 @@
         aria-describedby="dialogDescription"
       >
         <header
-          class="dialog-header"
+          class="browser-header"
           id="dialogTitle"
         >
           <slot name="header">
@@ -38,10 +38,9 @@
           </div>
         </section>
 
-        <footer class="dialog-footer">
+        <footer class="browser-footer">
           <el-button
-            type="button"
-            class="btn-green"
+            type="primary"
             @click="close"
             aria-label="Close dialog"
           >
@@ -142,20 +141,20 @@ import axios from 'axios';
     flex-direction: column;
   }
 
-  .dialog-header,
-  .dialog-footer {
+  .browser-header,
+  .browser-footer {
     padding: 15px;
     display: flex;
   }
 
-  .dialog-header {
+  .browser-header {
     position: relative;
     border-bottom: 1px solid #eeeeee;
     color: #4AAE9B;
     justify-content: space-between;
   }
 
-  .dialog-footer {
+  .browser-footer {
     border-top: 1px solid #eeeeee;
     flex-direction: column;
   }
@@ -197,13 +196,6 @@ import axios from 'axios';
     font-weight: bold;
     color: #4AAE9B;
     background: transparent;
-  }
-
-  .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
   }
 
   .dialog-fade-enter,

@@ -1,6 +1,5 @@
 <template>
   <el-dialog class="confirm-modal"
-             center
              :modal-append-to-body="false"
              :append-to-body="true"
              :visible="isVisible"
@@ -8,17 +7,19 @@
              :before-close="beforeClose"
              v-bind="$attrs">
     <slot>
-      <span>{{ message }}</span>
+      <div>
+        <span>{{ message }}</span>
+      </div>
       <el-checkbox v-model="subcheck">{{ subConfirmMessage }}</el-checkbox>
     </slot>
-    <div slot="footer" class="dialog-footer">
-       <el-button id="save-button" type="success" :loading="loading" @click.native="confirm">
-         {{ confirmLabel }}
-       </el-button>
-      <el-button id="close-button" type="danger" @click.native="close">
-        {{ cancelLabel }}
-      </el-button>
-    </div>
+    <span slot="footer" class="dialog-footer">
+        <el-button type="primary" :loading="loading" @click.native="confirm">
+          {{ confirmLabel }}
+        </el-button>
+        <el-button type="danger" @click.native="close">
+          {{ cancelLabel }}
+        </el-button>
+    </span>
   </el-dialog>
 </template>
 <script>
@@ -43,11 +44,11 @@ export default {
     },
     cancelLabel: {
       type: String,
-      default: "Cancel"
+      default: "取消"
     },
     confirmLabel: {
       type: String,
-      default: "Yes"
+      default: "确认"
     },
     loading: {
       type: Boolean,
@@ -120,3 +121,25 @@ export default {
   }
 };
 </script>
+
+<style>
+
+ .el-dialog{
+      display: flex;
+      flex-direction: column;
+      margin:0 !important;
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      /*height:600px;*/
+      max-height:calc(100% - 30px);
+      /* max-width:calc(100% - 30px); */
+      width: 450px;
+  }
+  .el-dialog .el-dialog__body{
+      flex:1;
+      overflow: auto;
+  }
+
+</style>
