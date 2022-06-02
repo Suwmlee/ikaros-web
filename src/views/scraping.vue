@@ -25,6 +25,7 @@
                 <el-button-group>
                     <el-button :disabled="multipleSelection.length === 0" icon="el-icon-delete" type="danger" @click="delrecords"></el-button>
                 </el-button-group>
+                <confirm-dialog title="确认" message="删除刮削后的文件" subConfirmMessage="同时删除原始文件" ref="confirm"></confirm-dialog>
             </el-col>
         </el-row>
 
@@ -179,9 +180,13 @@
 <script lang="ts">
 import axios from 'axios'
 import {ScrapingRecordDto} from '../types/ika-record'
+import ConfirmDialog from '../components/dialogs/ConfirmDialog.vue'
 
 export default {
     name: 'scraping',
+    components:{
+        ConfirmDialog
+    },
     data() {
         return {
             running: false,
@@ -337,22 +342,32 @@ export default {
             this.refresh()
         },
         delrecords() {
-            var ids = new Array();
-            this.multipleSelection.forEach((item) => {
-                ids.push(item.id);
-            });
-            axios.delete('/api/scraping/record', {data:ids})
-                .then( () => {
-                    this.$message({
-                        showClose: true,
-                        duration: 2000,
-                        message: '清理成功',
-                        type: 'success'
+            this.$refs.confirm
+            .show()
+            .then(() => {
+                // alert(this.$refs.confirm.subcheck)
+                var delsrc =this.$refs.confirm.subcheck
+                var ids = new Array();
+                this.multipleSelection.forEach((item) => {
+                    ids.push(item.id);
+                });
+                const del = {'ids': ids, 'delsrc': delsrc}
+                axios.delete('/api/scraping/record', {data: del})
+                    .then( () => {
+                        this.$message({
+                            showClose: true,
+                            duration: 2000,
+                            message: '清理成功',
+                            type: 'success'
+                        })
+                        this.refresh()
                     })
-                    this.refresh()
+                    .catch(function (error) {
+                        console.log(error);
+                    });
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(() => {
+                    console.log("You rejected");
                 });
         },
         handleEdit(index: number, row: ScrapingRecordDto) {

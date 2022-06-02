@@ -93,6 +93,7 @@
                     <!-- <el-button icon="el-icon-edit" @click="editfolders"></el-button> -->
                     <el-button :disabled="multipleSelection.length === 0" icon="el-icon-delete" type="danger" @click="delrecords"></el-button>
                 </el-button-group>
+                <confirm-dialog title="确认" message="删除转移后的文件" subConfirmMessage="同时删除原始文件" ref="confirm"></confirm-dialog>
             </el-col>
         </el-row>
         <el-alert class="alter-tip"
@@ -240,12 +241,14 @@
 <script lang="ts"> 
 import axios from 'axios'
 import FileBrowserDialog from '../components/dialogs/FileBrowserDialog.vue';
+import ConfirmDialog from '../components/dialogs/ConfirmDialog.vue'
 
 
 export default {
     name: 'transfer',
     components: {
       FileBrowserDialog,
+      ConfirmDialog,
     },
     data() {
         return {
@@ -347,22 +350,31 @@ export default {
             this.timerstatus = 0
         },
         delrecords() {
-            var ids = new Array();
-            this.multipleSelection.forEach((item) => {
-                ids.push(item.id);
-            });
-            axios.delete('/api/transfer/record', {data:ids})
-                .then( () => {
-                    this.$message({
-                        showClose: true,
-                        duration: 2000,
-                        message: '清理成功',
-                        type: 'success'
+            this.$refs.confirm
+            .show()
+            .then(() => {
+                var delsrc =this.$refs.confirm.subcheck
+                var ids = new Array();
+                this.multipleSelection.forEach((item) => {
+                    ids.push(item.id);
+                });
+                const del = {'ids': ids, 'delsrc': delsrc}
+                axios.delete('/api/transfer/record', {data:del})
+                    .then( () => {
+                        this.$message({
+                            showClose: true,
+                            duration: 2000,
+                            message: '清理成功',
+                            type: 'success'
+                        })
+                        this.refresh()
                     })
-                    this.refresh()
+                    .catch(function (error) {
+                        console.log(error);
+                    });
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(() => {
+                    console.log("You rejected");
                 });
         },
         editfolders(){
