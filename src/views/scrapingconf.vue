@@ -55,11 +55,16 @@
             <el-form-item label="刮削源">
                 <el-input v-model="scrapingconfig.site_sources" placeholder="默认顺序:javbus,airav,fanza,xcity,javdb,mgstage,madou,fc2,avsox,dlsite,carib,fc2club"></el-input>
             </el-form-item>
-            <el-form-item label="Javdb">
-                <el-input v-model="scrapingconfig.cookies_javdb" placeholder="Javdb Cookies(有效期7天)"></el-input>
+            <el-form-item label="更多剧情" >
+                <el-switch
+                    v-model="scrapingconfig.morestoryline"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+                <div class="tip-info" >尝试从不同站点获取更多剧情</div>
             </el-form-item>
-            <el-form-item label="Javlib">
-                <el-input v-model="scrapingconfig.cookies_javlib" placeholder="Javlib Cookies"></el-input>
+            <el-form-item label="Javdb">
+                <el-input v-model="scrapingconfig.cookies_javdb" placeholder="Javdb Cookies(有效期7天),非VIP无法获取额外内容,建议留空"></el-input>
             </el-form-item>
             <el-form-item label="刷新Emby">
                 <el-input v-model="scrapingconfig.refresh_url" placeholder="Emby库刷新链接,查看说明文档"></el-input>
@@ -309,4 +314,10 @@ export default {
     width: 100px;
 }
 
+.tip-info {
+    color: gray;
+    margin-top: 3px;
+    font-size: 12px;
+    line-height: normal;
+}
 </style>
