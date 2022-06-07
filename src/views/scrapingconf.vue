@@ -54,6 +54,7 @@
             </el-form-item>
             <el-form-item label="刮削源">
                 <el-input v-model="scrapingconfig.site_sources" placeholder="默认顺序:javbus,airav,fanza,xcity,javdb,mgstage,madou,fc2,avsox,dlsite,carib,fc2club"></el-input>
+                <div class="tip-info" >指定源与顺序,无特殊需求,留空即可</div>
             </el-form-item>
             <el-form-item label="更多剧情" >
                 <el-switch
@@ -68,6 +69,7 @@
             </el-form-item>
             <el-form-item label="刷新Emby">
                 <el-input v-model="scrapingconfig.refresh_url" placeholder="Emby库刷新链接,查看说明文档"></el-input>
+                <div class="tip-info" >如果Emby库内设置实时监控则不需要进行设置,选择适合自己的方案即可</div>
             </el-form-item>
 
             <el-form-item label="添加水印" >
@@ -94,16 +96,6 @@
             <el-form-item v-if="scrapingconfig.extrafanart_enable==true" label="剧照文件夹">
                 <el-input v-model="scrapingconfig.extrafanart_folder"></el-input>
             </el-form-item>
-
-            <!-- <el-form-item label="刮削顺序" >
-                <el-switch
-                    active-text="同时使用多个源"
-                    inactive-text="按照顺序"
-                    v-model="scrapingconfig.async_request"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                </el-switch>
-            </el-form-item> -->
             <el-form-item label="使用代理" >
                 <el-switch
                     v-model="scrapingconfig.proxy_enable"
