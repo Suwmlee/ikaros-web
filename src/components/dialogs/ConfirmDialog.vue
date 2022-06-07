@@ -13,11 +13,11 @@
       <el-checkbox v-model="subcheck">{{ subConfirmMessage }}</el-checkbox>
     </slot>
     <span slot="footer" class="dialog-footer">
+        <el-button @click.native="close">
+          {{ cancelLabel }}
+        </el-button>
         <el-button type="primary" :loading="loading" @click.native="confirm">
           {{ confirmLabel }}
-        </el-button>
-        <el-button type="danger" @click.native="close">
-          {{ cancelLabel }}
         </el-button>
     </span>
   </el-dialog>
