@@ -91,6 +91,9 @@
                 sortable="custom"
                 prop="updatetime">
             </el-table-column>
+            <el-table-column label="删除时间" width="155"
+                prop="deadtime">
+            </el-table-column>
             <el-table-column label="操作" width="180">
                 <template slot-scope="scope">
                     <el-button

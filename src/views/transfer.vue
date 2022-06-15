@@ -163,6 +163,9 @@
             <el-table-column label="更新时间" width="140" :show-overflow-tooltip="true"
                 prop="updatetime" >
             </el-table-column>
+            <el-table-column label="删除时间" width="155"
+                prop="deadtime">
+            </el-table-column>
             <el-table-column label="操作" >
                 <template slot-scope="scope">
                     <el-button

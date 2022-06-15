@@ -54,22 +54,6 @@
             <div slot="tip" class="el-upload__tip">清理源文件已不存在的记录</div>
         </div>
         <el-divider />
-        <!-- <div >
-            <el-button type="primary" @click="exportdb" >导出JAV记录</el-button>
-        </div>
-        <el-divider />
-        <div class="div-upload">
-            <el-upload
-                ref="upload"
-                action="/api/options/importjav"
-                :file-list="fileList"
-                :multiple="multifile"
-                :auto-upload="false">
-                <el-button slot="trigger" type="primary">选择</el-button>
-                <el-button style="margin-left: 10px;" type="success" @click="submitUpload">导入JAV记录</el-button>
-                <div slot="tip" class="el-upload__tip">只能导入xls/xlsx文件</div>
-            </el-upload>
-        </div> -->
 
         <div class="row">
             <h2 >日志:</h2>
