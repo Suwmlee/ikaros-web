@@ -10,49 +10,56 @@
                 </el-radio-group>
             </el-form-item>
         </el-form>
-        <el-divider>通知</el-divider>
-         <el-form label-position="right" label-width="auto" :model="notificationConf">
+
+        <el-form label-position="right" label-width="auto" :model="localConf">
+            <el-divider>通知</el-divider>
             <el-form-item label="TG token">
-                <el-input v-model="notificationConf.tg_token" placeholder="Telegram token"></el-input>
+                <el-input @change="confValueChange" v-model="localConf.tg_token" placeholder="Telegram token"></el-input>
                 <div class="tip-info" >配置后 <a href="https://github.com/Suwmlee/ikaros/wiki/%E6%8E%A8%E9%80%81%E6%B6%88%E6%81%AF%E6%95%88%E6%9E%9C" target="_blank">效果展示</a></div>
             </el-form-item>
             <el-form-item label="TG chatid">
-                <el-input v-model="notificationConf.tg_chatid" placeholder="Telegram chatid"></el-input>
+                <el-input @change="confValueChange" v-model="localConf.tg_chatid" placeholder="Telegram chatid"></el-input>
             </el-form-item>
             <el-form-item label="微信 corpid">
-                <el-input v-model="notificationConf.wechat_corpid" placeholder="企业微信 corpid"></el-input>
+                <el-input @change="confValueChange" v-model="localConf.wechat_corpid" placeholder="企业微信 corpid"></el-input>
                 <div class="tip-info" >参考 <a href="https://developer.work.weixin.qq.com/document/path/90665" target="_blank">企业微信开发指南</a></div>
             </el-form-item>
             <el-form-item label="微信 secret">
-                <el-input v-model="notificationConf.wechat_corpsecret" placeholder="企业微信 corpsecret"></el-input>
+                <el-input @change="confValueChange" v-model="localConf.wechat_corpsecret" placeholder="企业微信 corpsecret"></el-input>
                 <div class="tip-info" >同上</div>
             </el-form-item>
             <el-form-item label="微信 agentid">
-                <el-input v-model="notificationConf.wechat_agentid" placeholder="企业微信 agentid"></el-input>
+                <el-input @change="confValueChange" v-model="localConf.wechat_agentid" placeholder="企业微信 agentid"></el-input>
                 <div class="tip-info" >同上</div>
             </el-form-item>
             <el-form-item label="使用代理" >
-                <el-switch
-                    v-model="notificationConf.proxy_enable"
+                <el-switch @change="confValueChange"
+                    v-model="localConf.proxy_enable"
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
             </el-form-item>
-            <el-form-item v-if="notificationConf.proxy_enable==true" label="类型">
-                <el-input v-model="notificationConf.proxy_type" placeholder="支持: http socks5 socks5h"></el-input>
+            <el-form-item v-if="localConf.proxy_enable==true" label="类型">
+                <el-input @change="confValueChange" v-model="localConf.proxy_type" placeholder="支持: http socks5 socks5h"></el-input>
             </el-form-item>
-            <el-form-item v-if="notificationConf.proxy_enable==true" label="地址">
-                <el-input v-model="notificationConf.proxy_address" placeholder="127.0.0.1:1080"></el-input>
+            <el-form-item v-if="localConf.proxy_enable==true" label="地址">
+                <el-input @change="confValueChange" v-model="localConf.proxy_address" placeholder="127.0.0.1:1080"></el-input>
             </el-form-item>
+            <el-divider>清理</el-divider>
             <el-form-item>
-                <el-button type="primary" @click="updatenotification">保存</el-button>
+                <el-button type="primary" @click="cleandata">手动清理</el-button>
+                <div class="tip-info" >删除目的文件不存在的记录及关联文件(不含源文件)</div>
+            </el-form-item>
+            <el-form-item label="计划任务" >
+                <el-switch @change="confValueChange"
+                    v-model="localConf.task_clean"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+                <div class="tip-info" >注意!! 删除源文件或目的文件不存在的记录及关联所有文件(包含源文件)</div>
             </el-form-item>
         </el-form>
-        <el-divider></el-divider>
-        <div >
-            <el-button type="primary" @click="cleandata">清理</el-button>
-            <div slot="tip" class="el-upload__tip">清理源文件已不存在的记录</div>
-        </div>
+
         <el-divider />
 
         <div class="row">
@@ -77,11 +84,11 @@ export default {
             multifile: false,
             loginfo: '',
             logtimer: null,
-            notificationConf: {}
+            localConf: {}
         };
     },
     mounted(){
-        this.getnotification()
+        this.getconfig()
         axios.get('/api/options/loglevel')
             .then(response => {
                 this.loglevel = response.data.loglevel;
@@ -107,14 +114,14 @@ export default {
                     console.log(error);
                 });
         },
-        getnotification() {
-            axios.get('/api/options/notification')
+        getconfig() {
+            axios.get('/api/options/config')
                 .then(response => {
-                    this.notificationConf = response.data;
+                    this.localConf = response.data;
                 })
         },
-        updatenotification(){
-            axios.put('/api/options/notification',this.notificationConf)
+        updateconfig(){
+            axios.put('/api/options/config',this.localConf)
                 .then( () => {
                     this.$message({
                         showClose: true,
@@ -127,11 +134,9 @@ export default {
                     console.log(error);
                 });
         },
-        submitUpload() {
-            this.$refs.upload.submit();
-        },
-        exportdb(){
-            window.location.href = '/api/options/exportjav';
+        confValueChange(v){
+            console.log(v)
+            this.updateconfig()
         },
         cleandata(){
             axios.get('/api/options/cleanrecord')
