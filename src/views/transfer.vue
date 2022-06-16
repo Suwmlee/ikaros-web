@@ -233,6 +233,13 @@
                 <el-form-item v-if="rowrecord.isepisode" label="集" prop="episode">
                     <el-input v-model="rowrecord.episode" />
                 </el-form-item>
+                <el-form-item label="清理时间" prop="deadtime">
+                    <div>
+                        <el-input v-model="rowrecord.deadtime" :disabled="true" size="small" style="width:12rem;margin-right: 1em;"/>
+                        <el-button size="small" type="primary" @click="cancelDeadtime()" v-if="rowrecord.deadtime!=''">取消删除计划</el-button>
+                    </div>
+                    <div class="tip-info" >源文件或刮削后文件不存在,到此时间将删除所有关联文件</div>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="text" @click="dialogexit()">取消</el-button>
@@ -522,8 +529,12 @@ export default {
             this.renameAllTop = false
             this.renameAllSub = false
         },
+        cancelDeadtime() {
+            this.rowrecord.deadtime = ''
+        },
         dialogexit() {
             this.editdialog = false
+            this.refresh()
         },
         dialogupdate() {
             this.editdialog = false
