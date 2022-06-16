@@ -87,12 +87,13 @@
             <el-table-column label="刮削后路径" min-width="150" :show-overflow-tooltip="true"
                 prop="destpath" >
             </el-table-column>
+            <el-table-column label="预计清理时间" width="155"
+                sortable="custom"
+                prop="deadtime">
+            </el-table-column>
             <el-table-column label="更新时间" width="155"
                 sortable="custom"
                 prop="updatetime">
-            </el-table-column>
-            <el-table-column label="删除时间" width="155"
-                prop="deadtime">
             </el-table-column>
             <el-table-column label="操作" width="180">
                 <template slot-scope="scope">
@@ -287,6 +288,7 @@ export default {
         changesort(sortProps: any){
             this.sortprop = sortProps.prop
             this.sortorder = sortProps.order
+            this.refresh()
         },
         refresh() {
             let pageparam: string = 'page=' + this.currentPage + '&size=' + this.pagesize

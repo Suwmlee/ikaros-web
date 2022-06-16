@@ -106,6 +106,7 @@
         <el-table :data="transferdata"
                 ref="multipleTable"
                 stripe
+                @sort-change="changesort"
                 @selection-change="handleSelectionChange"
                 :cell-style="{padding: '0', height: '50px'}" >
             <el-table-column
@@ -160,11 +161,13 @@
             <el-table-column label="实际路径" min-width="120" :show-overflow-tooltip="true"
                 prop="destpath" >
             </el-table-column>
-            <el-table-column label="更新时间" width="140" :show-overflow-tooltip="true"
-                prop="updatetime" >
-            </el-table-column>
-            <el-table-column label="删除时间" width="155"
+            <el-table-column label="预计清理时间" width="155"
+                sortable="custom"
                 prop="deadtime">
+            </el-table-column>
+            <el-table-column label="更新时间" width="140" :show-overflow-tooltip="true"
+                sortable="custom"
+                prop="updatetime" >
             </el-table-column>
             <el-table-column label="操作" >
                 <template slot-scope="scope">
@@ -266,6 +269,8 @@ export default {
             totalnum: 10,
             pagesize: 10,
             blur: '',
+            sortprop: '',
+            sortorder: '',
             transferdata: [],
             transconfig: {},
             selectedoption: -1,
@@ -311,10 +316,16 @@ export default {
                     console.log(error);
                 });
         },
+        changesort(sortProps: any){
+            this.sortprop = sortProps.prop
+            this.sortorder = sortProps.order
+            this.refresh()
+        },
         refresh() {
             let pageparam: string = 'page=' + this.currentPage + '&size=' + this.pagesize
+            let sortparam = '&sortprop=' + this.sortprop + '&sortorder=' + this.sortorder
             let blurparam = '&blur=' + this.blur 
-            let geturl: string = '/api/transfer/record?' + pageparam + blurparam
+            let geturl: string = '/api/transfer/record?' + pageparam + sortparam + blurparam
             axios.get(geturl)
                 .then(response => {
                     this.timerstatus = 0;
