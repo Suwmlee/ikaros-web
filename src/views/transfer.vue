@@ -116,7 +116,7 @@
             <el-table-column label="原始名称"  min-width="150" :show-overflow-tooltip="true"
                 prop="srcname" >
             </el-table-column>
-            <el-table-column label="原始地址" min-width="120" :show-overflow-tooltip="true"
+            <el-table-column label="原始地址" min-width="110" :show-overflow-tooltip="true"
                 prop="srcpath" >
             </el-table-column>
             <el-table-column label="顶层目录" width="120" :show-overflow-tooltip="true"
@@ -134,21 +134,21 @@
                     <span v-if="scope.row.status===2" >忽略</span>
                 </template>
             </el-table-column>
-            <el-table-column label="剧集" width="60"
+            <el-table-column label="剧集" width="60" align="center"
                 prop="isepisode" >
                 <template slot-scope="scope">
                     <span v-if="scope.row.isepisode===true" >✓</span>
                     <span v-if="scope.row.isepisode===false" ></span>
                 </template>
             </el-table-column>
-            <el-table-column label="季" width="55"
+            <el-table-column label="季" width="60" align="center"
                 prop="season" >
                 <template slot-scope="scope">
                     <span v-if="scope.row.season===-1" ></span>
                     <span v-if="scope.row.season > -1" >{{scope.row.season}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="集" width="100"
+            <el-table-column label="集" width="80" align="center"
                 prop="episode" >
                 <template slot-scope="scope">
                     <span v-if="scope.row.episode===-1" ></span>
@@ -158,10 +158,10 @@
             <!-- <el-table-column label="链接路径" min-width="120" :show-overflow-tooltip="true"
                 prop="linkpath" >
             </el-table-column> -->
-            <el-table-column label="实际路径" min-width="120" :show-overflow-tooltip="true"
+            <el-table-column label="实际路径" min-width="110" :show-overflow-tooltip="true"
                 prop="destpath" >
             </el-table-column>
-            <el-table-column label="预计清理时间" width="155"
+            <el-table-column label="计划删除时间" width="140" :show-overflow-tooltip="true"
                 sortable="custom"
                 prop="deadtime">
             </el-table-column>

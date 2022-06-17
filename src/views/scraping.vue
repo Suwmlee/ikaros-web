@@ -50,12 +50,12 @@
             <el-table-column label="原始名称" min-width="150" :show-overflow-tooltip="true"
                 prop="srcname" >
             </el-table-column>
-            <el-table-column label="原始地址" min-width="150" :show-overflow-tooltip="true"
+            <el-table-column label="原始地址" min-width="120" :show-overflow-tooltip="true"
                 prop="srcpath" >
             </el-table-column>
-            <el-table-column label="大小(MB)" width="80" 
+            <!-- <el-table-column label="大小(MB)" width="80" 
                 prop="srcsize" >
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column label="状态" width="80"
                 sortable="custom"
                 prop="status" >
@@ -70,7 +70,7 @@
             <el-table-column label="刮削用番号" min-width="120" :show-overflow-tooltip="true"
                 prop="scrapingname" >
             </el-table-column>
-            <el-table-column label="中文" width="100"
+            <el-table-column label="中文" width="80" align="center"
                 sortable="custom"
                 prop="cnsubtag" >
                 <template slot-scope="scope">
@@ -78,20 +78,20 @@
                     <span v-if="scope.row.cnsubtag===false" ></span>
                 </template>
             </el-table-column>
-            <el-table-column label="分集编号" min-width="80" :show-overflow-tooltip="true"
+            <el-table-column label="分集编号" min-width="100" align="center" :show-overflow-tooltip="true"
                 prop="cdnum">
                 <template slot-scope="scope">
                     <span v-if="scope.row.cdnum" v-text="scope.row.cdnum"></span>
                 </template>
             </el-table-column>
-            <el-table-column label="刮削后路径" min-width="150" :show-overflow-tooltip="true"
+            <el-table-column label="刮削后路径" min-width="120" :show-overflow-tooltip="true"
                 prop="destpath" >
             </el-table-column>
-            <el-table-column label="预计清理时间" width="155"
+            <el-table-column label="计划删除时间" width="140" :show-overflow-tooltip="true"
                 sortable="custom"
                 prop="deadtime">
             </el-table-column>
-            <el-table-column label="更新时间" width="155"
+            <el-table-column label="更新时间" width="140" :show-overflow-tooltip="true"
                 sortable="custom"
                 prop="updatetime">
             </el-table-column>
