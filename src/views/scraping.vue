@@ -95,7 +95,7 @@
                 sortable="custom"
                 prop="updatetime">
             </el-table-column>
-            <el-table-column label="操作" width="180">
+            <el-table-column label="操作" width="120" fixed="right">
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
@@ -135,7 +135,6 @@
                         <el-radio class="radio-btn" :label="2">失败</el-radio>
                         <el-radio class="radio-btn" :label="3">忽略</el-radio>
                     </el-radio-group>
-                    <div class="tip-info" >如需重新刮削,请修改状态为: 未刮削;将使用页面选择的刮削配置</div>
                 </el-form-item>
                 <el-form-item label="刮削番号" prop="scrapingname">
                     <el-input v-model="rowrecord.scrapingname" />

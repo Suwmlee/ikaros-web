@@ -48,7 +48,7 @@
             <el-divider>清理</el-divider>
             <el-form-item>
                 <el-button type="primary" @click="cleandata">手动清理</el-button>
-                <div class="tip-info" >删除目的文件不存在的记录及关联文件(不含源文件)</div>
+                <div class="tip-info" >删除目标文件不存在的记录及关联文件(不含源文件)</div>
             </el-form-item>
             <el-form-item label="计划任务" >
                 <el-switch @change="confValueChange"
@@ -56,7 +56,7 @@
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
-                <div class="tip-info" >注意!! 删除源文件或目的文件不存在的记录及关联所有文件(包含源文件)</div>
+                <div class="tip-info" style="color:red">注意!! 检测源文件或目标文件不存在的记录并标记。三天后将删除所有关联文件(包含源文件)</div>
             </el-form-item>
         </el-form>
 
