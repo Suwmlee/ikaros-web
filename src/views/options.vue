@@ -50,10 +50,10 @@
                 <el-input @change="confValueChange" v-model="localConf.tr_url" placeholder="完整的服务器地址(含端口),如: http://192.168.1.1:5000/"></el-input>
             </el-form-item>
              <el-form-item label="登录名">
-                <el-input @change="confValueChange" v-model="localConf.tr_username" placeholder="登录名"></el-input>
+                <el-input @change="confValueChange" autoComplete="off" v-model="localConf.tr_username" placeholder="登录名"></el-input>
             </el-form-item>
              <el-form-item label="登陆密码">
-                <el-input @change="confValueChange" v-model="localConf.tr_passwd" placeholder="登陆密码"></el-input>
+                <el-input @change="confValueChange" show-password auto-complete="new-password" v-model="localConf.tr_passwd" placeholder="登陆密码"></el-input>
             </el-form-item>
              <el-form-item label="下载目录修正">
                 <el-input @change="confValueChange" v-model="localConf.tr_prefix" placeholder="tr下载目录映射到ikaros目录,如: /volume1/Media:/media"></el-input>
