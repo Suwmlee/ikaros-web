@@ -55,7 +55,7 @@
              <el-form-item label="登陆密码">
                 <el-input @change="confValueChange" show-password auto-complete="new-password" v-model="localConf.tr_passwd" placeholder="登陆密码"></el-input>
             </el-form-item>
-             <el-form-item label="下载目录修正">
+             <el-form-item label="下载目录映射">
                 <el-input @change="confValueChange" v-model="localConf.tr_prefix" placeholder="tr下载目录映射到ikaros目录,如: /volume1/Media:/media"></el-input>
             </el-form-item>
             <el-divider>清理</el-divider>
