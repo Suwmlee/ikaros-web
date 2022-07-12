@@ -39,6 +39,9 @@
                 <el-form-item label="过滤目录">
                     <el-input v-model="transconfig.escape_folder"></el-input>
                 </el-form-item>
+                <el-form-item label="立即转移">
+                    <el-input v-model="transconfig.specified_files" placeholder="对源目录下的指定文件(夹)立即进行转移操作,可立即应用当前更改。为空则不指定"></el-input>
+                </el-form-item>
                 <el-form-item label="大小限制">
                     <el-input v-model="transconfig.escape_size" placeholder="忽略小于此值的文件,单位:MB。设置为0则不限制"></el-input>
                 </el-form-item>
@@ -48,9 +51,6 @@
                         active-color="#13ce66"
                         inactive-color="#ff4949">
                     </el-switch>
-                </el-form-item>
-                <el-form-item v-if="transconfig.fix_series" label="指定内容">
-                    <el-input v-model="transconfig.specified_files" placeholder="针对源目录下的指定文件(夹)"></el-input>
                 </el-form-item>
                 <el-divider>扩展功能</el-divider>
                 <el-form-item label="刷新Emby">
