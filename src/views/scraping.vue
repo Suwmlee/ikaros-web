@@ -140,6 +140,14 @@
                     <el-input v-model="rowrecord.scrapingname" />
                     <div class="tip-info" >强制使用此番号刮削</div>
                 </el-form-item>
+                <el-form-item label="指定源" prop="specifiedsource">
+                    <el-input v-model="rowrecord.specifiedsource" />
+                    <div class="tip-info" >指定源,需要与`指定网址`搭配生效</div>
+                </el-form-item>
+                <el-form-item label="指定网址" prop="specifiedurl">
+                    <el-input v-model="rowrecord.specifiedurl" />
+                    <div class="tip-info" >指定网址,需要与`指定源`搭配生效</div>
+                </el-form-item>
                 <el-form-item label="中文标记" prop="cnsubtag">
                     <el-switch
                         v-model="rowrecord.cnsubtag"
