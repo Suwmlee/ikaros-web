@@ -45,19 +45,6 @@
             <el-form-item v-if="localConf.proxy_enable==true" label="地址">
                 <el-input @change="confValueChange" v-model="localConf.proxy_address" placeholder="127.0.0.1:1080"></el-input>
             </el-form-item>
-            <el-divider>下载服务器 - Transmission</el-divider>
-             <el-form-item label="服务器地址">
-                <el-input @change="confValueChange" v-model="localConf.tr_url" placeholder="完整的服务器地址(含端口),如: http://192.168.1.1:5000/"></el-input>
-            </el-form-item>
-             <el-form-item label="登录名">
-                <el-input @change="confValueChange" autoComplete="off" v-model="localConf.tr_username" placeholder="登录名"></el-input>
-            </el-form-item>
-             <el-form-item label="登陆密码">
-                <el-input @change="confValueChange" show-password auto-complete="new-password" v-model="localConf.tr_passwd" placeholder="登陆密码"></el-input>
-            </el-form-item>
-             <el-form-item label="下载目录映射">
-                <el-input @change="confValueChange" v-model="localConf.tr_prefix" placeholder="tr下载目录映射到ikaros目录,如: /volume1/Media:/media"></el-input>
-            </el-form-item>
             <el-divider>清理</el-divider>
             <el-form-item>
                 <el-button type="primary" @click="cleandata">手动清理</el-button>
@@ -69,7 +56,20 @@
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
-                <div class="tip-info" style="color:red">注意!! 检测源文件或目标文件不存在的记录并标记。三天后将删除所有关联文件(包含源文件),如设置transmission,也会删除关联的种子</div>
+                <div class="tip-info" style="color:red">注意!! 检测源文件或目标文件不存在的记录并标记。七天后将删除所有关联文件(包含源文件),如设置transmission,也会删除关联的种子</div>
+            </el-form-item>
+            <el-divider>下载服务器 - Transmission</el-divider>
+            <el-form-item label="服务器地址">
+                <el-input @change="confValueChange" v-model="localConf.tr_url" placeholder="完整的服务器地址(含端口),如: http://192.168.1.1:5000/"></el-input>
+            </el-form-item>
+             <el-form-item label="登录名">
+                <el-input @change="confValueChange" autoComplete="off" v-model="localConf.tr_username" placeholder="登录名"></el-input>
+            </el-form-item>
+             <el-form-item label="登陆密码">
+                <el-input @change="confValueChange" show-password auto-complete="new-password" v-model="localConf.tr_passwd" placeholder="登陆密码"></el-input>
+            </el-form-item>
+            <el-form-item label="下载目录映射">
+                <el-input @change="confValueChange" v-model="localConf.tr_prefix" placeholder="tr下载目录映射到ikaros目录,如: /volume1/Media:/media"></el-input>
             </el-form-item>
         </el-form>
 
