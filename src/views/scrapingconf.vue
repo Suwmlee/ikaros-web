@@ -96,7 +96,7 @@
             <el-form-item v-if="scrapingconfig.extrafanart_enable==true" label="剧照文件夹">
                 <el-input v-model="scrapingconfig.extrafanart_folder"></el-input>
             </el-form-item>
-            <el-form-item label="使用代理" >
+            <!-- <el-form-item label="使用代理" >
                 <el-switch
                     v-model="scrapingconfig.proxy_enable"
                     active-color="#13ce66"
@@ -111,7 +111,7 @@
             </el-form-item>
             <el-form-item label="超时">
                 <el-input v-model="scrapingconfig.proxy_timeout"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item>
                 <el-button type="primary" size="medium" @click="addconf">新增</el-button>
                 <el-button type="primary" size="medium" @click="updateconf">保存</el-button>

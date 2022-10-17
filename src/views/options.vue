@@ -12,6 +12,20 @@
         </el-form>
 
         <el-form label-position="right" label-width="auto" :model="localConf">
+            <el-divider>代理</el-divider>
+            <el-form-item label="使用代理" >
+                <el-switch @change="confValueChange"
+                    v-model="localConf.proxy_enable"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
+            <el-form-item v-if="localConf.proxy_enable==true" label="类型">
+                <el-input @change="confValueChange" v-model="localConf.proxy_type" placeholder="支持: http socks5 socks5h"></el-input>
+            </el-form-item>
+            <el-form-item v-if="localConf.proxy_enable==true" label="地址">
+                <el-input @change="confValueChange" v-model="localConf.proxy_address" placeholder="127.0.0.1:1080"></el-input>
+            </el-form-item>
             <el-divider>通知</el-divider>
             <el-form-item label="TG token">
                 <el-input @change="confValueChange" v-model="localConf.tg_token" placeholder="Telegram token"></el-input>
@@ -31,19 +45,6 @@
             <el-form-item label="微信 agentid">
                 <el-input @change="confValueChange" v-model="localConf.wechat_agentid" placeholder="企业微信 agentid"></el-input>
                 <div class="tip-info" >同上</div>
-            </el-form-item>
-            <el-form-item label="使用代理" >
-                <el-switch @change="confValueChange"
-                    v-model="localConf.proxy_enable"
-                    active-color="#13ce66"
-                    inactive-color="#ff4949">
-                </el-switch>
-            </el-form-item>
-            <el-form-item v-if="localConf.proxy_enable==true" label="类型">
-                <el-input @change="confValueChange" v-model="localConf.proxy_type" placeholder="支持: http socks5 socks5h"></el-input>
-            </el-form-item>
-            <el-form-item v-if="localConf.proxy_enable==true" label="地址">
-                <el-input @change="confValueChange" v-model="localConf.proxy_address" placeholder="127.0.0.1:1080"></el-input>
             </el-form-item>
             <el-divider>清理</el-divider>
             <el-form-item>
