@@ -63,14 +63,27 @@
             <el-form-item label="服务器地址">
                 <el-input @change="confValueChange" v-model="localConf.tr_url" placeholder="完整的服务器地址(含端口),如: http://192.168.1.1:5000/"></el-input>
             </el-form-item>
-             <el-form-item label="登录名">
+            <el-form-item label="登录名">
                 <el-input @change="confValueChange" autoComplete="off" v-model="localConf.tr_username" placeholder="登录名"></el-input>
             </el-form-item>
-             <el-form-item label="登陆密码">
+            <el-form-item label="登陆密码">
                 <el-input @change="confValueChange" show-password auto-complete="new-password" v-model="localConf.tr_passwd" placeholder="登陆密码"></el-input>
             </el-form-item>
             <el-form-item label="下载目录映射">
                 <el-input @change="confValueChange" v-model="localConf.tr_prefix" placeholder="tr下载目录映射到ikaros目录,如: /volume1/Media:/media"></el-input>
+            </el-form-item>
+            <el-divider>更新(开发中)</el-divider>
+            <el-form-item label="刮削库">
+                <el-row>
+                    <el-col :span="8">
+                        <span>当前版本:  <label v-text="libcurrent"></label></span>
+                    </el-col>
+                    <el-col :span="8">
+                        <span>最新版本:  <label v-text="liblatest"></label></span>
+                    </el-col>
+                    <el-button  type="primary" size="medium" @click="checklibver">检测</el-button>
+                    <el-button type="danger" size="medium" @click="updatelib">更新</el-button>
+                </el-row>
             </el-form-item>
         </el-form>
 
@@ -94,8 +107,8 @@ export default {
     data() { 
         return {
             loglevel: 20,
-            fileList: [],
-            multifile: false,
+            libcurrent: "0.1.0",
+            liblatest: "0.1.0",
             loginfo: '',
             logtimer: null,
             localConf: {}
@@ -151,6 +164,24 @@ export default {
         confValueChange(v){
             console.log(v)
             this.updateconfig()
+        },
+        checklibver(){
+            axios.get('/api/options/check/lib')
+                .then( response => {
+                    this.libcurrent = response.data.installed
+                    this.liblatest = response.data.latest
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        updatelib(){
+            axios.put('/api/options/check/lib')
+                .then( () => {
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         },
         cleandata(){
             axios.get('/api/options/cleanrecord')
