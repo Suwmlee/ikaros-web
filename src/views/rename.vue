@@ -2,7 +2,7 @@
     <div>
         <el-form label-position="right" label-width="auto" :model="renameconf">
             <el-form-item label="源目录">
-                <el-input v-model="renameconf.source_folder">
+                <el-input v-model="renameconf.source_folder" placeholder="需要改名目录">
                     <el-button slot="append" icon="el-icon-search" @click="showDialog"></el-button>
                 </el-input>
             </el-form-item>
@@ -13,7 +13,7 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item v-if="renametype==0" label="自定义">
-                <el-input v-model="renameconf.reg" placeholder="输入自定义正则匹配规则，默认使用针对剧集的匹配规则"></el-input>
+                <el-input v-model="renameconf.reg" placeholder="自定义正则匹配规则，默认使用针对剧集的匹配规则"></el-input>
             </el-form-item>
             <el-form-item v-if="renametype==0" label="修正前缀">
                 <el-input v-model="renameconf.prefix" placeholder="默认S01E, 将匹配的 E11或 [11] 修正为 S01E11"></el-input>
@@ -75,7 +75,7 @@ export default {
             prenames: [],
             renametype: 0,
             renameconf: {
-                source_folder: 'E:\\Entertaiment\\ACG\\Animes',
+                source_folder: '',
                 reg: '',
                 prefix: '',
                 ext_type: '',
@@ -88,21 +88,55 @@ export default {
         preview() {
             axios.post('/api/previewrename',this.renameconf)
                 .then(response => {
-                    this.prenames = response.data
+                    if (response.data.length === 0) {
+                        this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '未发现可改名文件',
+                        type: 'warning'
+                        })
+                    }else{
+                        this.prenames = response.data
+                    }
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(() => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '异常! 请查看日志或检查路径是否存在',
+                        type: 'error'
+                    })
                 });
         },
         apply() {
-            this.fixnames = "",
-            this.prenames = "",
+            this.fixnames = [],
+            this.prenames = [],
             axios.post('/api/renamebyreg',this.renameconf)
                 .then(response => {
-                    this.prenames = response.data
+                    if (response.data.length === 0) {
+                        this.$message({
+                            showClose: true,
+                            duration: 2000,
+                            message: '未发现可改名文件',
+                            type: 'success'
+                        })
+                    }else{
+                        this.prenames = response.data
+                        this.$message({
+                            showClose: true,
+                            duration: 2000,
+                            message: '重命名成功',
+                            type: 'success'
+                        })
+                    }
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(() => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '异常! 请查看日志或检查路径是否存在',
+                        type: 'error'
+                    })
                 });
         },
         replace() {
@@ -116,8 +150,13 @@ export default {
                         type: 'success'
                     })
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(() => {
+                    this.$message({
+                        showClose: true,
+                        duration: 2000,
+                        message: '异常! 请查看日志或检查路径是否存在',
+                        type: 'error'
+                    })
                 });
         },
         showDialog() {
