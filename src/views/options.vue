@@ -92,7 +92,7 @@
         <div class="row">
             <h2 >日志:</h2>
             <div class="logging_window">
-                <pre id="output"></pre>
+                <pre ref="output"></pre>
             </div>
         </div>
 
@@ -123,7 +123,17 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
-        this.updateLog()
+
+        let ws = new WebSocket('ws://localhost:12348/log?tail=1')
+        ws.onmessage = (event) => {
+            if (event.data === 'ping') {
+                ws.send('pong')
+                return
+            }
+            this.loginfo = event.data;
+            this.$refs.output.textContent = this.loginfo;
+            this.$refs.output.scrollTop = this.$refs.output.scrollHeight; 
+        }
     },
     methods: {
         updateloglvl() {
@@ -198,38 +208,6 @@ export default {
                     console.log(error);
                 });
         },
-        xhrRequestLog() {
-            var output = document.getElementById('output');
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/api/options/logstream', true);
-            xhr.onreadystatechange = function() {
-                switch(xhr.readyState){
-                    case 4://DONE
-                        console.log("restart xhr")
-                        clearInterval(this.logtimer)
-                        this.logtimer = null;
-                        this.updateLog()
-                        break;
-                }}.bind(this)
-            xhr.send();
-            this.logtimer = setInterval(function() {
-                if (this.loginfo != xhr.responseText) {
-                    console.log("update log")
-                    this.loginfo = xhr.responseText;
-                    output.textContent = this.loginfo;
-                    output.scrollTop = output.scrollHeight; 
-                }
-            }.bind(this), 2000);
-        },
-        updateLog(){
-            setTimeout(function(){this.xhrRequestLog()}.bind(this), 1000)
-        },
-        // TODO formate
-        logFormate(logs){
-            console.log(logs)
-
-            return logs
-        }
     }
 }
 </script>
