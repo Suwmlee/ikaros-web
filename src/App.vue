@@ -60,7 +60,6 @@ export default {
     versionInfo(){
       axios.get('/api/version')
           .then(response => {
-              console.log(response)
               this.version = response.data
           })
           .catch(function (error) {

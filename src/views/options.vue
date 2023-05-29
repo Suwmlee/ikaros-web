@@ -124,7 +124,9 @@ export default {
                 console.log(error);
             });
 
-        let ws = new WebSocket('ws://localhost:12348/log?tail=1')
+        const { protocol, host } = location
+        const wsurl = `${protocol === 'https' ? 'wss' : 'ws'}://${host}/ws/log?tail=1`
+        let ws = new WebSocket(wsurl)
         ws.onmessage = (event) => {
             if (event.data === 'ping') {
                 ws.send('pong')

@@ -14,6 +14,11 @@ module.exports = {
         pathRewrite: {
           '^/imgs': 'imgs'
         }
+      },
+      '/ws': {
+        target: 'http://localhost:12348',
+        ws: true,
+        changeOrigin: true
       }
     }
   }
