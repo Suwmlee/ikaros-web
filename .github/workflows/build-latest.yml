@@ -21,8 +21,8 @@ jobs:
 
     - name: Build Package Source
       run: |
-        yarn install
-        yarn build
+        npm install
+        npm run build
 
     - name: Git push assets to "release" branch
       run: |
