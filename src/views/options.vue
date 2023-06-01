@@ -110,6 +110,7 @@ export default {
             libcurrent: "0.1.0",
             liblatest: "0.1.0",
             loginfo: '',
+            lastinfo: '',
             logtimer: null,
             localConf: {}
         };
@@ -125,9 +126,10 @@ export default {
             });
 
         // TODO: fix url
-        let ws = new WebSocket(`ws://${location.host}/logstream?tail=1`)
+        let ws = new WebSocket(`ws://${location.host}/ws/logstream?tail=1`)
         ws.onmessage = (event) => {
-            this.loginfo = event.data;
+            this.lastinfo = event.data;
+            this.loginfo = this.loginfo + this.lastinfo;
             this.$refs.output.textContent = this.loginfo;
             this.$refs.output.scrollTop = this.$refs.output.scrollHeight; 
         }

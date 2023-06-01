@@ -15,7 +15,7 @@ module.exports = {
           '^/imgs': 'imgs'
         }
       },
-      '/logstream': {
+      '/ws': {
         target: 'http://localhost:12346',
         ws: true,
         changeOrigin: true
