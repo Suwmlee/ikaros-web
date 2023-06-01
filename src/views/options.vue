@@ -125,15 +125,15 @@ export default {
             });
 
         // TODO: fix url
-        let ws = new WebSocket(`ws://${location.hostname}:12348/ws/log?tail=1`)
+        let ws = new WebSocket(`ws://${location.host}/logstream?tail=1`)
         ws.onmessage = (event) => {
-            if (event.data === 'ping') {
-                ws.send('pong')
-                return
-            }
             this.loginfo = event.data;
             this.$refs.output.textContent = this.loginfo;
             this.$refs.output.scrollTop = this.$refs.output.scrollHeight; 
+        }
+        ws.onerror = () => {
+            console.log("ws close")
+            ws.close();
         }
     },
     methods: {
