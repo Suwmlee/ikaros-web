@@ -1,107 +1,63 @@
 <template>
-  <div id="app">
-    <el-container>
-      <el-header>
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="1">简介</el-menu-item>
-          <el-menu-item index="3">刮削</el-menu-item>
-          <el-menu-item index="4">转移</el-menu-item>
-          <el-menu-item index="5">重命名</el-menu-item>
-          <el-menu-item index="6">自动</el-menu-item>
-          <el-menu-item index="7">选项</el-menu-item>
-        </el-menu>
-      </el-header>
-      <el-main>
-        <Tutorial v-if="activeIndex==='1'" />
-        <JavScraping v-if="activeIndex==='3'" />
-        <Transfer v-if="activeIndex==='4'" />
-        <Reanme v-if="activeIndex==='5'" />
-        <Automation v-if="activeIndex==='6'" />
-        <Options v-if="activeIndex==='7'" />
-      </el-main>
-      <el-footer class="site-footer" ><a href="https://github.com/Suwmlee/ikaros" target="_blank">ikaros</a> {{ version }}</el-footer>
-    </el-container>
-
-  </div>
+  <div
+    v-show="this.$store.state.layout === 'landing'"
+    class="landing-bg h-100 bg-gradient-primary position-fixed w-100"
+  ></div>
+  <sidenav
+    :custom_class="this.$store.state.mcolor"
+    :class="[
+      this.$store.state.isTransparent,
+      'fixed-start'
+    ]"
+    v-if="this.$store.state.showSidenav"
+  />
+  <main
+    class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
+  >
+    <!-- nav -->
+    <navbar
+      :class="[navClasses]"
+      :textWhite="
+        this.$store.state.isAbsolute ? 'text-white opacity-8' : 'text-white'
+      "
+      :minNav="navbarMinimize"
+      v-if="this.$store.state.showNavbar"
+    />
+    <router-view />
+    <app-footer v-show="this.$store.state.showFooter" />
+  </main>
 </template>
-
-<script lang="ts">
-import axios from 'axios'
-import Tutorial from './views/tutorial.vue'
-import JavScraping from './views/javscraping.vue'
-import Transfer from './views/transfer.vue'
-import Reanme from './views/rename.vue'
-import Automation from './views/automation.vue'
-import Options from './views/options.vue'
+<script>
+import Sidenav from "./examples/Sidenav";
+import Navbar from "@/examples/Navbars/Navbar.vue";
+import AppFooter from "@/examples/Footer.vue";
+import { mapMutations } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Tutorial,
-    JavScraping,
-    Transfer,
-    Reanme,
-    Automation,
-    Options
-  },
-  data() {
-    return {
-      version:'',
-      activeIndex: '1',
-    };
-  },
-  async created() {
-    this.versionInfo()
+    Sidenav,
+    Navbar,
+    AppFooter
   },
   methods: {
-    handleSelect(key: number) {
-      this.activeIndex = key
-    },
-    versionInfo(){
-      axios.get('/api/version')
-          .then(response => {
-              this.version = response.data
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
+    ...mapMutations(["toggleConfigurator", "navbarMinimize"])
+  },
+  computed: {
+    navClasses() {
+      return {
+        "position-sticky bg-white left-auto top-2 z-index-sticky":
+          this.$store.state.isNavFixed && !this.$store.state.darkMode,
+        "position-sticky bg-default left-auto top-2 z-index-sticky":
+          this.$store.state.isNavFixed && this.$store.state.darkMode,
+        "position-absolute px-4 mx-0 w-100 z-index-2": this.$store.state
+          .isAbsolute,
+        "px-0 mx-4": !this.$store.state.isAbsolute
+      };
     }
+  },
+  beforeMount() {
+    this.$store.state.isTransparent = "bg-transparent";
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-
-.el-container {
-  min-height: 97vh;
-}
-
-.el-header {
-  text-align: center;
-  line-height: 60px;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-.el-header > ul {
-  width: 450px;
-}
-
-.el-footer {
-  text-align: center;
-  line-height: 60px;
-}
-
-.site-footer {
-    color: var(--theme-footer-link-color);
-    line-height: 1.30769231;
-    display: inline-block;
-    text-decoration: none;
-}
-
-</style>
