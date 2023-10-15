@@ -65,6 +65,7 @@
                     <span v-if="scope.row.status===2" >失败</span>
                     <span v-if="scope.row.status===3" >忽略</span>
                     <span v-if="scope.row.status===4" >进行中</span>
+                    <span v-if="scope.row.status===5" >已删除</span>
                 </template>
             </el-table-column>
             <el-table-column label="刮削用番号" min-width="120" :show-overflow-tooltip="true"

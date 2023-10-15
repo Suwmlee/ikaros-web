@@ -132,6 +132,7 @@
                     <span v-if="scope.row.status===0" ></span>
                     <span v-if="scope.row.status===1" >锁定</span>
                     <span v-if="scope.row.status===2" >忽略</span>
+                    <span v-if="scope.row.status===5" >已删除</span>
                 </template>
             </el-table-column>
             <el-table-column label="剧集" width="60" align="center"
