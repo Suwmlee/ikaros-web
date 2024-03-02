@@ -53,9 +53,6 @@
             <el-table-column label="原始地址" min-width="120" :show-overflow-tooltip="true"
                 prop="srcpath" >
             </el-table-column>
-            <!-- <el-table-column label="大小(MB)" width="80" 
-                prop="srcsize" >
-            </el-table-column> -->
             <el-table-column label="状态" width="80"
                 sortable="custom"
                 prop="status" >
@@ -70,11 +67,24 @@
             <el-table-column label="刮削用番号" min-width="120" :show-overflow-tooltip="true"
                 prop="scrapingname" >
             </el-table-column>
-            <el-table-column label="中文" width="80" align="center"
-                sortable="custom"
-                prop="cnsubtag" >
+            <el-table-column label="已删除" width="100" align="center"
+                sortable="custom" prop="deleted" >
                 <template slot-scope="scope">
-                    <span v-if="scope.row.cnsubtag===true" >是</span>
+                    <span v-if="scope.row.deleted===true" >✓</span>
+                    <span v-if="scope.row.deleted===false" ></span>
+                </template>
+            </el-table-column>
+            <el-table-column label="忽略" width="80" align="center"
+                sortable="custom" prop="ignored" >
+                <template slot-scope="scope">
+                    <span v-if="scope.row.ignored===true" >✓</span>
+                    <span v-if="scope.row.ignored===false" ></span>
+                </template>
+            </el-table-column>
+            <el-table-column label="中文" width="80" align="center"
+                sortable="custom" prop="cnsubtag" >
+                <template slot-scope="scope">
+                    <span v-if="scope.row.cnsubtag===true" >✓</span>
                     <span v-if="scope.row.cnsubtag===false" ></span>
                 </template>
             </el-table-column>
