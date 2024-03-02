@@ -60,12 +60,11 @@
                 sortable="custom"
                 prop="status" >
                 <template slot-scope="scope">
-                    <span v-if="scope.row.status===0" >未刮削</span>
-                    <span v-if="scope.row.status===1" >完成</span>
+                    <span v-if="scope.row.status===0" ></span>
+                    <span v-if="scope.row.status===1" >成功</span>
                     <span v-if="scope.row.status===2" >失败</span>
                     <span v-if="scope.row.status===3" >忽略</span>
                     <span v-if="scope.row.status===4" >进行中</span>
-                    <span v-if="scope.row.status===5" >已删除</span>
                 </template>
             </el-table-column>
             <el-table-column label="刮削用番号" min-width="120" :show-overflow-tooltip="true"
@@ -130,11 +129,10 @@
                     <span v-text="rowrecord.srcpath" />
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="rowrecord.status">
-                        <el-radio class="radio-btn" :label="0">未刮削</el-radio>
-                        <el-radio class="radio-btn" :label="1">完成</el-radio>
-                        <el-radio class="radio-btn" :label="2">失败</el-radio>
-                        <el-radio class="radio-btn" :label="3">忽略</el-radio>
+                    <el-radio-group v-model="recordoption">
+                        <el-radio class="radio-btn" :label="0">正常</el-radio>
+                        <el-radio class="radio-btn" :label="1">锁定</el-radio>
+                        <el-radio class="radio-btn" :label="2">忽略</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="刮削番号" prop="scrapingname">
@@ -225,6 +223,7 @@ export default {
             multipleSelection: [],
             selectedoption: -1,
             options: [],
+            recordoption: 0,
             scrapingconfig: {},
         }
     },
@@ -393,6 +392,13 @@ export default {
         handleEdit(index: number, row: ScrapingRecordDto) {
             this.rowrecord = row;
             this.editdialog = true
+            if (this.rowrecord.locked) {
+                this.recordoption = 1
+            } else if (this.rowrecord.ignroed) {
+                this.recordoption = 2
+            } else {
+                this.recordoption = 0
+            }
         },
         cancelDeadtime() {
             this.rowrecord.deadtime = ''
@@ -403,6 +409,16 @@ export default {
         },
         dialogupdate() {
             this.editdialog = false
+            if (this.recordoption == 1) {
+                this.rowrecord.ignored = false
+                this.rowrecord.locked = true
+            } else if (this.recordoption == 2) {
+                this.rowrecord.ignored = true
+                this.rowrecord.locked = false
+            } else {
+                this.rowrecord.ignored = false
+                this.rowrecord.locked = false
+            }
             axios.put('/api/scraping/record', this.rowrecord)
                 .then(response => {
                     this.refresh()
