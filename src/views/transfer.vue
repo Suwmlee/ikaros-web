@@ -125,17 +125,6 @@
             <el-table-column label="次级目录" width="100" :show-overflow-tooltip="true"
                 prop="secondfolder" >
             </el-table-column>
-            <!-- <el-table-column label="状态" width="80"
-                sortable="custom"
-                prop="status" >
-                <template slot-scope="scope">
-                    <span v-if="scope.row.status===0" ></span>
-                    <span v-if="scope.row.status===1" >成功</span>
-                    <span v-if="scope.row.status===2" >失败</span>
-                    <span v-if="scope.row.status===3" >忽略</span>
-                    <span v-if="scope.row.status===4" >进行中</span>
-                </template>
-            </el-table-column> -->
             <el-table-column label="已删除" width="100" align="center"
                 sortable="custom" prop="deleted" >
                 <template slot-scope="scope">
@@ -171,9 +160,9 @@
                     <span v-if="scope.row.episode != -1" >{{scope.row.episode}}</span>
                 </template>
             </el-table-column>
-            <!-- <el-table-column label="链接路径" min-width="120" :show-overflow-tooltip="true"
-                prop="linkpath" >
-            </el-table-column> -->
+            <el-table-column label="强制名称" min-width="110" :show-overflow-tooltip="true"
+                prop="forcedname" >
+            </el-table-column>
             <el-table-column label="实际路径" min-width="110" :show-overflow-tooltip="true"
                 prop="destpath" >
             </el-table-column>
@@ -226,6 +215,9 @@
                         <el-radio class="radio-btn" :label="1">锁定</el-radio>
                         <el-radio class="radio-btn" :label="2">忽略</el-radio>
                     </el-radio-group>
+                </el-form-item>
+                <el-form-item label="强制名称" prop="forcedname">
+                    <el-input v-model="rowrecord.forcedname" placeholder="强制使用的文件名" />
                 </el-form-item>
                 <el-form-item label="顶层目录" prop="topfolder">
                     <el-input v-model="rowrecord.topfolder" />

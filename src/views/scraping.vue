@@ -88,7 +88,7 @@
                     <span v-if="scope.row.cnsubtag===false" ></span>
                 </template>
             </el-table-column>
-            <el-table-column label="分集编号" min-width="100" align="center" :show-overflow-tooltip="true"
+            <el-table-column label="分片" width="80" align="center"
                 prop="cdnum">
                 <template slot-scope="scope">
                     <span v-if="scope.row.cdnum" v-text="scope.row.cdnum"></span>
