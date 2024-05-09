@@ -96,6 +96,13 @@
             <el-form-item v-if="scrapingconfig.extrafanart_enable==true" label="剧照文件夹">
                 <el-input v-model="scrapingconfig.extrafanart_folder"></el-input>
             </el-form-item>
+            <el-form-item label="自动监控" >
+                <el-switch
+                    v-model="scrapingconfig.auto_watch"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949">
+                </el-switch>
+            </el-form-item>
             <!-- <el-form-item label="使用代理" >
                 <el-switch
                     v-model="scrapingconfig.proxy_enable"

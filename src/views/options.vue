@@ -57,7 +57,7 @@
                     active-color="#13ce66"
                     inactive-color="#ff4949">
                 </el-switch>
-                <div class="tip-info" style="color:red">注意!! 检测源文件或目标文件不存在的记录并标记。七天后将删除所有关联文件(包含源文件),如设置transmission,也会删除关联的种子</div>
+                <div class="tip-info" style="color:red">注意! 检测源文件或目标文件不存在的记录并标记。七天后将删除所有关联文件(包含源文件),如设置transmission,也会删除关联的种子</div>
             </el-form-item>
             <el-divider>下载服务器 - Transmission</el-divider>
             <el-form-item label="服务器地址">

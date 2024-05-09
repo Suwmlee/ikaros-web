@@ -70,6 +70,13 @@
                         inactive-color="#ff4949">
                     </el-switch>
                 </el-form-item>
+                <el-form-item label="自动监控" >
+                    <el-switch
+                        v-model="transconfig.auto_watch"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
             </el-form>
             <el-button type="primary" size="medium" @click="addconf">新增</el-button>
             <el-button type="primary" size="medium" @click="updateconf">保存</el-button>
