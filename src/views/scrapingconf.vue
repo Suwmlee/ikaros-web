@@ -40,6 +40,9 @@
                     <el-button slot="append" icon="el-icon-search" @click="showFailedDialog"></el-button>
                 </el-input>
             </el-form-item>
+            <el-form-item label="并发线程(beta)">
+                <el-input v-model="scrapingconfig.threads_num"></el-input>
+            </el-form-item>
             <el-form-item label="跳过目录">
                 <el-input v-model="scrapingconfig.escape_folders"></el-input>
             </el-form-item>
