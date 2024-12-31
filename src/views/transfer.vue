@@ -31,6 +31,13 @@
                 <el-form-item v-if="transconfig.linktype==0" label="软链接前缀">
                     <el-input v-model="transconfig.soft_prefix"></el-input>
                 </el-form-item>
+                <el-form-item v-if="transconfig.linktype===0" label="使用相对路径" >
+                    <el-switch
+                        v-model="transconfig.is_sym_relative_path"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
                 <el-form-item label="输出目录">
                     <el-input v-model="transconfig.output_folder">
                         <el-button slot="append" icon="el-icon-search" @click="showOutputDialog"></el-button>
